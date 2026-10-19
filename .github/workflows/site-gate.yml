@@ -18,12 +18,13 @@
 # 共存：gh-pages 根目錄 = main 的網站；preview/<PR 號>/ = 各 PR 預覽。
 #   main deploy 用 rsync --delete 換根目錄但排除 preview/（不清其他 PR 的預覽）；
 #   PR preview 只換自己的 preview/<PR 號>/（不碰根目錄與其他 PR）。兩者共用 concurrency 群組序列化。
-#   PR 關閉後預覽是否清除：待裁，本範本不處理（預覽留著）。
+#   PR 關閉（merge 或不 merge）→ preview-cleanup 刪 preview/<PR 號>/；robots.txt 擋 /preview/（WO-PS17，Wen 10-21 裁）。
 name: site-gate
 
 on:
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, closed]
   push:
     branches: [main]
 
@@ -33,6 +34,7 @@ permissions:
 jobs:
   gate:
     name: gate
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
@@ -52,7 +54,7 @@ jobs:
   preview:
     name: preview
     needs: gate
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'pull_request' && github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 3
     concurrency:
@@ -113,6 +115,26 @@ jobs:
         run: |
           echo "宣稱清單 / 預覽網址有缺項，見 PR 留言。"
           exit 1
+
+  preview-cleanup:
+    name: preview-cleanup
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    concurrency:
+      group: pages-publish
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: 刪 gh-pages 的 preview/PR號/
+        env:
+          PR: ${{ github.event.pull_request.number }}
+          GH_TOKEN: ${{ github.token }}
+        run: bash .gate/pages_publish.sh "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" remove "$PR"
 
   deploy:
     name: deploy
