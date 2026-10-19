@@ -1,0 +1,137 @@
+# 公開 repo（wentl3/wentl3.github.io）用的 workflow 範本。由 ops/publish/export.py 複製到 .github/workflows/site-gate.yml。
+# 今晚（WO-PS5）只是範本，尚未推到任何 repo。
+#
+# Job / status check 名稱（分支保護要勾的就是這兩個）：
+#   gate     隱私詞 + 內部等級 + 無等級數字 + 匯出清單
+#   preview  PR 預覽發佈到 https://wentl3.github.io/preview/<PR 號>/ + 留言：預覽網址、宣稱清單；有缺項則此 job 失敗
+# （deploy 只在 push main 跑，不是 PR check，不要勾）
+#
+# 一次性設定（Wen 早上做）：
+#   1. Settings > Pages > Source = "Deploy from a branch"、Branch = gh-pages / (root)
+#      （gh-pages 由第一次發佈自動建立；main 的 deploy 與每個 PR 的 preview 都寫這個分支）
+#   2. Settings > Secrets and variables > Actions > 新增 secret PRIVACY_TERMS（內容 = CoW 私有隱私詞表全文）
+#   3. Settings > Branches > main 規則：Require a pull request before merging（1 approval）、
+#      Require status checks = gate + preview、Do not allow bypassing the above settings、禁 force push
+#   4. 破壞測試：直接 push main 應被拒
+#
+# 流程：PR -> gate + preview 全綠、PR 留言有預覽網址與宣稱清單 -> Wen approve -> merge -> deploy。
+# 共存：gh-pages 根目錄 = main 的網站；preview/<PR 號>/ = 各 PR 預覽。
+#   main deploy 用 rsync --delete 換根目錄但排除 preview/（不清其他 PR 的預覽）；
+#   PR preview 只換自己的 preview/<PR 號>/（不碰根目錄與其他 PR）。兩者共用 concurrency 群組序列化。
+#   PR 關閉後預覽是否清除：待裁，本範本不處理（預覽留著）。
+name: site-gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    name: gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - name: 隱私詞表（secret -> 暫存檔，不印出）
+        env:
+          PRIVACY_TERMS: ${{ secrets.PRIVACY_TERMS }}
+        run: |
+          if [ -z "$PRIVACY_TERMS" ]; then echo "PRIVACY_TERMS secret 未設 -> fail closed"; exit 1; fi
+          printf '%s\n' "$PRIVACY_TERMS" > "$RUNNER_TEMP/terms.txt"
+      - name: gate v0（隱私詞 + 內部等級 + 無等級數字 + 匯出清單）
+        run: |
+          REG=""
+          if [ -f .gate/claims-public.json ]; then REG="--claims-registry .gate/claims-public.json"; fi
+          python3 .gate/gate.py --site . --terms "$RUNNER_TEMP/terms.txt" --evidence .gate/evidence-public.json --require-manifest $REG
+
+  preview:
+    name: preview
+    needs: gate
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    concurrency:
+      group: pages-publish
+      cancel-in-progress: false
+    permissions:
+      contents: write        # 推 gh-pages
+      pull-requests: write   # 貼留言
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: 宣稱清單 + 預覽網址 -> 留言內容
+        id: claims
+        continue-on-error: true
+        env:
+          BASE: origin/${{ github.base_ref }}
+          PR: ${{ github.event.pull_request.number }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          ONLY=""
+          for f in $(git diff --name-only "$BASE"...HEAD -- '*.html' '*.htm'); do ONLY="$ONLY --only $f"; done
+          REG=""
+          if [ -f .gate/claims-public.json ]; then REG="--claims-registry .gate/claims-public.json"; fi
+          python3 .gate/claims.py --site . --evidence .gate/evidence-public.json $ONLY $REG \
+            --preview-pr "$PR" --preview-base "https://$OWNER.github.io" --require-preview-url --out "$RUNNER_TEMP/comment.md"
+      - name: 預覽副本（排除閘門與 .git；noindex；根目錄路徑改到 /preview/PR號/）
+        env:
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          mkdir "$RUNNER_TEMP/preview"
+          tar --exclude=.git --exclude=.gate --exclude=.github --exclude=export-manifest.json -cf - . | tar -xf - -C "$RUNNER_TEMP/preview"
+          python3 .gate/preview_prep.py --dir "$RUNNER_TEMP/preview" --pr "$PR"
+      - name: 發佈到 gh-pages 的 preview/PR號/
+        env:
+          PR: ${{ github.event.pull_request.number }}
+          GH_TOKEN: ${{ github.token }}
+        run: bash .gate/pages_publish.sh "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" preview "$RUNNER_TEMP/preview" "$PR"
+      - name: 貼到 PR（更新同一則留言）
+        if: always()
+        uses: actions/github-script@v7
+        env:
+          COMMENT_FILE: ${{ runner.temp }}/comment.md
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.existsSync(process.env.COMMENT_FILE)
+              ? fs.readFileSync(process.env.COMMENT_FILE, 'utf8')
+              : '<!-- site-gate-report -->\n預覽 / 宣稱清單產生失敗，見 Actions log。';
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const all = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
+            const old = all.find(c => c.body && c.body.startsWith('<!-- site-gate-report -->'));
+            if (old) await github.rest.issues.updateComment({ owner, repo, comment_id: old.id, body });
+            else await github.rest.issues.createComment({ owner, repo, issue_number, body });
+      - name: 宣稱清單有缺項 -> 此 check 失敗
+        if: steps.claims.outcome == 'failure'
+        run: |
+          echo "宣稱清單 / 預覽網址有缺項，見 PR 留言。"
+          exit 1
+
+  deploy:
+    name: deploy
+    needs: gate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    concurrency:
+      group: pages-publish
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: 網站檔（排除閘門與 .git）
+        run: |
+          mkdir "$RUNNER_TEMP/public"
+          tar --exclude=.git --exclude=.gate --exclude=.github --exclude=export-manifest.json -cf - . | tar -xf - -C "$RUNNER_TEMP/public"
+      - name: 發佈到 gh-pages 根目錄（保留 preview/）
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash .gate/pages_publish.sh "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" main "$RUNNER_TEMP/public"

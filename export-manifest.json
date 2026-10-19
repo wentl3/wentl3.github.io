@@ -1,0 +1,19 @@
+{
+ "files": {
+  ".gate/claims-public.json": "a783ddfd6aed1cd1dc6c6a8d3140eb6c3d350e6b5b88b77c9af4968dbd5f3516",
+  ".gate/claims.py": "da2b8698ba24ec759de8e6620eaf74a106025ad44481b3718d7f7342049226e2",
+  ".gate/evidence-public.json": "dd1789d88bd9b0ac9538d8c0a49e4c017a9a2061bf8b95d5a7cb33cce0adf361",
+  ".gate/gate.py": "5dfca0926699ba169fade0f233cdd73ada879ca1c2b09c1b72cc52cbc09c324a",
+  ".gate/pages_publish.sh": "9c0534356f5514083e0042b064cc86d40e09ed049980d25ac2f64cdf10ee205c",
+  ".gate/preview_prep.py": "25098ad9f85a8b8b35e22eec9306ee009c41429082cf6bedc5f18e4f5d96d4c9",
+  ".github/workflows/site-gate.yml": "a86621dd1a80084df86d501a9c7cf8c828f46a1514682a13f9d01f6572eb30af",
+  "assets/style.css": "44adf1f376daf5902d6a7da1d0d420ee795b3649495f87ba5011a8bce8e4cdf6",
+  "hpc/esd/index.html": "61f8711664106a45700f8fc8d0452ed6e0e3d3eefa379c994c2c8fee06af6606",
+  "hpc/index.html": "ef7141e03b154ad6d6f46fa046a7d1504e8a2498c6e157433e8bd3ca787b923e",
+  "hpc/office-immersion/index.html": "928fba2111916560b71568f99655bf7c96ed1b3eae04ca37d07dd618cd6604f5",
+  "hpc/why-liquid-cooling/index.html": "109a480711d0d73f1c16046252049b3a3ba72cd61466278f3d508716cbb801ae",
+  "index.html": "4cbd135c9ba38fe4f66aafa5f4c6578c3b4b31fd972e22315e873fec0f065b45",
+  "reading/index.html": "dcd9453822487f714a68532e72a185c845f8af1b15628ff159ce1c58e5a6185d",
+  "sitemap.xml": "de7d199aaca61a11deb1a49ba0836e31dc40cdb78f6fe1dc50e8b5ed8800c8a1"
+ }
+}
