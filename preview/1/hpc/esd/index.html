@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How do you control ESD in an HPC office lab? | HPC</title>
+<meta name="description" content="Controlling electrostatic discharge in an HPC office lab: one common ground, a protected area, people, materials and coolant flow.">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-zone="engineering" data-type="chapter">
+<header><a href="../../">Wen&#x27;s writing blog</a></header>
+<main>
+<p class="stage" data-stage="build-lab">Stage 2 of 5 · Build the lab</p>
+<section id="b1"><h1>How do you control ESD in an HPC office lab? / ESD / grounding / EPA</h1></section>
+<section id="b2"><h2>Short answer</h2>
+<p><strong>Tie every conductive and dissipative item to one low-impedance common ground, and hold relative humidity in a controlled range.</strong></p></section>
+<article id="body">
+<p>Once the lab space exists, the next job is to keep static out of it. Here is the short version.</p>
+<h2>Why static builds up</h2>
+<ul>
+<li>When two different materials, such as plastic and rubber, touch and then separate quickly, electrons move: one surface turns positive, the other negative.</li>
+<li>Handling materials, walking on carpet and fast fluid flow in pipes all do this.</li>
+<li>At low relative humidity the moisture film on surfaces is gone and air insulates better. A person or object can then carry a high static voltage.</li>
+<li>Semiconductor parts are sensitive to far lower voltages. The damage can be permanent, and a spark can also ignite vapors.</li>
+</ul>
+<h2>The design: one equipotential system</h2>
+<ul>
+<li>Connect all conductive and dissipative materials to a common ground, so no potential difference is left to discharge across.</li>
+<li>Metal chassis and work surfaces are grounded directly, by welding or clamping.</li>
+<li>ESD mats, anti-static flooring and ESD garments are coupled indirectly, together with static elimination devices.</li>
+<li>Equipment that is not grounded, and high-impedance materials, are neutralized with ionizers that release positive and negative ions. They work best where air convects well.</li>
+</ul>
+<h2>The protected area (EPA)</h2>
+<ul>
+<li>An Electrostatic Protection Area, set up under ANSI/ESD S20.20 and IEC 61340-5-1, wraps a stable equipotential environment around ESD-sensitive items such as IC components and PCB modules.</li>
+<li>Every piece of equipment, tool, packaging container and operator inside is connected to the common ground, from receipt through assembly, testing and packaging.</li>
+<li>The network is built from low-impedance copper strips or flat wires. Every grounding point is inspected daily, wrist-strap and main-ground continuity first.</li>
+<li>The static ground is kept separate from the power neutral and the lightning-protection ground (TN-S). Common grounding electrodes are kept at low impedance.</li>
+<li>Non-ESD-compliant insulating containers, plastic packaging and personal belongings are prohibited inside and are labeled.</li>
+<li>ESD-sensitive items arrive in certified anti-static packaging. Conductivity, seal integrity and condition are audited.</li>
+</ul>
+<h2>People</h2>
+<ul>
+<li>Before entering: certified grounding wrist strap, anti-static clothing, anti-static shoes or heel grounders.</li>
+<li>At the door, a test portal checks that strap and footwear grounding resistance is within the allowed range. The same range is checked daily for body, footwear and floor.</li>
+<li>Seated work uses a wrist strap. Standing work uses anti-static footwear on conductive flooring.</li>
+<li>A wrist strap has a built-in current-limiting resistor, so static drains without a perceptible shock.</li>
+<li>An insulator in a strong electrostatic field stays a safe distance from sensitive devices, or gets ion blowers.</li>
+<li>Very sensitive parts (bare dies, high-speed switching MOSFETs, RF modules) call for anti-static gloves or finger cots made of conductive fibers.</li>
+</ul>
+<h2>Materials</h2>
+<ul>
+<li>Materials fall into three classes by resistance: conductive, dissipative and insulating.</li>
+<li>Dissipative flooring keeps its surface resistance within a set range.</li>
+<li>Highly insulating items, such as certain packaging films or plastic housings, are labeled and kept outside the EPA, or ionized.</li>
+<li>Point scans with an electrostatic field meter find the sources. A source at a high-risk field level gets a buffer zone, or the eliminator is moved and its airflow adjusted.</li>
+<li>One uncontrolled insulating object can trigger ESD even when every person and tool is grounded.</li>
+</ul>
+<h2>Where the liquid side meets static</h2>
+<ul>
+<li>A low-conductivity liquid, such as certain mineral oils or synthetic coolants, charges quickly in fast flow. The discharge energy can ignite flammable vapors or mists.</li>
+<li>Pipes and tanks are metal or stably conductive composite, with a continuous grounding path tied into the ESD network.</li>
+<li>Flow ramps up and down gradually, by limiting the maximum Reynolds number and the pressure loss.</li>
+<li>A set dwell time before startup lets charge dissipate. Relaxation time is calculated from each liquid's dielectric constant and conductivity.</li>
+</ul>
+<h2>Carts and racks</h2>
+<p>Shelving, carts, pallets and racks that are ungrounded or insulating become isolated islands. Tie them into the grounding network with anti-static mats and detachable grounding leads, so the whole flow from receipt to storage stays equipotential.</p>
+</article>
+<section id="b4"><h2>How it is calculated</h2>
+<p>This chapter shows no numbers yet. The figures in the original article are the author&#x27;s own statements; each one will appear once it is bound to a public vendor source with a capture date.</p>
+<p>Rewritten from the author's article (2025-06-15): <a href="https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21">https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21</a></p></section>
+<section id="b5"><h2>Public layer</h2>
+<p>Narrative with method (public layer 3).</p></section>
+<section id="b6"><h2>Keep reading</h2>
+<nav class="chapter-nav" aria-label="Chapter navigation">
+<a rel="prev" href="../office-immersion/">Previous chapter</a>
+<a href="../">Back to the series: HPC: from hardware validation to deployment planning</a>
+<span></span>
+</nav></section>
+</main>
+</body>
+</html>
