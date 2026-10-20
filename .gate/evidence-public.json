@@ -1,0 +1,40 @@
+{
+ "keys": {
+  "B200-AIR-TUE": {
+   "captured": "2026-10-01",
+   "display": "2.04",
+   "source_url": "https://lenovopress.lenovo.com/lp2247.pdf",
+   "tier": "Estimated"
+  },
+  "B200-AIR-TUE-MAX": {
+   "captured": "2026-10-01",
+   "display": "2.08",
+   "source_url": "https://lenovopress.lenovo.com/lp2247.pdf",
+   "tier": "Estimated"
+  },
+  "B200-AIR-TUE-MIN": {
+   "captured": "2026-10-01",
+   "display": "2.03",
+   "source_url": "https://lenovopress.lenovo.com/lp2247.pdf",
+   "tier": "Estimated"
+  },
+  "B200-DLC-TUE": {
+   "captured": "2026-10-01",
+   "display": "1.54",
+   "source_url": "https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-xe9685l-spec-sheet.pdf",
+   "tier": "Estimated"
+  },
+  "B200-DLC-TUE-MAX": {
+   "captured": "2026-10-01",
+   "display": "1.60",
+   "source_url": "https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-xe9685l-spec-sheet.pdf",
+   "tier": "Estimated"
+  },
+  "B200-DLC-TUE-MIN": {
+   "captured": "2026-10-01",
+   "display": "1.52",
+   "source_url": "https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-xe9685l-spec-sheet.pdf",
+   "tier": "Estimated"
+  }
+ }
+}

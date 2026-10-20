@@ -1,0 +1,23 @@
+{
+ "files": {
+  ".gate/claims-public.json": "a783ddfd6aed1cd1dc6c6a8d3140eb6c3d350e6b5b88b77c9af4968dbd5f3516",
+  ".gate/claims.py": "da2b8698ba24ec759de8e6620eaf74a106025ad44481b3718d7f7342049226e2",
+  ".gate/evidence-public.json": "8d38a4b3eab8c2d212cdaac508d6155f74298fff0cb9701de36f6ce4994d892d",
+  ".gate/gate.py": "e6c7a9299b92504f23ea93e0f2954de6d9bff67217b5bd98cc43f1e34d04e05e",
+  ".gate/pages_publish.sh": "f38b44eb3fb0d640e1a65509b80d7b5ed0b265d55c435949e085fbc8a60da843",
+  ".gate/preview_prep.py": "25098ad9f85a8b8b35e22eec9306ee009c41429082cf6bedc5f18e4f5d96d4c9",
+  ".github/workflows/site-gate.yml": "1808db1f0f090562aa464c2bc1cd4f6ea6e7405c632456c0e18a23f56005e5e9",
+  "assets/style.css": "44adf1f376daf5902d6a7da1d0d420ee795b3649495f87ba5011a8bce8e4cdf6",
+  "hpc/deploy/index.html": "4a10e1f35ea7cf8e3d009f20ce433acd2b30a0873f564c90d892707890d25ac9",
+  "hpc/esd/index.html": "b1634403372868a19e91eab2464e60edd8ce135f18bf9ff50a7e36f28971d0f9",
+  "hpc/index.html": "7d8887ba0cecce6304f1cb7fb2fd9c167bed0cbd0277cef4c0edd4f79d8fc8b5",
+  "hpc/office-immersion/index.html": "928fba2111916560b71568f99655bf7c96ed1b3eae04ca37d07dd618cd6604f5",
+  "hpc/plan/index.html": "75e95c2e14ea02f7147f049d62772aa68a58b87b66e06ec37984d2b76317c191",
+  "hpc/why-liquid-cooling/index.html": "109a480711d0d73f1c16046252049b3a3ba72cd61466278f3d508716cbb801ae",
+  "index.html": "4cbd135c9ba38fe4f66aafa5f4c6578c3b4b31fd972e22315e873fec0f065b45",
+  "reading/index.html": "dcd9453822487f714a68532e72a185c845f8af1b15628ff159ce1c58e5a6185d",
+  "robots.txt": "1aab749c1e120432d74ce2dcf7ddd48d02af7e3c79d1cab92b0a233c6a9abdb3",
+  "sitemap.xml": "f7393534e9020573880782228a0ad994895ce8e1a496f7ff62869ba6557f6d55",
+  "tools/planner/index.html": "63881bca644a4a4a5c04ab999a7a12fd9a2164f9fa56ed59998fae57a165ce10"
+ }
+}
