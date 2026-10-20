@@ -8,13 +8,13 @@
   ".gate/preview_prep.py": "25098ad9f85a8b8b35e22eec9306ee009c41429082cf6bedc5f18e4f5d96d4c9",
   ".github/workflows/site-gate.yml": "1808db1f0f090562aa464c2bc1cd4f6ea6e7405c632456c0e18a23f56005e5e9",
   "assets/style.css": "5c580125498a57f76e1d6dbc7b48564a4883555b499422a22971e61edab2fce7",
-  "hpc/deploy/index.html": "778ef9d9d8282d3c130434d45662cbf22d6fad3d2c39ad3759d344ffb2e86563",
-  "hpc/esd/index.html": "7ccb532de9510868fc9d5b4d3a59fa5afc306b57cf493b9876528b3738aa28b1",
-  "hpc/index.html": "ef003f448880ac5f00caf1cd4a3e173e6b6db3d506d41ad44af65359ee772859",
-  "hpc/office-immersion/index.html": "bcc73155a47a61e8293948158f868db465eeb4e066115a5da2d61d11caca5928",
-  "hpc/plan/index.html": "57138e0d56b802f8245cb7f8f84d1a0798989be1d66b459da49a170eec61068e",
-  "hpc/variants/index.html": "434c46b1763b867dcdb1641b2fdc547079753d04b415d0e617d6d4b5365cdd9c",
-  "hpc/why-liquid-cooling/index.html": "53d9b352a92177bc5c6a5e2f48eec95faac39f08b554e9a2dd1622f4c92eba80",
+  "hpc/deploy/index.html": "513663451ec9ab3b5d81656dca35ee4bf79c93926a239e6766f1472c2578cec2",
+  "hpc/esd/index.html": "2e781a93fa4fbc7e36abed53db7023829b8a6feabeba80ef72a7a16734a0b273",
+  "hpc/index.html": "5b69c2843031da69ab5a1fa4fc8649cc960b7a44d3625cc818bceb1772b078d6",
+  "hpc/office-immersion/index.html": "79339cc53ed2ab715c2d10459d19ab3b790d767a62db3e7f56de1c976ed3b56e",
+  "hpc/plan/index.html": "ca3943a42d0ce785c9c5922c240d11f238d603d64463443f340f32bb3cd61c45",
+  "hpc/variants/index.html": "d2add6f3053799136edbc9b961e4cb20a3e1253ab04ec7257f516ea8571cd5b4",
+  "hpc/why-liquid-cooling/index.html": "f3601e548e44555f200b033fb4faffaa9c34b90dd8a7d87baee58ef70ec419fe",
   "index.html": "c93633d1f7afb113f5575a20723c20e8fbed6094503e3accc9ff379ca8301a43",
   "reading/four-hour-workweek/index.html": "f70df987c28cde35cec1994bc44c440216bc1a054ff842505a98e2c08459cd64",
   "reading/index.html": "5444f47b33d28ea8b3201915ce70792a877187156e61f3e65cfcfd96888b7cb5",
@@ -22,8 +22,8 @@
   "reading/writing-investment/index.html": "af88ac5de3b28ad69d4fa9aeea2d171c11ac8b68b7c74ff356c2b8653afc269e",
   "robots.txt": "1aab749c1e120432d74ce2dcf7ddd48d02af7e3c79d1cab92b0a233c6a9abdb3",
   "sitemap.xml": "d1df3e0778663eaf84154035ad8317c29d327da1e38f040c90f2ad1da099762b",
-  "tools/doe/index.html": "26347f4d4722ce21453cf22dd4fac9a512896072d41538b8e2640e9caed28180",
+  "tools/doe/index.html": "bf22b1561aeac2937ddc5d8ab2292ca623a0f844e0bb4e8f31f91a1680f27054",
   "tools/index.html": "edd86a10fa4db0f27293e88f978eab4ec61eee2c66fbcf4151ed8be50fcc08cf",
-  "tools/planner/index.html": "b549580bb8faa93d624f64c5f769403ca054c289ef88435821db5d7b033c019c"
+  "tools/planner/index.html": "4b3db86768cd81062b656df8460086494d5be6f3366c2ee74fb19bf9ec2c0106"
  }
 }
