@@ -8,13 +8,14 @@
   ".gate/preview_prep.py": "25098ad9f85a8b8b35e22eec9306ee009c41429082cf6bedc5f18e4f5d96d4c9",
   ".github/workflows/site-gate.yml": "1808db1f0f090562aa464c2bc1cd4f6ea6e7405c632456c0e18a23f56005e5e9",
   "assets/style.css": "44adf1f376daf5902d6a7da1d0d420ee795b3649495f87ba5011a8bce8e4cdf6",
-  "hpc/esd/index.html": "61f8711664106a45700f8fc8d0452ed6e0e3d3eefa379c994c2c8fee06af6606",
-  "hpc/index.html": "ef7141e03b154ad6d6f46fa046a7d1504e8a2498c6e157433e8bd3ca787b923e",
+  "hpc/deploy/index.html": "bd793788a1c8a5e75a41fbb855d790ea8d4d42943b9e6d1265c53d3980178195",
+  "hpc/esd/index.html": "b1634403372868a19e91eab2464e60edd8ce135f18bf9ff50a7e36f28971d0f9",
+  "hpc/index.html": "f6408e1ced8c00206e91f835dc28439a49738726cb1578ae29d11e4c05b95d27",
   "hpc/office-immersion/index.html": "928fba2111916560b71568f99655bf7c96ed1b3eae04ca37d07dd618cd6604f5",
   "hpc/why-liquid-cooling/index.html": "109a480711d0d73f1c16046252049b3a3ba72cd61466278f3d508716cbb801ae",
   "index.html": "4cbd135c9ba38fe4f66aafa5f4c6578c3b4b31fd972e22315e873fec0f065b45",
   "reading/index.html": "dcd9453822487f714a68532e72a185c845f8af1b15628ff159ce1c58e5a6185d",
   "robots.txt": "1aab749c1e120432d74ce2dcf7ddd48d02af7e3c79d1cab92b0a233c6a9abdb3",
-  "sitemap.xml": "de7d199aaca61a11deb1a49ba0836e31dc40cdb78f6fe1dc50e8b5ed8800c8a1"
+  "sitemap.xml": "27fc513b0725435b4b8b9cd91deff6dda969d70546f5af3fcf9af5a36435d9e5"
  }
 }
