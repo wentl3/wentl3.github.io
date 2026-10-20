@@ -1,0 +1,23 @@
+{
+ "files": {
+  ".gate/claims-public.json": "a783ddfd6aed1cd1dc6c6a8d3140eb6c3d350e6b5b88b77c9af4968dbd5f3516",
+  ".gate/claims.py": "da2b8698ba24ec759de8e6620eaf74a106025ad44481b3718d7f7342049226e2",
+  ".gate/evidence-public.json": "c28d64b14b9deacda3c89ff5d067b749efc728d7127c44a1c5168425d1fdb729",
+  ".gate/gate.py": "e6c7a9299b92504f23ea93e0f2954de6d9bff67217b5bd98cc43f1e34d04e05e",
+  ".gate/pages_publish.sh": "f38b44eb3fb0d640e1a65509b80d7b5ed0b265d55c435949e085fbc8a60da843",
+  ".gate/preview_prep.py": "25098ad9f85a8b8b35e22eec9306ee009c41429082cf6bedc5f18e4f5d96d4c9",
+  ".github/workflows/site-gate.yml": "1808db1f0f090562aa464c2bc1cd4f6ea6e7405c632456c0e18a23f56005e5e9",
+  "assets/style.css": "5c580125498a57f76e1d6dbc7b48564a4883555b499422a22971e61edab2fce7",
+  "hpc/deploy/index.html": "1c15261f8281c257facb2b3a87f07947e286fae3adc3068dc21471d7e8b50d48",
+  "hpc/esd/index.html": "459db61b0c8727bbfc78300142eddffee52c086d30f2d99359c8317a8ca64bbb",
+  "hpc/index.html": "c65b1046ad142c54ded7bfde31b3b38d48499a2f8ced3f7380983ca5b2bab83c",
+  "hpc/office-immersion/index.html": "8cb3b9152818a90a030ad1c57d8bac73d1dc1064af3758242a8cf9165d8deeac",
+  "hpc/plan/index.html": "239b7667aa0b8154a3c0e060af24577d94bfbadd65afa633718032b1da82232b",
+  "hpc/why-liquid-cooling/index.html": "dfbdd587268e2bd0ef0f34c1ea1a8f35ef440c35b581c063c81e087de8b54bf1",
+  "index.html": "d98be7d62d1e73e0ce7c9ad2f9ff5726fc4c1502e47e79f835b626128eea45f7",
+  "reading/index.html": "06c8be8d26261f1dc27b3a986bbbaffa76dae238a3595031a46b315d6ce5213f",
+  "robots.txt": "1aab749c1e120432d74ce2dcf7ddd48d02af7e3c79d1cab92b0a233c6a9abdb3",
+  "sitemap.xml": "f7393534e9020573880782228a0ad994895ce8e1a496f7ff62869ba6557f6d55",
+  "tools/planner/index.html": "63881bca644a4a4a5c04ab999a7a12fd9a2164f9fa56ed59998fae57a165ce10"
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "keys": {
+  "PLAN-AIR-NODEKW": {
+   "captured": "2026-10-04",
+   "display": "12.44",
+   "source_url": "https://lcp.lenovo.com/",
+   "tier": "Vendor"
+  },
+  "PLAN-AIR-PPUE": {
+   "captured": "2026-10-20",
+   "display": "1.410",
+   "source_url": "tools/planner/index.html",
+   "tier": "Estimated"
+  },
+  "PLAN-AIR-PPUE-MAX": {
+   "captured": "2026-10-20",
+   "display": "1.442",
+   "source_url": "tools/planner/index.html",
+   "tier": "Estimated"
+  },
+  "PLAN-AIR-PPUE-MIN": {
+   "captured": "2026-10-20",
+   "display": "1.404",
+   "source_url": "tools/planner/index.html",
+   "tier": "Estimated"
+  },
+  "PLAN-DLC-CAPTURE": {
+   "captured": "2026-10-01",
+   "display": "70",
+   "source_url": "https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-xe9685l-spec-sheet.pdf",
+   "tier": "Vendor"
+  },
+  "PLAN-DLC-PPUE": {
+   "captured": "2026-10-20",
+   "display": "1.194",
+   "source_url": "tools/planner/index.html",
+   "tier": "Estimated"
+  },
+  "PLAN-DLC-PPUE-MAX": {
+   "captured": "2026-10-20",
+   "display": "1.242",
+   "source_url": "tools/planner/index.html",
+   "tier": "Estimated"
+  },
+  "PLAN-DLC-PPUE-MIN": {
+   "captured": "2026-10-20",
+   "display": "1.183",
+   "source_url": "tools/planner/index.html",
+   "tier": "Estimated"
+  }
+ }
+}
