@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How much does cooling change facility TUE? | HPC</title>
+<meta name="description" content="Planning the room before it is built: air cooling, direct liquid cooling and immersion compared on total-usage effectiveness for one B200 HGX cluster.">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-zone="engineering" data-type="chapter">
+<header><a href="../../">Wen&#x27;s writing blog</a></header>
+<main>
+<p class="stage" data-stage="plan">Stage 5 of 5 · Plan</p>
+<section id="b1"><h1>How much does the cooling choice change facility TUE? / air / DLC / immersion / TUE</h1></section>
+<section id="b2"><h2>Short answer</h2>
+<p><strong>For one B200 HGX cluster, estimated facility TUE is 2.04<!--R:B200-AIR-TUE--> with air cooling and 1.54<!--R:B200-DLC-TUE--> with direct liquid cooling; immersion is not shown until its inputs have a public source.</strong></p></section>
+<section id="b3"><h2>Comparison</h2>
+<table>
+<thead><tr><th>Cooling</th><th>TUE</th><th>Range</th><th>Samples</th><th>Level</th><th>Source</th></tr></thead>
+<tbody>
+<tr><td>Air cooling</td><td>2.04<!--R:B200-AIR-TUE--></td><td>2.03<!--R:B200-AIR-TUE-MIN--> – 2.08<!--R:B200-AIR-TUE-MAX--></td><td>n = 1</td><td>Estimated</td><td><a href="https://lenovopress.lenovo.com/lp2247.pdf">Lenovo ThinkSystem SR680a V3 product guide (LP2247)</a>, captured 2026-10-01</td></tr>
+<tr><td>Direct liquid cooling</td><td>1.54<!--R:B200-DLC-TUE--></td><td>1.52<!--R:B200-DLC-TUE-MIN--> – 1.60<!--R:B200-DLC-TUE-MAX--></td><td>n = 2</td><td>Estimated</td><td><a href="https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-xe9685l-spec-sheet.pdf">Dell PowerEdge XE9685L spec sheet</a>, captured 2026-10-01</td></tr>
+</tbody>
+</table>
+<p>The full interactive planning tool will be added to this chapter in a separate update.</p></section>
+<article id="body">
+<p>The earlier chapters followed one system from the reason it needs liquid cooling, through the lab where it is tested, into the room where it runs. The last step comes before the room is built: deciding how it will be cooled.</p>
+<h2>What TUE measures</h2>
+<p>Power usage effectiveness (PUE) compares the energy a facility draws with the energy delivered to its IT equipment. It hides one thing: inside each server, part of the IT energy goes to fans and power conversion instead of computing. Total-usage effectiveness (TUE) adds that part back. It multiplies the server's own overhead (ITUE) by the facility's cooling and power overhead, so a lower TUE means more of every watt drawn from the grid reaches the processors.</p>
+<p>That makes TUE the fairer way to compare cooling methods. Liquid cooling changes both factors at once: it removes most of the fan power inside the server and it lets the facility reject heat with warmer water and less chiller work.</p>
+<h2>The comparison</h2>
+<p>The comparison uses one design point: an HGX cluster of thirty-two eight-GPU B200 nodes. Air cooling and direct liquid cooling are each represented by one vendor server whose power and heat-capture figures are published.</p>
+<p>Immersion is left out on purpose. The tool's best immersion configuration depends on a reference design that has no public source, and the next one depends on inputs that are still missing. Following the rule for this site, a figure without a public source is not shown, and the rest of the chapter is published without it.</p>
+<h2>How to read the estimates</h2>
+<p>Each value is an estimate, not a vendor's own figure: no single document states a TUE for these systems. The range is the low and high result of the same calculation, and n is the number of vendor samples behind the value. Both ranges are narrow, so the gap between air and direct liquid cooling is larger than the uncertainty inside either one.</p>
+</article>
+<section id="b4"><h2>How it is calculated</h2>
+<p>Computed with the author&#x27;s planning tool from the vendors&#x27; public documents listed in the comparison. Each figure is an estimate; the range and the number of samples (n) are shown as they are.</p></section>
+<section id="b5"><h2>Public layer</h2>
+<p>Full tool (public layer 1). Until the tool is embedded, the comparison lists only the figures that meet the publishing rule.</p></section>
+<section id="b6"><h2>Keep reading</h2>
+<nav class="chapter-nav" aria-label="Chapter navigation">
+<a rel="prev" href="../deploy/">Previous chapter</a>
+<a href="../">Back to the series: HPC: from hardware validation to deployment planning</a>
+<span></span>
+</nav></section>
+</main>
+</body>
+</html>
