@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&display=swap");
+:root { color-scheme: light dark; --fg:#1a1a1a; --bg:#fff; --mut:#5c5c5c; --line:#d6d6d6; --accent:#0e7490;
+        --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --sans: system-ui, -apple-system, "Segoe UI", sans-serif; }
+@media (prefers-color-scheme: dark) { :root { --fg:#e8e8e8; --bg:#161616; --mut:#a8a8a8; --line:#3a3a3a; --accent:#22d3ee; } }
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: clamp(18px, 15.4px + 0.39vw, 21px); }
+body { margin: 0; font: 1rem/1.6 var(--serif); color: var(--fg); background: var(--bg); }
+main { max-width: 68ch; margin: 0 auto; padding: 0 16px 3rem; }
+h1, h2, h3, .tagline, .keywords, .stage, .site-header, .site-footer, nav, table, .tool-card, .cards {
+  font-family: var(--sans); }
+h1 { font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.2rem); line-height: 1.2; margin: 1.5rem 0 .5rem; }
+h2 { font-size: clamp(1.2rem, 1.05rem + .5vw, 1.45rem); line-height: 1.3; margin: 2rem 0 .5rem; }
+.keywords { color: var(--mut); font-size: 1.05rem; margin: 0 0 1.5rem; }
+.tagline { color: var(--mut); margin: 2rem 0 0; }
+a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: .15em; }
+.site-header, .site-footer { border-bottom: 1px solid var(--line); }
+.site-footer { border-top: 1px solid var(--line); border-bottom: 0; margin-top: 2rem; }
+.bar { max-width: 1100px; margin: 0 auto; padding: .75rem 16px; display: flex; flex-wrap: wrap;
+       justify-content: space-between; align-items: baseline; gap: .5rem 1.25rem; font-size: .9rem; }
+.bar .brand { font-weight: 700; text-decoration: none; }
+.bar nav { display: flex; gap: 1.25rem; }
+.stage { display: inline-block; border: 1px solid var(--accent); color: var(--accent); border-radius: 999px;
+         padding: 0 .6rem; font-size: .8rem; margin: 0; }
+nav.chapter-nav { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: .9rem; }
+.wide { width: min(1100px, 100vw - 32px); max-width: none; position: relative; left: 50%; transform: translateX(-50%); }
+.table-wrap { overflow-x: auto; margin: 1rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: .85rem; line-height: 1.45; }
+th, td { text-align: left; vertical-align: top; padding: .5rem .6rem; border-bottom: 1px solid var(--line); }
+thead th { border-bottom: 2px solid var(--line); }
+small { color: var(--mut); }
+@media (max-width: 600px) {
+  table.cmp, table.cmp tbody, table.cmp tr, table.cmp th, table.cmp td { display: block; width: 100%; }
+  table.cmp thead { display: none; }
+  table.cmp tr { border: 1px solid var(--line); border-radius: 8px; margin: 0 0 .75rem; padding: .25rem 0; }
+  table.cmp th[scope=row] { border-bottom: 1px solid var(--line); font-size: .95rem; }
+  table.cmp td { border: 0; }
+  table.cmp td::before { content: attr(data-label); display: block; color: var(--mut); font-size: .75rem;
+                         text-transform: uppercase; letter-spacing: .04em; }
+}
+.tool-card { border: 1px solid var(--accent); border-radius: 10px; padding: 1rem 1.1rem; margin: 1.5rem 0; }
+.tool-card .tool-title { font-weight: 700; margin: 0 0 .25rem; }
+.tool-card p { margin: 0 0 .75rem; font-size: .95rem; }
+.tool-card .button { display: inline-block; background: var(--accent); color: var(--bg); text-decoration: none;
+                     font-weight: 600; border-radius: 6px; padding: .45rem .9rem; }
+.tool-card .note { color: var(--mut); font-size: .8rem; margin: .5rem 0 0; }
+.series { margin: 2.5rem 0; }
+.axis { color: var(--mut); font-size: .85rem; margin: 0; font-family: var(--sans); }
+.axis strong { color: var(--accent); }
+.series h2 { margin-top: .25rem; }
+ol.cards { list-style: none; padding: 0; margin: 1rem 0; display: grid; gap: .75rem; }
+ol.cards a { display: block; border: 1px solid var(--line); border-radius: 10px; padding: .8rem 1rem; text-decoration: none; }
+ol.cards a:hover { border-color: var(--accent); }
+ol.cards .card-title { display: block; font-weight: 700; margin: .35rem 0 .15rem; }
+ol.cards .keywords { display: block; margin: 0; font-size: .85rem; }

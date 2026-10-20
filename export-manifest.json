@@ -1,0 +1,25 @@
+{
+ "files": {
+  ".gate/claims-public.json": "a783ddfd6aed1cd1dc6c6a8d3140eb6c3d350e6b5b88b77c9af4968dbd5f3516",
+  ".gate/claims.py": "da2b8698ba24ec759de8e6620eaf74a106025ad44481b3718d7f7342049226e2",
+  ".gate/evidence-public.json": "c28d64b14b9deacda3c89ff5d067b749efc728d7127c44a1c5168425d1fdb729",
+  ".gate/gate.py": "e6c7a9299b92504f23ea93e0f2954de6d9bff67217b5bd98cc43f1e34d04e05e",
+  ".gate/pages_publish.sh": "f38b44eb3fb0d640e1a65509b80d7b5ed0b265d55c435949e085fbc8a60da843",
+  ".gate/preview_prep.py": "25098ad9f85a8b8b35e22eec9306ee009c41429082cf6bedc5f18e4f5d96d4c9",
+  ".github/workflows/site-gate.yml": "1808db1f0f090562aa464c2bc1cd4f6ea6e7405c632456c0e18a23f56005e5e9",
+  "assets/style.css": "5c580125498a57f76e1d6dbc7b48564a4883555b499422a22971e61edab2fce7",
+  "hpc/deploy/index.html": "510b9ecc9ae671cc536855b841126fb2d416ce93a1f2c2c06bc88ef53ceaa94e",
+  "hpc/esd/index.html": "7ccb532de9510868fc9d5b4d3a59fa5afc306b57cf493b9876528b3738aa28b1",
+  "hpc/index.html": "6d7ad93f5954d33fab3cd0a6f6b4ee4011891a93c7b2d056156805f3e562d11c",
+  "hpc/office-immersion/index.html": "2b47f607b8862fe47701de4de574d454952a4aaa73f31e7ad8f6bba96322a49e",
+  "hpc/plan/index.html": "0b134c99feae5c077f055aa60fbcab54fdfb14962be30e6d53dea564ef33241b",
+  "hpc/why-liquid-cooling/index.html": "e14fd76a84a884515949b9c4a1f686b76e8c937319618665aa7594ae54b51c28",
+  "index.html": "327082835c0b5bc68be83e6a1a7d14dac8730fbe38009976513f25423954b519",
+  "reading/index.html": "06c8be8d26261f1dc27b3a986bbbaffa76dae238a3595031a46b315d6ce5213f",
+  "robots.txt": "1aab749c1e120432d74ce2dcf7ddd48d02af7e3c79d1cab92b0a233c6a9abdb3",
+  "sitemap.xml": "084e7bb56c96856be8e227dd177eed5d38730ea3b64e846dc8af9829e9445764",
+  "tools/doe/index.html": "26347f4d4722ce21453cf22dd4fac9a512896072d41538b8e2640e9caed28180",
+  "tools/index.html": "cc3c3189665bc4ef42fa2f7f9bc89343f65a194fbad518f844f126d39c8730a2",
+  "tools/planner/index.html": "b549580bb8faa93d624f64c5f769403ca054c289ef88435821db5d7b033c019c"
+ }
+}
