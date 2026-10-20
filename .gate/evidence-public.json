@@ -1,5 +1,47 @@
 {
  "keys": {
+  "B200-AIR-TUE": {
+   "captured": "2026-10-01",
+   "display": "2.04",
+   "source_url": "https://lenovopress.lenovo.com/lp2247.pdf",
+   "tier": "Estimated"
+  },
+  "B200-AIR-TUE-MAX": {
+   "captured": "2026-10-01",
+   "display": "2.08",
+   "source_url": "https://lenovopress.lenovo.com/lp2247.pdf",
+   "tier": "Estimated"
+  },
+  "B200-AIR-TUE-MIN": {
+   "captured": "2026-10-01",
+   "display": "2.03",
+   "source_url": "https://lenovopress.lenovo.com/lp2247.pdf",
+   "tier": "Estimated"
+  },
+  "B200-DLC-TUE": {
+   "captured": "2026-10-01",
+   "display": "1.54",
+   "source_url": "https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-xe9685l-spec-sheet.pdf",
+   "tier": "Estimated"
+  },
+  "B200-DLC-TUE-MAX": {
+   "captured": "2026-10-01",
+   "display": "1.60",
+   "source_url": "https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-xe9685l-spec-sheet.pdf",
+   "tier": "Estimated"
+  },
+  "B200-DLC-TUE-MIN": {
+   "captured": "2026-10-01",
+   "display": "1.52",
+   "source_url": "https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-xe9685l-spec-sheet.pdf",
+   "tier": "Estimated"
+  },
+  "PLAN-AIR-FANKW": {
+   "captured": "2026-10-20",
+   "display": "2.07",
+   "source_url": "tools/planner/index.html",
+   "tier": "Estimated"
+  },
   "PLAN-AIR-NODEKW": {
    "captured": "2026-10-04",
    "display": "12.44",
@@ -30,6 +72,30 @@
    "source_url": "https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-xe9685l-spec-sheet.pdf",
    "tier": "Vendor"
   },
+  "PLAN-DLC-FANKW": {
+   "captured": "2026-10-20",
+   "display": "0.59",
+   "source_url": "tools/planner/index.html",
+   "tier": "Estimated"
+  },
+  "PLAN-DLC-NODEKW": {
+   "captured": "2026-10-04",
+   "display": "11.9",
+   "source_url": "https://www.dell.com/calc",
+   "tier": "Estimated"
+  },
+  "PLAN-DLC-NODEKW-MAX": {
+   "captured": "2026-10-04",
+   "display": "12.36",
+   "source_url": "https://www.dell.com/calc",
+   "tier": "Estimated"
+  },
+  "PLAN-DLC-NODEKW-MIN": {
+   "captured": "2026-10-04",
+   "display": "11.44",
+   "source_url": "https://www.dell.com/calc",
+   "tier": "Estimated"
+  },
   "PLAN-DLC-PPUE": {
    "captured": "2026-10-20",
    "display": "1.194",
@@ -47,6 +113,48 @@
    "display": "1.183",
    "source_url": "tools/planner/index.html",
    "tier": "Estimated"
+  },
+  "PLAN-IMM-NODEKW": {
+   "captured": "2026-10-05",
+   "display": "10.37",
+   "source_url": "https://lcp.lenovo.com/",
+   "tier": "Estimated"
+  },
+  "PLAN-IMM-PPUE": {
+   "captured": "2026-10-20",
+   "display": "1.111",
+   "source_url": "tools/planner/index.html",
+   "tier": "Estimated"
+  },
+  "PLAN-IMM-TUE": {
+   "captured": "2026-10-20",
+   "display": "1.33",
+   "source_url": "tools/planner/index.html",
+   "tier": "Estimated"
+  },
+  "RTXPRO-RA-256-GPUS": {
+   "captured": "2026-09-11",
+   "display": "256",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "RTXPRO-RA-256-LEAF": {
+   "captured": "2026-09-11",
+   "display": "2",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "RTXPRO-RA-256-NODES": {
+   "captured": "2026-09-11",
+   "display": "32",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "RTXPRO-RA-256-SPINE": {
+   "captured": "2026-09-11",
+   "display": "0",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
   }
  }
 }
