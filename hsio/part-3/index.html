@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which cable fits a data center link? | High speed IO</title>
+<meta name="description" content="In a data center, reach picks the cable class among DAC, AEC, AOC and coherent optics, and every class swaps one thermal problem for another.">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-zone="engineering" data-type="chapter">
+<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hpc/">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
+<main>
+<p class="stage">Part 3 of 3</p>
+<section id="b1"><h1>Which cable fits a data center link, and what heat comes with it?</h1><p class="keywords">DAC / AEC / AOC / NIC</p></section>
+<section id="b2"><h2>Short answer</h2>
+<p><strong>In a data center, reach picks the cable class, and every class swaps one thermal problem for another: thick copper blocks airflow, while thin active cables and optics make heat of their own.</strong></p></section>
+<article id="body">
+<p>This part follows one packet through a data center and asks what each cable on the path does to the heat budget.</p>
+<h2>How a packet moves through a data center</h2>
+<ul>
+<li>A packet from a user's software goes from the carrier's base station to the data center.</li>
+<li>It travels over optical fiber to a network switch, then over copper to the servers that compute.</li>
+<li>After computing, the server sends the packet back through the network interface card (NIC) to the switch and the data center backbone, and on to the user.</li>
+<li>Fiber to the switch and copper to the server is the economic model that spreads the cost of building a data center.</li>
+</ul>
+<h2>Four cable classes, by reach</h2>
+<div class="table-wrap wide"><table class="cmp">
+<thead><tr><th>Class</th><th>What it is</th><th>Reach, in order</th><th>Reach, number</th></tr></thead>
+<tbody>
+<tr><th scope="row">DAC (direct attach cable)</th><td data-label="What it is">Plain copper wire; used for servers inside a rack</td><td data-label="Reach, in order">Shortest of the four</td><td data-label="Reach, number"><em>Not shown.</em> The figure is the author's own and no vendor datasheet has been read. Until: a datasheet is read.</td></tr>
+<tr><th scope="row">AEC (active electrical cable)</th><td data-label="What it is">A DAC plus a chip that improves the signal; needs less high-purity material and a thinner gauge than a DAC</td><td data-label="Reach, in order">Longer than a DAC</td><td data-label="Reach, number"><em>Not shown.</em> The figure in the original is not confirmed by any datasheet. Until: a vendor datasheet or industry agreement is read.</td></tr>
+<tr><th scope="row">AOC (active optical cable)</th><td data-label="What it is">Optical fiber; less distortion and a longer reach</td><td data-label="Reach, in order">Longer than an AEC</td><td data-label="Reach, number"><em>Not shown.</em> The figure in the original disagrees with common specifications. Until: a vendor datasheet or the Ethernet standard is read.</td></tr>
+<tr><th scope="row">Coherent optics</th><td data-label="What it is">An AOC-style link with coherent light-source control and chip computation to make up for loss over long distance</td><td data-label="Reach, in order">Longest of the four</td><td data-label="Reach, number"><em>Not shown.</em> The figure is the author's own and no datasheet has been read. Until: a vendor datasheet is read.</td></tr>
+</tbody>
+</table></div>
+<h2>What each class costs in heat</h2>
+<ul>
+<li><strong>DAC.</strong> The thick gauge makes cooling at the switch cluster hard and makes rack exhaust harder.</li>
+<li><strong>AEC.</strong> The chip cleans up the signal, so the wire can be thinner. It does not block airflow and is easier to route.</li>
+<li><strong>AOC.</strong> A thin fiber cable eases switch exhaust and raises cable density. The extra energy conversion adds waste heat that needs thermal design.</li>
+<li><strong>Coherent optics.</strong> They add a temperature-control element, and the heavier processor load means more energy density to handle.</li>
+</ul>
+<h2>The limit of the claim</h2>
+<p>In a compact data center, heat limits performance and is also one factor in PUE.</p>
+<p>The thin cables are not a free fix: an AOC adds waste heat from energy conversion, and coherent optics add temperature-control parts and a heavier processor load, so both need a thermal design.</p>
+<p>A pluggable cable can look like a USB lead and still need a thermal design.</p>
+<h2>The NIC end of the link</h2>
+<ul>
+<li>Data center NICs come in several form factors.</li>
+<li>The heat sink on the IO side makes the contrast between transfer speed and thermal design easy to see.</li>
+</ul>
+<h2>Where this leaves the series</h2>
+<p>When the modules are compared, cost and physical operating mode come first and thermal design follows. High-speed IO is the infrastructure of future communication and also one indicator of data center power performance.</p>
+<h2>Numbers not shown</h2>
+<ul>
+<li><strong>Reach of each cable class.</strong> Why: the four figures in the original article are the author's own statements and have not been checked against a vendor datasheet; some of them disagree with common specifications. Until: a datasheet or the Ethernet standard is read and bound to the registry with its read date.</li>
+<li><strong>Wire gauge of the DAC and the AEC.</strong> Why: the original gives gauge figures that are unchecked, and its diameters for the same wires are typing slips. Until: a vendor datasheet is read.</li>
+<li><strong>Fiber cable diameter of the AOC.</strong> Why: the figure is the author's own and unchecked. Until: a vendor datasheet is read.</li>
+</ul>
+</article>
+<section id="b4"><h2>How it is calculated</h2>
+<p>No number appears on this page. The reach and the wire sizes in the original article are the author&#x27;s own statements, and some of them disagree with common specifications, so each is withheld until a vendor datasheet or the Ethernet standard is read. The table and the last section show what is held back and what would release it.</p>
+<p>Rewritten from the author's article (2022-07-03): <a href="https://medium.com/wentsenliao/what-thermal-is-in-high-speed-io-part-3-a462b372d16a">https://medium.com/wentsenliao/what-thermal-is-in-high-speed-io-part-3-a462b372d16a</a></p></section>
+<section id="b5"><h2>Public layer</h2>
+<p>Narrative with method (public layer 3).</p></section>
+<section id="b6"><h2>Keep reading</h2>
+<nav class="chapter-nav" aria-label="Chapter navigation">
+<a rel="prev" href="../part-2/">Previous chapter</a>
+<a href="../">Back to the series: High speed IO: from everyday ports to data center cables</a>
+<span></span>
+</nav></section>
+</main>
+</body>
+</html>
