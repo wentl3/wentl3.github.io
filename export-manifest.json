@@ -2,7 +2,7 @@
  "files": {
   ".gate/claims-public.json": "a783ddfd6aed1cd1dc6c6a8d3140eb6c3d350e6b5b88b77c9af4968dbd5f3516",
   ".gate/claims.py": "da2b8698ba24ec759de8e6620eaf74a106025ad44481b3718d7f7342049226e2",
-  ".gate/evidence-public.json": "2d95196fbc42bb134f390b30ec560590e9c704a7231520fac3eb3c71220b527a",
+  ".gate/evidence-public.json": "6340e12a6041c59d153e7e66c450588ecafa7b6fd4be0598897f080991797bd3",
   ".gate/gate.py": "bf7ef3cec1a86a8e292c60884bd1a218e6be45df84aebe8008c2c8487819815e",
   ".gate/pages_publish.sh": "f38b44eb3fb0d640e1a65509b80d7b5ed0b265d55c435949e085fbc8a60da843",
   ".gate/preview_prep.py": "25098ad9f85a8b8b35e22eec9306ee009c41429082cf6bedc5f18e4f5d96d4c9",
@@ -15,15 +15,20 @@
   "hpc/plan/index.html": "ca3943a42d0ce785c9c5922c240d11f238d603d64463443f340f32bb3cd61c45",
   "hpc/variants/index.html": "d2add6f3053799136edbc9b961e4cb20a3e1253ab04ec7257f516ea8571cd5b4",
   "hpc/why-liquid-cooling/index.html": "f3601e548e44555f200b033fb4faffaa9c34b90dd8a7d87baee58ef70ec419fe",
-  "index.html": "c93633d1f7afb113f5575a20723c20e8fbed6094503e3accc9ff379ca8301a43",
+  "hsio/index.html": "101c4b5f36fabbd95f0378f2b5cc569b691c36a069648a7616fa686dd27a6fe4",
+  "hsio/part-1/index.html": "1b61c8ac33004271a865d542473108d8464adb7e9618b55451ebef82e33033f2",
+  "hsio/part-2/index.html": "3a966bf449d21d331b4a78d53b5c6e66093577a1daf12c62c1ef6382c606402d",
+  "hsio/part-3/index.html": "90bc6d3f94f3015135415a4bc5506aa8a65a8aaeafcc7e84237f56e6f24b6bb0",
+  "index.html": "5341e39faac5c626a64d1b80a9c597f2b1dc79c4b355b45868b8c62e2a6fd147",
   "reading/four-hour-workweek/index.html": "f70df987c28cde35cec1994bc44c440216bc1a054ff842505a98e2c08459cd64",
   "reading/index.html": "5444f47b33d28ea8b3201915ce70792a877187156e61f3e65cfcfd96888b7cb5",
   "reading/thermal-engineer-pm/index.html": "da9d47ac7bef0f3fb9790e10ab93cd9e27779aec9a9e5a340fc176e7acef1404",
   "reading/writing-investment/index.html": "af88ac5de3b28ad69d4fa9aeea2d171c11ac8b68b7c74ff356c2b8653afc269e",
   "robots.txt": "1aab749c1e120432d74ce2dcf7ddd48d02af7e3c79d1cab92b0a233c6a9abdb3",
-  "sitemap.xml": "d1df3e0778663eaf84154035ad8317c29d327da1e38f040c90f2ad1da099762b",
+  "sitemap.xml": "7509d79834ed3ee1f6dc8f5956ec519b4e7a94fdb279e4b6c1272dc600032158",
   "tools/doe/index.html": "bf22b1561aeac2937ddc5d8ab2292ca623a0f844e0bb4e8f31f91a1680f27054",
-  "tools/index.html": "edd86a10fa4db0f27293e88f978eab4ec61eee2c66fbcf4151ed8be50fcc08cf",
-  "tools/planner/index.html": "4b3db86768cd81062b656df8460086494d5be6f3366c2ee74fb19bf9ec2c0106"
+  "tools/index.html": "6f80cfd200372ab9892242b0afb7bd9bba816af5bc1646c65efa9a9a3128c57a",
+  "tools/planner/index.html": "4b3db86768cd81062b656df8460086494d5be6f3366c2ee74fb19bf9ec2c0106",
+  "tools/variants-steps/index.html": "ab6c1bee54501c800878173b4f857d08f1ea7cec6415eca4a53c920a36d8710b"
  }
 }
