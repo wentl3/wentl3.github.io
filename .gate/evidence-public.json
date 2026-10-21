@@ -204,6 +204,42 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/hgx-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
+  "HSIO-TB-GEN": {
+   "captured": "2026-10-21",
+   "display": "4",
+   "source_url": "https://www.intel.com/content/www/us/en/architecture-and-technology/thunderbolt/overview.html",
+   "tier": "Vendor"
+  },
+  "HSIO-TB4-MIN-GBPS": {
+   "captured": "2026-10-21",
+   "display": "40",
+   "source_url": "https://www.intel.com/content/www/us/en/architecture-and-technology/thunderbolt/overview.html",
+   "tier": "Vendor"
+  },
+  "HSIO-USB-SPEC-VERSION": {
+   "captured": "2026-10-21",
+   "display": "3.2",
+   "source_url": "https://www.usb.org/usb-32-0",
+   "tier": "Vendor"
+  },
+  "HSIO-USB32-GBPS-HIGH": {
+   "captured": "2026-10-21",
+   "display": "20",
+   "source_url": "https://www.usb.org/usb-32-0",
+   "tier": "Vendor"
+  },
+  "HSIO-USB32-GBPS-LOW": {
+   "captured": "2026-10-21",
+   "display": "5",
+   "source_url": "https://www.usb.org/usb-32-0",
+   "tier": "Vendor"
+  },
+  "HSIO-USB32-GBPS-MID": {
+   "captured": "2026-10-21",
+   "display": "10",
+   "source_url": "https://www.usb.org/usb-32-0",
+   "tier": "Vendor"
+  },
   "NVL72-RA-GPUS-PER-NIC": {
    "captured": "2026-09-11",
    "display": "1",
@@ -498,6 +534,12 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
+  "VAR-V0-FABRICLINKS": {
+   "captured": "2026-09-11",
+   "display": "0",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
   "VAR-V0-GPUS-PER-NIC": {
    "captured": "2026-09-11",
    "display": "2",
@@ -528,9 +570,21 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
+  "VAR-V0-NICPORTS": {
+   "captured": "2026-09-11",
+   "display": "128",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
   "VAR-V0-NICS": {
    "captured": "2026-09-11",
    "display": "4",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V0-NODES": {
+   "captured": "2026-09-11",
+   "display": "32",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
@@ -540,6 +594,12 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
+  "VAR-V0-PLANES": {
+   "captured": "2026-09-11",
+   "display": "2",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
   "VAR-V0-SPINE": {
    "captured": "2026-09-11",
    "display": "0",
@@ -547,6 +607,12 @@
    "tier": "Estimated"
   },
   "VAR-V1-ENDPOINTLINKS": {
+   "captured": "2026-09-11",
+   "display": "96",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1-FABRICLINKS": {
    "captured": "2026-09-11",
    "display": "96",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
@@ -582,9 +648,21 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
+  "VAR-V1-NICPORTS": {
+   "captured": "2026-09-11",
+   "display": "96",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
   "VAR-V1-NICS": {
    "captured": "2026-09-11",
    "display": "3",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V1-NODES": {
+   "captured": "2026-09-11",
+   "display": "32",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
@@ -594,6 +672,12 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
+  "VAR-V1-PLANES": {
+   "captured": "2026-09-11",
+   "display": "3",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
   "VAR-V1-SPINE": {
    "captured": "2026-09-11",
    "display": "2",
@@ -601,6 +685,12 @@
    "tier": "Estimated"
   },
   "VAR-V2-ENDPOINTLINKS": {
+   "captured": "2026-09-11",
+   "display": "64",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2-FABRICLINKS": {
    "captured": "2026-09-11",
    "display": "64",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
@@ -636,9 +726,21 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
+  "VAR-V2-NICPORTS": {
+   "captured": "2026-09-11",
+   "display": "64",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
   "VAR-V2-NICS": {
    "captured": "2026-09-11",
    "display": "2",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V2-NODES": {
+   "captured": "2026-09-11",
+   "display": "32",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
@@ -648,6 +750,12 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
+  "VAR-V2-PLANES": {
+   "captured": "2026-09-11",
+   "display": "2",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
   "VAR-V2-SPINE": {
    "captured": "2026-09-11",
    "display": "4",
@@ -655,6 +763,12 @@
    "tier": "Estimated"
   },
   "VAR-V3-ENDPOINTLINKS": {
+   "captured": "2026-09-11",
+   "display": "192",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V3-FABRICLINKS": {
    "captured": "2026-09-11",
    "display": "192",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
@@ -690,9 +804,21 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
+  "VAR-V3-NICPORTS": {
+   "captured": "2026-09-11",
+   "display": "192",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
   "VAR-V3-NICS": {
    "captured": "2026-09-11",
    "display": "6",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V3-NODES": {
+   "captured": "2026-09-11",
+   "display": "32",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
@@ -702,6 +828,12 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
+  "VAR-V3-PLANES": {
+   "captured": "2026-09-11",
+   "display": "6",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
   "VAR-V3-SPINE": {
    "captured": "2026-09-11",
    "display": "4",
@@ -709,6 +841,12 @@
    "tier": "Estimated"
   },
   "VAR-V4-ENDPOINTLINKS": {
+   "captured": "2026-09-11",
+   "display": "64",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V4-FABRICLINKS": {
    "captured": "2026-09-11",
    "display": "64",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
@@ -744,9 +882,21 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Assumption"
   },
+  "VAR-V4-NICPORTS": {
+   "captured": "2026-09-11",
+   "display": "64",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
   "VAR-V4-NICS": {
    "captured": "2026-09-11",
    "display": "2",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Assumption"
+  },
+  "VAR-V4-NODES": {
+   "captured": "2026-09-11",
+   "display": "32",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Assumption"
   },
@@ -755,6 +905,12 @@
    "display": "0.5",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
+  },
+  "VAR-V4-PLANES": {
+   "captured": "2026-09-11",
+   "display": "2",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Assumption"
   },
   "VAR-V4-SPINE": {
    "captured": "2026-09-11",

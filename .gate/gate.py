@@ -158,7 +158,7 @@ def scan_text(rel, raw, cfg, F):
     # --- 宣稱數字：N[單位]<!--C:ID-->，ID 在登記簿才算綁
     unit_alt = '|'.join(re.escape(u) for u in sorted(cfg['units'], key=len, reverse=True))
     reg = cfg.get('claims')
-    for m in re.finditer(r'(?<![\w.])\d[\d,]*(?:\.\d+)?(?:\s*(?:' + unit_alt + r'))?' + CLAIM_MARK, raw):
+    for m in re.finditer(r'(?<![\w.])\d[\d,]*(?:\.\d+)?(?:[ \t]*(?:' + unit_alt + r'))?' + CLAIM_MARK, raw):
         ln = line_of(raw, m.start())
         if reg is None:
             F.append(('CLAIM-ID', rel, ln, f'宣稱數字 {m.group(1)} 需要 --claims-registry'))
@@ -180,7 +180,7 @@ def scan_text(rel, raw, cfg, F):
     for m in re.finditer(r'(?<![A-Za-z])(?:PUE|TUE)\s*[:=約≈~]?\s*(\d+(?:\.\d+)?)', t):
         if not any(s <= m.start(1) < e for s, e in spans):
             F.append(('UNBOUND-NUMBER', rel, line_of(raw, m.start()), 'PUE/TUE 數字未綁 <!--R:KEY-->'))
-    for m in re.finditer(r'(?<![\w.])\d[\d,]*(?:\.\d+)?\s*(?:' + unit_alt + r')(?![A-Za-z])', t):
+    for m in re.finditer(r'(?<![\w.])\d[\d,]*(?:\.\d+)?[ \t]*(?:' + unit_alt + r')(?![A-Za-z])', t):
         if not any(s <= m.start() < e for s, e in spans):
             F.append(('UNBOUND-NUMBER', rel, line_of(raw, m.start()), '帶單位數字未綁 <!--R:KEY-->'))
 
