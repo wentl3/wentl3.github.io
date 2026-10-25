@@ -42,6 +42,7 @@ figure.tool-step, figure.concept { margin: 1.5rem 0; padding: 0; }
 figure.tool-step img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; margin: 0 0 .5rem; }
 figure.concept svg { display: block; width: 100%; height: auto; }
 figure.tool-step figcaption, figure.concept figcaption { font-family: var(--sans); font-size: .9rem; color: var(--mut); }
+figure.reading-fig { margin: 1.5rem auto; }
 figure.tool-step .tool-links a { margin-right: .9rem; white-space: nowrap; }
 figure.tool-step .chain { color: var(--fg); margin: .4rem 0 0; }
 .tool-card .tool-title { font-weight: 700; margin: 0 0 .25rem; }
