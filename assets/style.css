@@ -59,3 +59,9 @@ ol.cards a { display: block; border: 1px solid var(--line); border-radius: 10px;
 ol.cards a:hover { border-color: var(--accent); }
 ol.cards .card-title { display: block; font-weight: 700; margin: .35rem 0 .15rem; }
 ol.cards .keywords { display: block; margin: 0; font-size: .85rem; }
+.bar nav { flex-wrap: wrap; row-gap: .35rem; }
+.bar nav .nav-muted { color: var(--mut); }
+.bar nav .nav-lang { border: 1px solid var(--line); border-radius: 6px; padding: 0 .4rem; }
+.block-muted, .block-muted h2 { color: var(--mut); }
+ul.chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: .6rem 0; padding: 0; list-style: none; font-family: var(--sans); }
+ul.chips li { font-size: .8rem; border: 1px solid var(--line); border-radius: 999px; padding: .1rem .65rem; }
