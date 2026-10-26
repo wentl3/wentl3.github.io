@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wired or wireless, fiber or copper? | High speed IO</title>
+<meta name="description" content="A link has four needs that pull against each other, distance, bandwidth, delay and cost. The one that binds decides between wireless and wired, and between fiber and copper.">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-zone="engineering" data-type="chapter">
+<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hpc/">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
+<main>
+<p class="stage">Part 2 of 3</p>
+<section id="b1"><h1>Wired or wireless, fiber or copper?</h1><p class="keywords">distance / bandwidth / fiber / copper</p></section>
+<section id="b2"><h2>Short answer</h2>
+<p><strong>Pick the medium by the constraint that binds, because fiber and copper cover each other&#x27;s weak side: copper for the short run, fiber beyond it.</strong></p></section>
+<article id="body">
+<p>Before the network jargon, start with something closer to daily life: how rail carries communication.</p>
+<h2>Start with the constraint that binds</h2>
+<p>A link has four needs that pull against each other: distance, bandwidth, delay and cost. The one that binds is the one that decides the medium.</p>
+<p>Rail shows it. Rail networks did more than spread culture. They also pushed the distance and bandwidth that communication could use. The same split shows up in networks.</p>
+<p>No medium wins all four. So this part sorts media by the binding constraint, not by the cable.</p>
+<h2>Wireless: when distance binds</h2>
+<p>Wireless carries the signal without a laid line. When the needed distance grows, its low build cost speeds up long-distance rollout. The article's example is a vendor's product shown under a traffic-management heading.</p>
+<p>The limit appears at the track itself. Along the rail track the need is bandwidth, not distance, so the choice moves to wired links.</p>
+<h2>Wired: when bandwidth binds</h2>
+<p>Wired means fiber or copper cable. Along the rail track, wired links remove the bandwidth bottleneck and keep parallel signals from disturbing one another.</p>
+<p>Wired links still pay for their bandwidth with signal delay and the high cost of laying the line.</p>
+<p>So a wired link is the right answer only when bandwidth, not reach or rollout speed, is what binds.</p>
+<h2>Fiber and copper split the wired job</h2>
+<p>Fiber and copper complement each other the way wired and wireless do. The article splits wired use into two kinds. Fiber networks serve hubs that need long distance. Electrical-signal links serve devices such as network monitors, which are easy to connect with an electrical signal.</p>
+<p>The split is not a ranking. It is a division of work, and each side is weak where the other is strong.</p>
+<h2>Fiber: light over long reach</h2>
+<p>Fiber carries light. Near-total internal reflection keeps signal attenuation and distortion low, so it reaches farther. An SFP optical transceiver is the article's example.</p>
+<p>Standards put a number on "farther", and the number depends on the fiber type: a long-reach single-mode link and a short-reach multimode link do not reach the same distance. The numbers are not shown yet; see the last section.</p>
+<p>The trade-off: the reach you get depends on the optic and the fiber you pair, not on the word "fiber".</p>
+<h2>Copper: electrical signal over short reach</h2>
+<p>Copper carries an electrical signal. Conductor impedance and signal attenuation limit how far it goes. The everyday example is Cat6 Ethernet cable with an RJ45 plug.</p>
+<p>Structured-cabling practice fixes a channel length made of a permanent link plus patch cords, and the Ethernet standard for ten-gigabit copper allows a longer run on a higher cable category than on a lower one. The lengths are not shown yet; see the last section.</p>
+<p>The trade-off: past that length copper gives way to fiber. That line is where the claim above flips.</p>
+<h2>Where heat comes in</h2>
+<p>The series title asks about heat, but this part has none. The article ends by saying the next part covers wired transmission applications and categories, and thermal considerations. Until then the claim rests on distance and bandwidth only.</p>
+<h2>Numbers not shown</h2>
+<ul>
+<li><strong>Fiber reach by fiber type.</strong> Why: only a secondary table of the Ethernet standards was checked, not the standard text or a vendor datasheet. Until: the standard text or a datasheet is read and bound to the registry with its read date.</li>
+<li><strong>Copper channel length and its split into permanent link and patch cords.</strong> Why: the structured-cabling standard was checked only through a secondary page, which does not state the channel total. Until: the standard text is read and bound to the registry with its read date.</li>
+<li><strong>Ten-gigabit copper reach by cable category.</strong> Why: same secondary table as the fiber figures. Until: the Ethernet standard text is read and bound to the registry with its read date.</li>
+</ul>
+</article>
+<section id="b4"><h2>How it is calculated</h2>
+<p>No number appears on this page. The reach of fiber and copper depends on standards that the original article states loosely and that have only been checked against a secondary table, so every distance is withheld until the standard text or a vendor datasheet is read. The last section lists what is held back and what would release it.</p>
+<p>Rewritten from the author's article (2022-07-03): <a href="https://medium.com/wentsenliao/what-thermal-is-in-high-speed-io-part-2-11faa534c093">https://medium.com/wentsenliao/what-thermal-is-in-high-speed-io-part-2-11faa534c093</a></p></section>
+<section id="b5"><h2>Public layer</h2>
+<p>Narrative with method (public layer 3).</p></section>
+<section id="b6"><h2>Keep reading</h2>
+<p>The next part stays with wired links and moves into the data center: which cable class fits which reach, and what heat each one brings.</p>
+<nav class="chapter-nav" aria-label="Chapter navigation">
+<a rel="prev" href="../part-1/">Previous chapter</a>
+<a href="../">Back to the series: High speed IO: from everyday ports to data center cables</a>
+<a rel="next" href="../part-3/">Next chapter</a>
+</nav></section>
+</main>
+</body>
+</html>
