@@ -8,13 +8,17 @@
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
 <body data-zone="engineering" data-type="chapter">
-<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hsio/">High speed IO</a><a href="../">HPC</a><span class="nav-muted">Toolkit</span><a href="../../tools/">Tools</a><span class="nav-muted">Path</span><a href="../../reading/" hreflang="zh-Hant">Reading</a><a class="nav-lang" href="../../reading/" hreflang="zh-Hant" lang="zh-Hant">中文</a></nav></div></header>
+<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hsio/">High speed IO</a><a href="../" aria-current="page">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
+<div class="layout">
+<aside class="toc" aria-label="In this series"><b><a href="../">HPC</a></b><ol><li><a href="../why-liquid-cooling/">Why does HPC need liquid cooling?</a></li><li><a href="../office-immersion/">Can an office host an immersion-cooled HPC lab?</a></li><li><a href="../esd/">How do you control ESD in an HPC office lab?</a></li><li><a href="../deploy/">How is immersion cooling deployed in a data center?</a></li><li class="here">How does cooling change facility TUE?</li><li><a href="../variants/">How many NICs does a PCIe GPU server need?</a></li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2">Inputs side by side</a></li><li><a href="#h2-3">What TUE measures</a></li><li><a href="#h2-4">Air cooling</a></li><li><a href="#h2-5">Direct liquid cooling</a></li><li><a href="#h2-6">Immersion</a></li><li><a href="#h2-7">How to read the table</a></li><li><a href="#h2-8">How it is calculated</a></li><li><a href="#h2-9">Public layer</a></li><li><a href="#h2-10">Keep reading</a></li></ol></aside>
 <main>
+<p class="crumb"><a href="../../">Home</a> › <a href="../">HPC</a> › Chapter 5 of 6</p>
+<div class="progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i class="live"></i><i class="off"></i><i class="off"></i></div>
 <p class="stage" data-stage="plan">Stage 5 of 6 · Plan</p>
 <section id="b1"><h1>How does the cooling choice change facility TUE?</h1><p class="keywords">air / DLC / immersion / TUE</p></section>
-<section id="b2"><h2>Short answer</h2>
+<section id="b2" class="answer"><h2 id="h2-1">Short answer</h2>
 <p><strong>For one B200 HGX cluster, the planning tool estimates facility TUE at 2.04<!--R:B200-AIR-TUE--> with air cooling, 1.54<!--R:B200-DLC-TUE--> with direct liquid cooling and 1.33<!--R:PLAN-IMM-TUE--> with immersion; all three are estimates with different gaps, and the table shows every input behind them.</strong></p></section>
-<section id="b3"><h2>Inputs side by side</h2>
+<section id="b3"><h2 id="h2-2">Inputs side by side</h2>
 <div class="table-wrap wide"><table class="cmp">
 <thead><tr><th>Input</th><th>Air cooling</th><th>Direct liquid cooling</th><th>Immersion</th></tr></thead>
 <tbody>
@@ -32,28 +36,29 @@
 </section>
 <article id="body">
 <p>The earlier chapters followed one system from the reason it needs liquid cooling, through the lab where it is tested, into the room where it runs. The last step comes before the room is built: deciding how it will be cooled. This chapter does not pick a winner. It puts the three methods on the same inputs so the choice can be made for a specific room.</p>
-<h2>What TUE measures</h2>
+<h2 id="h2-3">What TUE measures</h2>
 <p>Power usage effectiveness (PUE) compares the energy a facility draws with the energy delivered to its IT equipment. It hides one thing: inside each server, part of the IT energy goes to fans and power conversion instead of computing. Total-usage effectiveness (TUE) adds that part back. It multiplies the server's own overhead (ITUE) by the facility's cooling and power overhead, so a lower TUE means more of every watt drawn from the grid reaches the processors.</p>
 <p>Every cooling method moves the same two levers: how much fan power stays inside the server, and how much work the facility does to reject the heat. The three sections below follow those two levers, then say what each method asks of the room and what is still missing.</p>
-<h2>Air cooling</h2>
+<h2 id="h2-4">Air cooling</h2>
 <p>Fans move all of the heat out of the server, and the room's air handling and chillers carry it away. Fan power therefore stays inside the server's own overhead, and the facility works hardest of the three. Air cooling needs no liquid in the rack and fits rooms that already run on computer room air conditioning. Its limits are density and climate: efficiency falls as rack density rises, evaporative cooling uses water, and hot, humid air makes the plant work harder. For this design point the server's power is the vendor's own estimate, and its fan power is estimated from the fan maker's datasheet.</p>
-<h2>Direct liquid cooling</h2>
+<h2 id="h2-5">Direct liquid cooling</h2>
 <p>Cold plates take heat straight from the processors, and fans move the rest. Fan power falls in proportion to the heat the liquid captures, and the facility can reject that part of the heat with warmer water and less chiller work. Direct liquid cooling supports higher rack densities and coexists with existing air-cooled infrastructure; its maintenance is regular and repeatable, though components tied into a cold-plate loop are harder to take apart, and the extra pumps and fittings need preventive maintenance. For this design point the captured share comes from the vendor's spec sheet, and the server's power is the average of two vendor planning tools.</p>
-<h2>Immersion</h2>
+<h2 id="h2-6">Immersion</h2>
 <p>The whole server sits in a dielectric fluid, so its fans are removed and all of its heat goes to the liquid. Fan power leaves the server's overhead entirely, and the facility can reject the heat with warm water, in some climates without chillers. Immersion handles the highest densities of the three and needs no air-handling infrastructure in the rack; it asks for tanks, fluid handling and staff training, and its maintenance looks like air cooling plus fluid checks. For this design point the fan and liquid shares follow from the method itself, the server's power is the air-cooled server's estimate without its fans, and the facility model gives one value without a range.</p>
-<h2>How to read the table</h2>
+<h2 id="h2-7">How to read the table</h2>
 <p>Each row is one input to TUE, with the same rule for every column. Vendor figures name their document and capture date; entries that follow from how the method works are written in words; estimates come from the planning tool with their sample count and, where the model computes one, their range. The last row is the result. Read it together with the rows above it: the immersion result rests on one sample and has no computed range, so the gap between the methods is less certain than the single figures suggest.</p>
 </article>
-<section id="b4"><h2>How it is calculated</h2>
+<section id="b4"><h2 id="h2-8">How it is calculated</h2>
 <p>Every cell comes from the author&#x27;s planning tool and the vendor documents named in it, including vendor planning tools that need a free account. Each estimate states its sample count and, where the model computes one, its range. The final TUE row is shown for all three methods together or for none.</p></section>
-<section id="b5"><h2>Public layer</h2>
+<section id="b5"><h2 id="h2-9">Public layer</h2>
 <p>Full tool (public layer 1). Until the tool is embedded, the chapter shows its inputs and results side by side.</p></section>
-<section id="b6"><h2>Keep reading</h2>
-<nav class="chapter-nav" aria-label="Chapter navigation">
-<a rel="prev" href="../deploy/">Previous chapter</a>
-<a href="../">Back to the series: HPC: from hardware validation to deployment planning</a>
-<a rel="next" href="../variants/">Next chapter</a>
-</nav></section>
+<section id="b6"><h2 id="h2-10">Keep reading</h2>
+<nav class="pager" aria-label="Chapter navigation">
+<a class="card" rel="prev" href="../deploy/"><span>← Previous chapter</span><h3>How is immersion cooling deployed in a data center?</h3></a>
+<a class="card next" rel="next" href="../variants/"><span>Next chapter →</span><h3>How many NICs does a PCIe GPU server need?</h3></a>
+</nav>
+<p><a href="../">Back to the series: HPC: from hardware validation to deployment planning</a></p></section>
 </main>
+</div>
 </body>
 </html>

@@ -8,29 +8,33 @@
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
 <body data-zone="engineering" data-type="chapter">
-<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hsio/">High speed IO</a><a href="../">HPC</a><span class="nav-muted">Toolkit</span><a href="../../tools/">Tools</a><span class="nav-muted">Path</span><a href="../../reading/" hreflang="zh-Hant">Reading</a><a class="nav-lang" href="../../reading/" hreflang="zh-Hant" lang="zh-Hant">中文</a></nav></div></header>
+<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hsio/">High speed IO</a><a href="../" aria-current="page">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
+<div class="layout">
+<aside class="toc" aria-label="In this series"><b><a href="../">HPC</a></b><ol><li><a href="../why-liquid-cooling/">Why does HPC need liquid cooling?</a></li><li><a href="../office-immersion/">Can an office host an immersion-cooled HPC lab?</a></li><li class="here">How do you control ESD in an HPC office lab?</li><li><a href="../deploy/">How is immersion cooling deployed in a data center?</a></li><li><a href="../plan/">How does cooling change facility TUE?</a></li><li><a href="../variants/">How many NICs does a PCIe GPU server need?</a></li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2">Why static builds up</a></li><li><a href="#h2-3">The design: one equipotential system</a></li><li><a href="#h2-4">The protected area (EPA)</a></li><li><a href="#h2-5">People</a></li><li><a href="#h2-6">Materials</a></li><li><a href="#h2-7">Where the liquid side meets static</a></li><li><a href="#h2-8">Carts and racks</a></li><li><a href="#h2-9">How it is calculated</a></li><li><a href="#h2-10">Public layer</a></li><li><a href="#h2-11">Keep reading</a></li></ol></aside>
 <main>
+<p class="crumb"><a href="../../">Home</a> › <a href="../">HPC</a> › Chapter 3 of 6</p>
+<div class="progress" aria-hidden="true"><i></i><i></i><i></i><i class="live"></i><i class="live"></i><i class="live"></i><i class="off"></i><i class="off"></i></div>
 <p class="stage" data-stage="build-lab">Stage 2 of 6 · Build the lab</p>
 <section id="b1"><h1>How do you control ESD in an HPC office lab?</h1><p class="keywords">ESD / grounding / EPA</p></section>
-<section id="b2"><h2>Short answer</h2>
+<section id="b2" class="answer"><h2 id="h2-1">Short answer</h2>
 <p><strong>Tie every conductive and dissipative item to one low-impedance common ground, and hold relative humidity in a controlled range.</strong></p></section>
 <article id="body">
 <p>Once the lab space exists, the next job is to keep static out of it. Here is the short version.</p>
-<h2>Why static builds up</h2>
+<h2 id="h2-2">Why static builds up</h2>
 <ul>
 <li>When two different materials, such as plastic and rubber, touch and then separate quickly, electrons move: one surface turns positive, the other negative.</li>
 <li>Handling materials, walking on carpet and fast fluid flow in pipes all do this.</li>
 <li>At low relative humidity the moisture film on surfaces is gone and air insulates better. A person or object can then carry a high static voltage.</li>
 <li>Semiconductor parts are sensitive to far lower voltages. The damage can be permanent, and a spark can also ignite vapors.</li>
 </ul>
-<h2>The design: one equipotential system</h2>
+<h2 id="h2-3">The design: one equipotential system</h2>
 <ul>
 <li>Connect all conductive and dissipative materials to a common ground, so no potential difference is left to discharge across.</li>
 <li>Metal chassis and work surfaces are grounded directly, by welding or clamping.</li>
 <li>ESD mats, anti-static flooring and ESD garments are coupled indirectly, together with static elimination devices.</li>
 <li>Equipment that is not grounded, and high-impedance materials, are neutralized with ionizers that release positive and negative ions. They work best where air convects well.</li>
 </ul>
-<h2>The protected area (EPA)</h2>
+<h2 id="h2-4">The protected area (EPA)</h2>
 <ul>
 <li>An Electrostatic Protection Area, set up under ANSI/ESD S20.20 and IEC 61340-5-1, wraps a stable equipotential environment around ESD-sensitive items such as IC components and PCB modules.</li>
 <li>Every piece of equipment, tool, packaging container and operator inside is connected to the common ground, from receipt through assembly, testing and packaging.</li>
@@ -39,7 +43,7 @@
 <li>Non-ESD-compliant insulating containers, plastic packaging and personal belongings are prohibited inside and are labeled.</li>
 <li>ESD-sensitive items arrive in certified anti-static packaging. Conductivity, seal integrity and condition are audited.</li>
 </ul>
-<h2>People</h2>
+<h2 id="h2-5">People</h2>
 <ul>
 <li>Before entering: certified grounding wrist strap, anti-static clothing, anti-static shoes or heel grounders.</li>
 <li>At the door, a test portal checks that strap and footwear grounding resistance is within the allowed range. The same range is checked daily for body, footwear and floor.</li>
@@ -48,7 +52,7 @@
 <li>An insulator in a strong electrostatic field stays a safe distance from sensitive devices, or gets ion blowers.</li>
 <li>Very sensitive parts (bare dies, high-speed switching MOSFETs, RF modules) call for anti-static gloves or finger cots made of conductive fibers.</li>
 </ul>
-<h2>Materials</h2>
+<h2 id="h2-6">Materials</h2>
 <ul>
 <li>Materials fall into three classes by resistance: conductive, dissipative and insulating.</li>
 <li>Dissipative flooring keeps its surface resistance within a set range.</li>
@@ -56,28 +60,29 @@
 <li>Point scans with an electrostatic field meter find the sources. A source at a high-risk field level gets a buffer zone, or the eliminator is moved and its airflow adjusted.</li>
 <li>One uncontrolled insulating object can trigger ESD even when every person and tool is grounded.</li>
 </ul>
-<h2>Where the liquid side meets static</h2>
+<h2 id="h2-7">Where the liquid side meets static</h2>
 <ul>
 <li>A low-conductivity liquid, such as certain mineral oils or synthetic coolants, charges quickly in fast flow. The discharge energy can ignite flammable vapors or mists.</li>
 <li>Pipes and tanks are metal or stably conductive composite, with a continuous grounding path tied into the ESD network.</li>
 <li>Flow ramps up and down gradually, by limiting the maximum Reynolds number and the pressure loss.</li>
 <li>A set dwell time before startup lets charge dissipate. Relaxation time is calculated from each liquid's dielectric constant and conductivity.</li>
 </ul>
-<h2>Carts and racks</h2>
+<h2 id="h2-8">Carts and racks</h2>
 <p>Shelving, carts, pallets and racks that are ungrounded or insulating become isolated islands. Tie them into the grounding network with anti-static mats and detachable grounding leads, so the whole flow from receipt to storage stays equipotential.</p>
 </article>
-<section id="b4"><h2>How it is calculated</h2>
+<section id="b4"><h2 id="h2-9">How it is calculated</h2>
 <p>This chapter shows no numbers yet. The figures in the original article are the author&#x27;s own statements; each one will appear once it is bound to a public vendor source with a capture date.</p>
 <p>Rewritten from the author's article (2025-06-15): <a href="https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21">https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21</a></p></section>
-<section id="b5"><h2>Public layer</h2>
+<section id="b5"><h2 id="h2-10">Public layer</h2>
 <p>Narrative with method (public layer 3).</p></section>
-<section id="b6"><h2>Keep reading</h2>
+<section id="b6"><h2 id="h2-11">Keep reading</h2>
 <p>With the lab grounded and running, the next chapter moves from the lab to the data center: how immersion cooling is deployed.</p>
-<nav class="chapter-nav" aria-label="Chapter navigation">
-<a rel="prev" href="../office-immersion/">Previous chapter</a>
-<a href="../">Back to the series: HPC: from hardware validation to deployment planning</a>
-<a rel="next" href="../deploy/">Next chapter</a>
-</nav></section>
+<nav class="pager" aria-label="Chapter navigation">
+<a class="card" rel="prev" href="../office-immersion/"><span>← Previous chapter</span><h3>Can an office host an immersion-cooled HPC lab?</h3></a>
+<a class="card next" rel="next" href="../deploy/"><span>Next chapter →</span><h3>How is immersion cooling deployed in a data center?</h3></a>
+</nav>
+<p><a href="../">Back to the series: HPC: from hardware validation to deployment planning</a></p></section>
 </main>
+</div>
 </body>
 </html>

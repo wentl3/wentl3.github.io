@@ -8,47 +8,52 @@
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
 <body data-zone="engineering" data-type="chapter">
-<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hsio/">High speed IO</a><a href="../">HPC</a><span class="nav-muted">Toolkit</span><a href="../../tools/">Tools</a><span class="nav-muted">Path</span><a href="../../reading/" hreflang="zh-Hant">Reading</a><a class="nav-lang" href="../../reading/" hreflang="zh-Hant" lang="zh-Hant">中文</a></nav></div></header>
+<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hsio/">High speed IO</a><a href="../" aria-current="page">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
+<div class="layout">
+<aside class="toc" aria-label="In this series"><b><a href="../">HPC</a></b><ol><li><a href="../why-liquid-cooling/">Why does HPC need liquid cooling?</a></li><li><a href="../office-immersion/">Can an office host an immersion-cooled HPC lab?</a></li><li><a href="../esd/">How do you control ESD in an HPC office lab?</a></li><li class="here">How is immersion cooling deployed in a data center?</li><li><a href="../plan/">How does cooling change facility TUE?</a></li><li><a href="../variants/">How many NICs does a PCIe GPU server need?</a></li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2">What immersion cooling is</a></li><li><a href="#h2-3">Where the market is</a></li><li><a href="#h2-4">Choosing the fluid</a></li><li><a href="#h2-5">Water and climate</a></li><li><a href="#h2-6">Running it: DLC versus immersion</a></li><li><a href="#h2-7">The other options</a></li><li><a href="#h2-8">How it is calculated</a></li><li><a href="#h2-9">Public layer</a></li><li><a href="#h2-10">Keep reading</a></li></ol></aside>
 <main>
+<p class="crumb"><a href="../../">Home</a> › <a href="../">HPC</a> › Chapter 4 of 6</p>
+<div class="progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i class="live"></i><i class="live"></i><i class="off"></i><i class="off"></i></div>
 <p class="stage" data-stage="deploy">Stage 4 of 6 · Deploy</p>
 <section id="b1"><h1>How is immersion cooling deployed in a data center?</h1><p class="keywords">fluid / water / climate / maintenance</p></section>
-<section id="b2"><h2>Short answer</h2>
+<section id="b2" class="answer"><h2 id="h2-1">Short answer</h2>
 <p><strong>Choose the fluid for performance, safety and lifespan; run the loop at higher water temperature so dry coolers can shrink or replace the chillers; and keep fluid quality under continuous monitoring.</strong></p></section>
 <article id="body">
 <p>Once the system has been tested in the lab, the question becomes how it goes into a real room. Here is the short version.</p>
-<h2>What immersion cooling is</h2>
+<h2 id="h2-2">What immersion cooling is</h2>
 <p>Immersion cooling submerges electronic components directly in a dielectric fluid. The fluid absorbs the heat and keeps the components inside a safe operating temperature range. The idea is old: insulating oil was used to cool high-voltage transformers, an early use of the superior thermal conductivity of liquids. It returned to attention in high-performance computing and data centers as processing power and heat density rose, and advances in materials made it more practical.</p>
 <p>There are two types. Single-phase is the most common: the liquid stays liquid and carries heat away by convection. It cools high-density components while reducing noise, improving reliability and saving space. Two-phase is more efficient: the liquid boils around the heat-generating parts and heat moves through the rise and condensation of vapor, at the cost of a more complex cooling design. The challenges are higher initial cost, maintenance complexity and scalability in large data centers. There are successful cases in newly built data centers and renovated buildings, with less noise and energy pollution than traditional setups.</p>
-<h2>Where the market is</h2>
+<h2 id="h2-3">Where the market is</h2>
 <p>As power density rises, the market is balancing performance against maintenance. Two-phase immersion has drawn attention in advanced semiconductor applications for its heat dissipation. New coolants raise thermal conductivity and reduce flow losses, and address dielectric breakdown voltage, biodegradability and environmental impact. Water-cooling innovations improve fluid dynamics and heat efficiency and integrate with monitoring systems for proactive maintenance. Direct liquid cooling (DLC) remains a primary solution for HPC systems and data centers, coexisting with existing infrastructure; high-end gaming PCs are adopting it too.</p>
 <p>Liquid cooling needs specialized knowledge to implement and maintain. Collaboration between open computing consortia and hardware manufacturers refines standard specifications, product development and warranty support. Research continues on dielectric fluids compatible with a broader range of components: material compatibility, aging, and validating bandwidth and latency performance.</p>
-<h2>Choosing the fluid</h2>
+<h2 id="h2-4">Choosing the fluid</h2>
 <p>There are three factors: performance, safety and lifespan. Composition and additives depend on the use case; corrosion resistance, biostability and antifreeze protection matter. Fluid-to-material compatibility prevents leaks and corrosion. Fluid quality is monitored regularly: purity, corrosion-inhibitor concentration and particle count. Fluids should meet safety standards and allow responsible disposal.</p>
 <p>The options differ. Deionized water has high thermal conductivity and is relatively affordable, but needs regular maintenance to keep purity and prevent metal-ion corrosion. Ethylene glycol and propylene glycol mixtures have built-in corrosion inhibitors and convenient maintenance, balanced against performance. Dielectric fluids such as synthetic hydrocarbons have good thermal conductivity, but are flammable, so they need caution. Fluorinated liquids have excellent heat performance and are non-flammable, with higher cost and potential environmental impact. Synthetic esters are environmentally friendly, possibly with limited thermal conductivity.</p>
 <p>Proprietary mixtures add corrosion inhibitors, biocides and defoamers to extend component life. Regular analysis of temperature, conductivity, particle count and dielectric strength catches degradation products and limits system losses. Keeping fluid quality is the hard part of operational maintenance.</p>
-<h2>Water and climate</h2>
+<h2 id="h2-5">Water and climate</h2>
 <p>Traditional air cooling relies on large amounts of water for evaporative cooling, to bring the cooling water close to the wet-bulb temperature. That is a problem in water-scarce regions and inefficient in hot, humid conditions. DLC and immersion depend less on the outside climate. They remove heat from the equipment directly, without air conditioning, so the plant runs efficiently at higher cooling-water temperatures and high loads are less sensitive to chiller performance. Cooling systems take a substantial share of a data center's total water usage; the share has fallen with technology but stays large. The goal is infrastructure fully compatible with dry coolers. DLC and immersion may allow smaller chillers, or none in some cases, cutting capital and operating expense and greenhouse gas emissions.</p>
 <p>Air conditioning is sensitive to ambient temperature: in hot, humid conditions it loses efficiency and can exceed system capacity; in cold climates extra heating is needed indoors. Research cited by the author finds that these technologies cool data centers effectively at room temperatures a few degrees higher than the typical operating point of traditional air conditioning.</p>
 <p>Dry coolers, in cooler and drier climates, cool the fluid loop with ambient air and no water. Compared with traditional air conditioning they can remove the data center's cooling water usage altogether. Economics as stated by the author: upfront cost slightly higher than air conditioning; smaller chiller units and piping, or no chillers, save a share of capital expenditure; dropping water-treatment facilities saves more; energy consumption and water-treatment costs both fall in operation.</p>
-<h2>Running it: DLC versus immersion</h2>
+<h2 id="h2-6">Running it: DLC versus immersion</h2>
 <p>DLC puts the coolant in contact with the components through cold plates. Maintenance is straightforward and repeatable: regular checks for leaks or corrosion in cold plates and pipes, coolant level monitoring and top-up, filter replacement, and coolant quality (temperature, conductivity, particle count). Disassembling and maintaining individual IT components tied into a complex cold-plate system is harder. Immersion submerges the components fully. Maintenance resembles traditional air cooling plus HVAC checks: continuous fluid-level monitoring, regular analysis of fluid quality, and inspection of the tanks for leaks or damage. For individual nodes in a rack it can be simpler than DLC.</p>
 <p>Handling and disposal of coolant follow regulations and best practice, for the environment and for worker safety. Leak monitoring and operator training matter: safe handling for the specific coolant, and how to use leak detection systems. Pumps, fans and heat exchangers carry specified mean time between failures (MTBF). DLC's extra components need preventive maintenance on MTBF guidelines; immersion stays close to traditional IT maintenance without vendor lock-in. Both systems monitor fluid quality continuously: temperature, conductivity, particle count and dielectric strength, tracked by automated real-time monitoring, with clear alarm thresholds for preventive maintenance. Fluid analysis gives the overall picture of coolant health.</p>
-<h2>The other options</h2>
+<h2 id="h2-7">The other options</h2>
 <p>This chapter follows immersion; the other options have their own strengths. Modular DLC units need fewer plumbing modifications, and where staff lack the expertise, a managed services provider that specializes in DLC can install, maintain and support it, at extra operating cost. DLC also improves energy efficiency against air cooling. Immersion, by contrast, faces scalability questions in large data centers, and handling dielectric fluids raises safety concerns that call for staff training.</p>
 <p>Air cooling keeps the lower upfront cost, since both liquid options cost more up front than traditional air conditioning. Hot and cold aisle closures and natural air cooling have already improved efficiency across rows of cabinets.</p>
 </article>
-<section id="b4"><h2>How it is calculated</h2>
+<section id="b4"><h2 id="h2-8">How it is calculated</h2>
 <p>This chapter shows no numbers yet. The figures in the original article are the author&#x27;s own statements; each one will appear once it is bound to a public vendor source with a capture date.</p>
 <p>Rewritten from the author's article (2024-07-20): <a href="https://medium.com/wentsenliao/hpc-deployment-and-immersion-59780b8c4c59">https://medium.com/wentsenliao/hpc-deployment-and-immersion-59780b8c4c59</a></p></section>
-<section id="b5"><h2>Public layer</h2>
+<section id="b5"><h2 id="h2-9">Public layer</h2>
 <p>Narrative with method (public layer 3).</p></section>
-<section id="b6"><h2>Keep reading</h2>
+<section id="b6"><h2 id="h2-10">Keep reading</h2>
 <p>With the system in the room, the next chapter compares air, DLC and immersion at facility level before the room is built.</p>
-<nav class="chapter-nav" aria-label="Chapter navigation">
-<a rel="prev" href="../esd/">Previous chapter</a>
-<a href="../">Back to the series: HPC: from hardware validation to deployment planning</a>
-<a rel="next" href="../plan/">Next chapter</a>
-</nav></section>
+<nav class="pager" aria-label="Chapter navigation">
+<a class="card" rel="prev" href="../esd/"><span>← Previous chapter</span><h3>How do you control ESD in an HPC office lab?</h3></a>
+<a class="card next" rel="next" href="../plan/"><span>Next chapter →</span><h3>How does cooling change facility TUE?</h3></a>
+</nav>
+<p><a href="../">Back to the series: HPC: from hardware validation to deployment planning</a></p></section>
 </main>
+</div>
 </body>
 </html>
