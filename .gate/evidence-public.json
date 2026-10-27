@@ -426,21 +426,9 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
-  "RTXPRO-RA-256-LEAF": {
-   "captured": "2026-09-11",
-   "display": "2",
-   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
-   "tier": "Vendor"
-  },
   "RTXPRO-RA-256-NODES": {
    "captured": "2026-09-11",
    "display": "32",
-   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
-   "tier": "Vendor"
-  },
-  "RTXPRO-RA-256-SPINE": {
-   "captured": "2026-09-11",
-   "display": "0",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
