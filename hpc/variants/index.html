@@ -8,15 +8,19 @@
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
 <body data-zone="engineering" data-type="chapter">
-<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
+<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hsio/">High speed IO</a><a href="../" aria-current="page">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
+<div class="layout">
+<aside class="toc" aria-label="In this series"><b><a href="../">HPC</a></b><ol><li><a href="../why-liquid-cooling/">Why does HPC need liquid cooling?</a></li><li><a href="../office-immersion/">Can an office host an immersion-cooled HPC lab?</a></li><li><a href="../esd/">How do you control ESD in an HPC office lab?</a></li><li><a href="../deploy/">How is immersion cooling deployed in a data center?</a></li><li><a href="../plan/">How does cooling change facility TUE?</a></li><li class="here">How many NICs does a PCIe GPU server need?</li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2">What rails and planes mean</a></li><li><a href="#h2-3">SXM has a domain, PCIe has a bus</a></li><li><a href="#h2-4">Four official design points</a></li><li><a href="#h2-5">The same thirty-two servers, five ways</a></li><li><a href="#h2-6">The other side</a></li><li><a href="#h2-7">Reproduce a row in the tool</a></li><li><a href="#h2-8">How to read the tables</a></li><li><a href="#h2-9">How it is calculated</a></li><li><a href="#h2-10">Public layer</a></li><li><a href="#h2-11">Keep reading</a></li></ol></aside>
 <main>
+<p class="crumb"><a href="../../">Home</a> › <a href="../">HPC</a> › Chapter 6 of 6</p>
+<div class="progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i></div>
 <p class="stage" data-stage="fabric">Stage 6 of 6 · Design the fabric</p>
 <section id="b1"><h1>How many NICs does a PCIe GPU server need?</h1><p class="keywords">rails / planes / P2P / PCIe vs SXM</p><p><small>Written for the engineer sizing NICs for a generic PCIe GPU server, the buyer deciding between three and six cards, and anyone planning a first RDMA cluster.</small></p></section>
-<section id="b2"><h2>Short answer</h2>
+<section id="b2" class="answer"><h2 id="h2-1">Short answer</h2>
 <p><strong>Ask about P2P first, then about topology. Servers whose GPUs share an NVLink domain are the ones that justify one rail per GPU; a PCIe server has no such domain, NVIDIA&#x27;s own reference point gives it two GPUs per NIC, and the tables below show what each variant of the same thirty-two servers buys in injection bandwidth and pays in switches.</strong></p></section>
 <article id="body">
 <p>A generic two-rack-unit server takes three or six PCIe GPUs. The question that follows is how many network cards to give it, and whether to wire them rail-optimized or as two separate planes. Most answers start from the topology. This chapter starts one step earlier: can the GPUs inside the node reach each other without the network?</p>
-<h2>What rails and planes mean</h2>
+<h2 id="h2-2">What rails and planes mean</h2>
 <p>Rail-optimized means the first NIC of every node plugs into the first leaf switch, the second NIC into the second leaf, and so on, so that a GPU's peers in other nodes are one hop away on its own rail. Dual-plane means two fabrics that never touch each other, each node holding one NIC on each plane. Both describe NICs, not GPUs: a rail is a NIC position, so a server with two GPUs per NIC has half as many rails as GPUs.</p>
 <p>Two scales matter and must not be mixed. Injection bandwidth per GPU is the NIC rate divided by the number of GPUs sharing that NIC; it is set by the server. Oversubscription ratio is the leaf's downlink bandwidth divided by its uplink bandwidth; it is set by the fabric, and every official training reference keeps it at one to one. The variants in this chapter change the first scale, not the second.</p>
 <figure class="concept">
@@ -61,7 +65,7 @@
 <figcaption><p>In the tool: tab 3 (selection DOE) on the RTX PRO 6000 official point. The topology selector stands at the official choice, HLD 3-C rail-isolated (two rails, no spine); its other entries are the choices this section defines (rail-optimized, split-NIC dual plane, dual full-capacity, pooled), and every sweep row states its plane count and spine count.</p>
 <p class="tool-links"><a href="../../tools/doe/#tab=doe&amp;preset=ra-rtx-pro-256" target="_blank" rel="noopener">Open tab 3 on the RTX PRO 6000 point ↗</a></p>
 <p class="chain"><strong>Carries forward:</strong> The plane count chosen here is the planeCount field of every variant record in this chapter.</p></figcaption></figure>
-<h2>SXM has a domain, PCIe has a bus</h2>
+<h2 id="h2-3">SXM has a domain, PCIe has a bus</h2>
 <p>An SXM server binds its eight GPUs into one NVLink domain through NVSwitch. Traffic between those GPUs never leaves the board, so the network only carries traffic to other nodes, and one rail per GPU is the natural fit. A PCIe server has no such domain: RTX PRO cards have no NVLink at all, and H200 NVL cards bridge only two or four of them. Inside the node, traffic between GPUs crosses the PCIe switch and the CPU. That is why NVIDIA's own PCIe reference point gives each pair of GPUs one NIC rather than one each.</p>
 <p>The tool shows the difference without opening a datasheet. Load the HGX B300 official point and then the RTX PRO 6000 point in the same tab: both hold the same number of GPUs, and the header counts the NIC endpoints each one needs.</p>
 <figure class="tool-step" data-step="domain">
@@ -70,7 +74,7 @@
 <figcaption><p>Same tab, two official points of 256 GPUs; the header counts NIC endpoints. Top: the HGX B300 point, 512 endpoints, because every GPU has its own 800G NIC split into two 400G legs. Bottom: the RTX PRO 6000 point, 128 endpoints, two GPUs per 400G NIC.</p>
 <p class="tool-links"><a href="../../tools/doe/#tab=doe&amp;preset=ra-hgx-b300-256" target="_blank" rel="noopener">HGX B300 point ↗</a> <a href="../../tools/doe/#tab=doe&amp;preset=ra-rtx-pro-256" target="_blank" rel="noopener">RTX PRO 6000 point ↗</a></p>
 <p class="chain"><strong>Carries forward:</strong> That GPUs-per-NIC ratio is the column the next table compares across the four families.</p></figcaption></figure>
-<h2>Four official design points</h2>
+<h2 id="h2-4">Four official design points</h2>
 <p>The first table puts the four NVIDIA reference families side by side at one design point each: the DGX SuperPOD on InfiniBand, the GB300 NVL72 AI Factory, the HGX B300 AI Factory and the RTX PRO 6000 AI Factory. The columns that matter are the NVLink domain, the number of GPUs per NIC and the injection bandwidth that follows; the switch counts are NVIDIA's own tables, reproduced by the tool.</p>
 <div class="table-wrap wide"><table class="cmp">
 <thead><tr><th>Family</th><th>Source</th><th>Nodes</th><th>GPUs per node</th><th>NVLink domain</th><th>NICs × rate</th><th>GPUs per NIC</th><th>Injection per GPU</th><th>Topology</th><th>Target OSR</th><th>Leaf / spine (official)</th><th>Leaf / spine (tool)</th></tr></thead>
@@ -87,7 +91,7 @@
 <figcaption><p>The tool&#x27;s reference-architecture table rebuilds each official leaf and spine count from the platform rules and marks it against NVIDIA&#x27;s own table (for example official 8L/4S ✓). The four rows used in this chapter open directly:</p>
 <p class="tool-links"><a href="../../tools/doe/#tab=doe&amp;preset=ra-spb200-256" target="_blank" rel="noopener">DGX SuperPOD B200 ↗</a> <a href="../../tools/doe/#tab=doe&amp;preset=ra-nvl72-144" target="_blank" rel="noopener">GB300 NVL72 ↗</a> <a href="../../tools/doe/#tab=doe&amp;preset=ra-hgx-b300-256" target="_blank" rel="noopener">HGX B300 ↗</a> <a href="../../tools/doe/#tab=doe&amp;preset=ra-rtx-pro-256" target="_blank" rel="noopener">RTX PRO 6000 ↗</a></p>
 <p class="chain"><strong>Carries forward:</strong> The RTX PRO 6000 row is V0, the reference every variant in the next section is measured against.</p></figcaption></figure>
-<h2>The same thirty-two servers, five ways</h2>
+<h2 id="h2-5">The same thirty-two servers, five ways</h2>
 <p>The second table holds the number of servers fixed and changes what is inside them. The official point is the reference. Three variants use the same RTX PRO card with three or six GPUs and a different NIC count. One variant swaps in a consumer card; it is marked as an assumption and takes no part in the conclusion, because no public statement about its peer-to-peer or GPUDirect support was found. The static prerequisites for each row, such as the PCIe lane budget of a given CPU generation or the number of sixteen-lane slots in the chassis, are withheld until the vendor pages behind them are read.</p>
 <div class="table-wrap wide"><table class="cmp">
 <thead><tr><th>Variant</th><th>Pool / tool</th><th>GPUs per node</th><th>NICs × rate</th><th>GPUs per NIC</th><th>Topology</th><th>Injection per GPU</th><th>Leaf / spine</th><th>Actual OSR (downlink ÷ uplink)</th><th>Endpoint links</th><th>Status</th><th>Static prerequisites</th></tr></thead>
@@ -106,7 +110,7 @@
 <figcaption><p>Variant card V2 (six RTX PRO 6000, two 400G NICs, dual plane): the numbers of its table row and the difference from the official point, line by line. Every row of the table opens its own card.</p>
 <p class="tool-links"><a href="../../tools/doe/#pool=eyJzY2hlbWFWZXJzaW9uIjoiMS4wIiwic291cmNlIjoiYWktZmFicmljLXBsYW5uZXIiLCJleHBvcnRlZEF0IjoiMjAyNi0xMC0yMVQwMDowMDowMFoiLCJwb29sIjp7ImlkIjoidjIiLCJuYW1lIjoiVjI6IDYgeCBSVFggUFJPIDYwMDAsIDIgeCA0MDBHLCBkdWFsIHBsYW5lIiwibm9kZUNvdW50IjozMiwiZ3B1c1Blck5vZGUiOjYsInBvcnRzUGVyR3B1IjowLjMzMywiZW5kcG9pbnRSYXRlR2JwcyI6NDAwLCJ0YXJnZXRPc3IiOjEsInBsYW5lQ291bnQiOjJ9fQ&amp;platform=rtx-pro-6000-bf3-4x400&amp;ref=ra-rtx-pro-256" target="_blank" rel="noopener">Open card V2 ↗</a></p>
 <p class="chain"><strong>Carries forward:</strong> Each card&#x27;s open Planner button exports the pool record that the planner reads in the last section.</p></figcaption></figure>
-<h2>The other side</h2>
+<h2 id="h2-6">The other side</h2>
 <p>Rails cost switches: for the same thirty-two servers, the rail-optimized variants need more leaf and spine switches than the dual-plane ones, and that cost sits in the table. Dual-plane buys something else: when one plane fails, the node keeps the other NIC and half of its bandwidth, while a rail-optimized fabric shares one spine group across all rails, so a spine failure touches every rail at once. The choice is therefore not only how many switches to buy but how the cluster should degrade.</p>
 <p>The reliability tab puts a number on that difference. On the official point it states what one leaf failure costs each GPU and each node; the variant cards carry the same line for their own wiring.</p>
 <figure class="tool-step" data-step="failure">
@@ -114,7 +118,7 @@
 <figcaption><p>Tab 5 (reliability) on the official point: when one leaf fails, each GPU on it loses its only path and the node loses half its bandwidth, the dual-plane behaviour described above.</p>
 <p class="tool-links"><a href="../../tools/doe/#tab=availability&amp;preset=ra-rtx-pro-256" target="_blank" rel="noopener">Open tab 5 ↗</a></p>
 <p class="chain"><strong>Carries forward:</strong> The same per-node loss is printed on every variant card as single leaf failure degradation.</p></figcaption></figure>
-<h2>Reproduce a row in the tool</h2>
+<h2 id="h2-7">Reproduce a row in the tool</h2>
 <p>Take variant V1 and rebuild it in the DOE input panel, one field at a time. Enter the node count: 32<!--R:VAR-V1-NODES-->. Enter the GPUs per node: 3<!--R:VAR-V1-GPUS-PER-NODE-->. Enter the backend NICs per node: 3<!--R:VAR-V1-NICS-->. Set the endpoint rate to 400<!--R:VAR-V1-NIC-GBPS--> Gbps. Choose rail-optimized as the topology, with one plane per rail: 3<!--R:VAR-V1-PLANES-->. Leave the target oversubscription at one to one and keep the official switch model. Nothing else is changed from the RTX PRO reference point; the pool record in the repository lists every field.</p>
 <p>Now read the tool's answer against the table. The cluster has 96<!--R:VAR-V1-NICPORTS--> NIC ports, one per GPU, so each GPU gets 400<!--R:VAR-V1-INJECT-GBPS--> Gbps of injection bandwidth. The fabric needs 3<!--R:VAR-V1-LEAF--> leaf switches, one per plane, and 2<!--R:VAR-V1-SPINE--> spine switches shared by all rails, joined by 96<!--R:VAR-V1-FABRICLINKS--> leaf-spine links. The oversubscription ratio shows as 0.5<!--R:VAR-V1-OSR-->, below one, for the reason given under the tables. If any figure differs from the row above, the chapter or the tool is wrong, and the discrepancy is worth reporting.</p>
 <section id="tools"><aside class="tool-card"><p class="tool-title">Variant card view in the network sizing tool</p>
@@ -131,19 +135,20 @@
 <figcaption><p>The planner, opened with the pool record that variant card V1 exports: thirty-two nodes with three NICs each, placed on the floor plan, and the network rack elevation holding the three leaf switches of the card, one per rail.</p>
 <p class="tool-links"><a href="../../tools/planner/#pool=eyJzY2hlbWFWZXJzaW9uIjoiMS4wIiwic291cmNlIjoiYWktZmFicmljLWRvZS1hbmFseXplciIsImV4cG9ydGVkQXQiOiIyMDI2LTEwLTIxVDAwOjAwOjAwWiIsInBvb2wiOnsiaWQiOiJ2MSIsIm5hbWUiOiJWMTogMyB4IFJUWCBQUk8gNjAwMCwgMyB4IDQwMEcsIHJhaWwgb3B0aW1pemVkIiwicm9sZSI6InRyYWluaW5nIiwibm9kZUNvdW50IjozMiwiZ3B1c1Blck5vZGUiOjMsInBvcnRzUGVyR3B1IjoxLCJlbmRwb2ludFJhdGVHYnBzIjo0MDAsInRhcmdldE9zciI6MSwicGxhbmVDb3VudCI6MywidG9wb2xvZ3lUeXBlIjoiUmFpbC1PcHRpbWl6ZWQiLCJsZWFmU3dpdGNoSWQiOiJTTjU2MDAtNjR4ODAwRyIsInNwaW5lU3dpdGNoSWQiOiJTTjU2MDAtNjR4ODAwRyIsImVtaXR0ZXJTb2x2ZSI6eyJsZWFmIjozLCJzcGluZSI6MiwibWV0aG9kIjoicmFpbC1vcHRpbWl6ZWQiLCJzd2l0Y2hJZCI6IlNONTYwMC02NHg4MDBHIiwicmFkaXgiOjY0LCJicmVha291dExlZ3MiOjEsImxlYWZCbG9ja05vZGVzIjo2NCwicmFpbHNQZXJMZWFmIjoxfX19&amp;tab=deploy&amp;pane=rack" target="_blank" rel="noopener">Open V1 in the planner ↗</a></p>
 <p class="chain"><strong>Carries forward:</strong> This rack layout is the input of the next chapter, which asks how many racks and coolant distribution units each cooling method needs.</p></figcaption></figure>
-<h2>How to read the tables</h2>
+<h2 id="h2-8">How to read the tables</h2>
 <p>Vendor cells name the reference page and the date it was read. Estimated cells come from the author's sizing tool and name its build. The oversubscription ratio in the variant rows is below one because the variants keep the official switch model, whose uplinks run at twice the NIC rate; it is reported as the tool computes it. Rows marked assumption are shown for completeness and are not used in any conclusion.</p>
 </article>
-<section id="b4"><h2>How it is calculated</h2>
+<section id="b4"><h2 id="h2-9">How it is calculated</h2>
 <p>Every number is produced once by the author&#x27;s network sizing tool from the pool records in the repository, then rendered here. Official rows reproduce NVIDIA&#x27;s own switch tables; variant rows are the tool&#x27;s estimates for the same thirty-two servers with the official switch model, labelled with the solver build. Static prerequisites (PCIe lanes, peer-to-peer statements, slot counts) are withheld until vendor pages are read.</p></section>
-<section id="b5"><h2>Public layer</h2>
+<section id="b5"><h2 id="h2-10">Public layer</h2>
 <p>Narrative with method and a shared data file (public layer 3). The variant pool records are public; each variant row opens its card view in the author&#x27;s network sizing tool.</p></section>
-<section id="b6"><h2>Keep reading</h2>
-<nav class="chapter-nav" aria-label="Chapter navigation">
-<a rel="prev" href="../plan/">Previous chapter</a>
-<a href="../">Back to the series: HPC: from hardware validation to deployment planning</a>
-<span></span>
-</nav></section>
+<section id="b6"><h2 id="h2-11">Keep reading</h2>
+<nav class="pager" aria-label="Chapter navigation">
+<a class="card" rel="prev" href="../plan/"><span>← Previous chapter</span><h3>How does cooling change facility TUE?</h3></a>
+
+</nav>
+<p><a href="../">Back to the series: HPC: from hardware validation to deployment planning</a></p></section>
 </main>
+</div>
 </body>
 </html>
