@@ -1,0 +1,49 @@
+# PR 預覽：PR 開 / 更新 → 把 PR 的成品放到 gh-pages 的 preview/<PR號>/；PR 關閉 → 刪掉。
+# 網址 https://wentl3.github.io/preview/<PR號>/；合併 PR 才換根目錄（= 正式上線）。
+name: pr-preview
+on:
+  pull_request:
+    branches: [gh-pages]
+    types: [opened, synchronize, reopened, closed]
+permissions:
+  contents: write
+concurrency:
+  group: gh-pages-write
+  cancel-in-progress: false
+jobs:
+  preview:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: pages
+      - uses: actions/checkout@v4
+        if: github.event.action != 'closed'
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: pr
+      - name: 更新 preview/${{ github.event.pull_request.number }}
+        env:
+          PR: ${{ github.event.pull_request.number }}
+          CLOSED: ${{ github.event.action == 'closed' }}
+        run: |
+          set -euo pipefail
+          cd pages
+          rm -rf "preview/$PR"
+          if [ "$CLOSED" != "true" ]; then
+            mkdir -p "preview/$PR"
+            rsync -a --exclude='/.git' --exclude='/.github' --exclude='/preview' ../pr/ "preview/$PR"/
+          fi
+          [ -f robots.txt ] || printf 'User-agent: *\nDisallow: /preview/\n' > robots.txt
+          touch .nojekyll
+          git add -A
+          git diff --cached --quiet && { echo "無變更"; exit 0; }
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "preview: #$PR ${{ github.event.action }}"
+          for i in 1 2 3; do git pull -q --rebase origin gh-pages && git push -q origin HEAD:gh-pages && exit 0; sleep 5; done
+          exit 1
+      - name: 預覽網址
+        if: github.event.action != 'closed'
+        run: echo "https://wentl3.github.io/preview/${{ github.event.pull_request.number }}/" >> "$GITHUB_STEP_SUMMARY"
