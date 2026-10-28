@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DFSS, DMAIC and Lean, stage by stage | Toolkit</title>
+<meta name="description" content="A Chinese-language page on what each stage of DFSS, DMAIC and Lean asks for.">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-zone="engineering" data-type="chapter">
+<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hsio/">High speed IO</a><a href="../../hpc/">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
+<div class="layout">
+<aside class="toc" aria-label="In this series"><b><a href="../">Toolkit</a></b><ol><li><a href="../newbie-thermal/">Copy the recipe once, then repeat runs</a></li><li><a href="../textbook-vs-simulation/">Textbook estimates bound a CFD result</a></li><li><a href="../functional-dimensioning/"><span lang="zh-Hant">品質標誌標在疊加的主導尺寸</span></a></li><li class="here"><span lang="zh-Hant">DFSS、DMAIC 都先過量測這一關</span></li><li><a href="../thermal-pm/"><span lang="zh-Hant">散熱工程師的專案管理</span></a></li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2"><span lang="zh-Hant">三套方法：什麼時候用哪一套</span></a></li><li><a href="#h2-3"><span lang="zh-Hant">gage R&amp;R：量測的晃動要比差異小得多</span></a></li><li><a href="#h2-4"><span lang="zh-Hant">DOE：慢慢來比較快</span></a></li><li><a href="#h2-5">Original article</a></li><li><a href="#h2-6">Keep reading</a></li></ol></aside>
+<main>
+<p class="crumb"><a href="../../">Home</a> › <a href="../">Toolkit</a> › Chapter 4 of 5</p>
+<div class="progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i class="live"></i></div>
+<p class="stage">Part 4 of 5</p>
+<section id="b1"><h1><span lang="zh-Hant">DFSS 管新設計、DMAIC 改既有流程，兩條路都先過量測這一關</span></h1></section>
+<section id="b2" class="answer"><h2 id="h2-1">Short answer</h2>
+<p><strong><span lang="zh-Hant">DFSS 管新設計、DMAIC 改既有流程、Lean 消除浪費；三條路的測量階段都先做 gage R&amp;R，量測的晃動要比想分辨的差異小得多，實驗設計才分得出好壞。</span></strong></p></section>
+<article id="body">
+<p><span lang="zh-Hant">統計品質這套概念，在實務應用上我很中意，也值得分享、值得研究；但要理解到多深，不用每個人都到黑帶高手，夠職場用就好。</span></p>
+<p><span lang="zh-Hant">DFSS 管新設計、DMAIC 改既有流程、Lean 消除浪費，三套都從客戶需求出發；三條路的測量階段都有同一道關卡：先用 gage R&amp;R 確認量測夠穩，再花錢做實驗設計（DOE）。量測本身晃得比設計差異還大，後面的 DOE 再精巧也分不出誰好。</span></p>
+<h2 id="h2-2"><span lang="zh-Hant">三套方法：什麼時候用哪一套</span></h2>
+<div class="table-wrap wide"><table class="cmp">
+<thead><tr><th><span lang="zh-Hant">方法</span></th><th><span lang="zh-Hant">什麼時候用</span></th><th><span lang="zh-Hant">階段做什麼</span></th><th><span lang="zh-Hant">代價</span></th></tr></thead>
+<tbody>
+<tr><th scope="row"><span lang="zh-Hant">DFSS（六標準差設計）</span></th><td data-label="什麼時候用"><span lang="zh-Hant">新產品從零設計，客戶需求還要轉成規格</span></td><td data-label="階段做什麼"><span lang="zh-Hant">定義 → 測量 → 分析 → 設計 → 驗證：品質機能展開（QFD）把客戶聲音轉成關鍵品質特性、做設計失效模式分析（DFMEA），TRIZ 選概念，田口方法與實驗設計找最佳參數、做公差設計，最後可靠度測試、防錯計畫與控制計畫。</span></td><td data-label="代價"><span lang="zh-Hant">前期最花時間；需求沒定就開跑，設計階段會整段重來</span></td></tr>
+<tr><th scope="row"><span lang="zh-Hant">DMAIC（六標準差改善）</span></th><td data-label="什麼時候用"><span lang="zh-Hant">產品已在量產，問題量得到</span></td><td data-label="階段做什麼"><span lang="zh-Hant">定義 → 測量 → 分析 → 改善 → 控制：量測系統分析確認量測可靠、評估製程能力，抽樣檢定與迴歸找根本原因，實驗設計找解法，最後標準化作業、訂控制計畫、專案移交。</span></td><td data-label="代價"><span lang="zh-Hant">要先有可信的量測；量測不穩，分析階段找到的「根因」可能只是量測雜訊</span></td></tr>
+<tr><th scope="row"><span lang="zh-Hant">Lean（精實工程）</span></th><td data-label="什麼時候用"><span lang="zh-Hant">品質沒問題，但流程慢、等待多</span></td><td data-label="階段做什麼"><span lang="zh-Hant">定義 → 測量 → 改進 → 控制：先定義價值、分出增值與非增值活動，畫價值流程圖（VSM）找浪費、平衡流程，再用實驗設計與試點驗證改進。</span></td><td data-label="代價"><span lang="zh-Hant">不直接提升產品性能；價值流要跨部門一起畫</span></td></tr>
+</tbody>
+</table></div>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg lang="zh-Hant" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 190" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>三套方法各有分工</title>
+<text x="20" y="22" font-size="12" fill="var(--mut, #5c5c5c)">都從客戶需求出發</text>
+<text x="20" y="61" font-size="13" fill="var(--fg, #1a1a1a)">新產品從零設計</text>
+<line x1="130" y1="56" x2="188.0" y2="56.0" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="196,56 188.0,52.0 188.0,60.0" fill="var(--fg, #1a1a1a)"/>
+<rect x="200" y="36" width="130" height="40" rx="4" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="212" y="54" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">DFSS</text>
+<text x="212" y="69" font-size="12" fill="var(--mut, #5c5c5c)">管新設計</text>
+<line x1="330" y1="56" x2="368.3" y2="67.7" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="376,70 369.5,63.8 367.2,71.5" fill="var(--fg, #1a1a1a)"/>
+<text x="20" y="111" font-size="13" fill="var(--fg, #1a1a1a)">產品已在量產</text>
+<line x1="130" y1="106" x2="188.0" y2="106.0" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="196,106 188.0,102.0 188.0,110.0" fill="var(--fg, #1a1a1a)"/>
+<rect x="200" y="86" width="130" height="40" rx="4" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="212" y="104" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">DMAIC</text>
+<text x="212" y="119" font-size="12" fill="var(--mut, #5c5c5c)">改既有流程</text>
+<line x1="330" y1="106" x2="368.0" y2="106.0" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="376,106 368.0,102.0 368.0,110.0" fill="var(--fg, #1a1a1a)"/>
+<text x="20" y="161" font-size="13" fill="var(--fg, #1a1a1a)">流程慢、等待多</text>
+<line x1="130" y1="156" x2="188.0" y2="156.0" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="196,156 188.0,152.0 188.0,160.0" fill="var(--fg, #1a1a1a)"/>
+<rect x="200" y="136" width="130" height="40" rx="4" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="212" y="154" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">Lean</text>
+<text x="212" y="169" font-size="12" fill="var(--mut, #5c5c5c)">消除浪費</text>
+<line x1="330" y1="156" x2="368.3" y2="144.3" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="376,142 367.2,140.5 369.5,148.2" fill="var(--fg, #1a1a1a)"/>
+<rect x="378" y="36" width="86" height="140" rx="4" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<text x="421" y="102" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">gage R&amp;R</text>
+<text x="421" y="122" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">同一道關卡</text>
+</svg>
+<figcaption><span lang="zh-Hant">DFSS 管新設計、DMAIC 改既有流程、Lean 消除浪費</span></figcaption></figure>
+<h2 id="h2-3"><span lang="zh-Hant">gage R&amp;R：量測的晃動要比差異小得多</span></h2>
+<p><span lang="zh-Hant">gage R&amp;R 像先檢查體重計：想看出一週瘦了多少，體重計每站上去一次就跳一下，跳的幅度比你想看出的變化還大，量再多次也說不出瘦了沒。實驗也一樣，量測系統的晃動要比想分辨的設計差異小得多。</span></p>
+<p><span lang="zh-Hant">很多 gage R&amp;R 可以追蹤實驗架設是否有代表性，可以跨人、跨次數分段。 算法是把晃動和總變異相比：%GRR = 量測變異 σ ÷ 總變異 σ。例如同一批散熱片跨人、跨次重複量測，量測變異 σ 0.3</span><!--R:TK-DFSS-GRR-MS--><span lang="zh-Hant"> °C、總變異 σ 1.0</span><!--R:TK-DFSS-GRR-TV--><span lang="zh-Hant"> °C，%GRR = 0.3</span><!--R:TK-DFSS-GRR-MS--> ÷ 1.0<!--R:TK-DFSS-GRR-TV--> = 30<!--R:TK-DFSS-GRR-PCT--><span lang="zh-Hant">%，剛好踩在業界常用的上限：低於 10</span><!--R:AIAG-GRR-OK--><span lang="zh-Hant">% 可接受，超過 30</span><!--R:AIAG-GRR-BAD--><span lang="zh-Hant">% 不可接受。這時該修的是熱電偶貼法、治具或操作步驟，不是加做實驗；量測 σ 要壓到約 0.1</span><!--R:TK-DFSS-GRR-MS2--><span lang="zh-Hant"> °C，%GRR 才回到 10</span><!--R:AIAG-GRR-OK--><span lang="zh-Hant">% 附近。</span></p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg lang="zh-Hant" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 210" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>量測變異占總變異多少</title>
+<text x="40" y="30" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">總變異 σ 1.0 °C</text>
+<rect x="40" y="40" width="400" height="24" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="40" y="40" width="120" height="24" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<text x="168" y="57" font-size="13" font-weight="600" fill="var(--accent, #0e7490)">30%</text>
+<text x="40" y="82" font-size="12" fill="var(--accent, #0e7490)">量測變異 σ 0.3 °C</text>
+<text x="40" y="112" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">約 0.1 °C</text>
+<rect x="40" y="122" width="400" height="24" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="40" y="122" width="40" height="24" fill="var(--fg, #1a1a1a)" fill-opacity="0.15" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="88" y="139" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">10%</text>
+<line x1="40" y1="176" x2="440" y2="176" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<line x1="80" y1="170" x2="80" y2="182" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="160" y1="170" x2="160" y2="182" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="80" y="198" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">10%</text>
+<text x="160" y="198" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">30%</text>
+<text x="40" y="166" font-size="12" fill="var(--mut, #5c5c5c)">可接受</text>
+<text x="168" y="166" font-size="12" fill="var(--mut, #5c5c5c)">不可接受</text>
+</svg>
+</figure>
+<h2 id="h2-4"><span lang="zh-Hant">DOE：慢慢來比較快</span></h2>
+<p></p>
+<p><span lang="zh-Hant">實驗設計的了解，慢慢來比較快（slow is fast）：抓住量化分析，避免報告時被追問、回頭補作業。  慢一點（slow）設計實驗，快一點過審。 量測沒過關就做 DOE，會白做。假設兩組散熱設計真的差 0.5</span><!--R:TK-DFSS-DOE-EFF--><span lang="zh-Hant"> °C，量測 σ 0.3</span><!--R:TK-DFSS-GRR-MS--><span lang="zh-Hant"> °C：兩次讀數相減，雜訊是 0.3</span><!--R:TK-DFSS-GRR-MS--><span lang="zh-Hant"> 乘上根號二 ≈ 0.42</span><!--R:TK-DFSS-DOE-N1--><span lang="zh-Hant"> °C，效應只有雜訊的 1.2</span><!--R:TK-DFSS-DOE-R1--><span lang="zh-Hant"> 倍，因子效應被雜訊蓋住。把量測 σ 修到 0.1</span><!--R:TK-DFSS-GRR-MS2--><span lang="zh-Hant"> °C，雜訊降到 0.14</span><!--R:TK-DFSS-DOE-N2--><span lang="zh-Hant"> °C，效應是雜訊的 3.5</span><!--R:TK-DFSS-DOE-R2--><span lang="zh-Hant"> 倍，一次就看得出。不修量測、改用重複次數硬壓，雜訊只隨次數的平方根下降，要重複 9</span><!--R:TK-DFSS-DOE-REP--><span lang="zh-Hant"> 次才追得上：這就是慢慢來（slow）反而快的算術。 職場報告是門藝術，多變數一起抓方向當然更好；但在熱仿真與樣品量測之間，要做成本與成果的取捨。  所以先慢下來（slow）把量測修到 %GRR 10</span><!--R:AIAG-GRR-OK--><span lang="zh-Hant">% 以下，再開 DOE 與仿真。</span></p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg lang="zh-Hant" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 198" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>慢慢來比較快</title>
+<text x="120" y="52" text-anchor="end" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">量測 σ 0.3 °C</text>
+<rect x="130" y="30" width="200" height="16" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="336" y="43" font-size="12" fill="var(--fg, #1a1a1a)">0.5 °C</text>
+<rect x="130" y="52" width="168" height="16" fill="var(--fg, #1a1a1a)" fill-opacity="0.15" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="304" y="65" font-size="12" fill="var(--fg, #1a1a1a)">0.42 °C</text>
+<text x="392" y="46" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">1.2 倍</text>
+<text x="392" y="64" font-size="12" fill="var(--mut, #5c5c5c)">被雜訊蓋住</text>
+<text x="120" y="122" text-anchor="end" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">修到 0.1 °C</text>
+<rect x="130" y="100" width="200" height="16" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<text x="336" y="113" font-size="12" fill="var(--fg, #1a1a1a)">0.5 °C</text>
+<rect x="130" y="122" width="56" height="16" fill="var(--fg, #1a1a1a)" fill-opacity="0.15" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="192" y="135" font-size="12" fill="var(--fg, #1a1a1a)">0.14 °C</text>
+<text x="392" y="116" font-size="14" font-weight="600" fill="var(--accent, #0e7490)">3.5 倍</text>
+<text x="392" y="134" font-size="12" fill="var(--accent, #0e7490)">一次就看得出</text>
+<text x="136" y="43" font-size="12" fill="var(--mut, #5c5c5c)">效應</text>
+<text x="136" y="65" font-size="12" fill="var(--mut, #5c5c5c)">雜訊</text>
+<text x="130" y="186" font-size="12" fill="var(--mut, #5c5c5c)">要重複 9 次才追得上</text>
+</svg>
+<figcaption><span lang="zh-Hant">慢一點（slow）設計實驗，快一點過審。</span></figcaption></figure>
+<p></p>
+<p><span lang="zh-Hant">這篇先上概念版，案例之後再補。下一篇交棒熱設計專案管理（thermal-pm）。</span></p>
+</article>
+<section id="b4"><h2 id="h2-5">Original article</h2>
+<span id="b4-origin" hidden></span><p>Rewritten from the author's article (2023-07-16): <a href="https://medium.com/p/948fbe4747a9">https://medium.com/p/948fbe4747a9</a></p></section>
+<section id="b6"><h2 id="h2-6">Keep reading</h2>
+<p><span lang="zh-Hant">下一篇交棒熱設計專案管理（thermal-pm）。</span></p>
+<nav class="pager" aria-label="Chapter navigation">
+<a class="card" rel="prev" href="../functional-dimensioning/"><span>← Previous chapter</span><h3><span lang="zh-Hant">品質標誌標在疊加的主導尺寸</span></h3></a>
+<a class="card next" rel="next" href="../thermal-pm/"><span>Next chapter →</span><h3><span lang="zh-Hant">散熱工程師的專案管理</span></h3></a>
+</nav>
+<p><a href="../">Back to the series: Toolkit: what school projects don&#x27;t teach</a></p></section>
+</main>
+</div>
+</body>
+</html>
