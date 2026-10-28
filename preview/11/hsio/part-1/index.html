@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Small ports run hot: heat follows power density</title>
+<meta name="description" content="A connector&#x27;s shape and its speed are separate choices; when the speed climbs inside the same small shell, the power packed into that shell climbs with it, which is why a port drawing only a few watts still needs thermal design.">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-zone="engineering" data-type="chapter">
+<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../" aria-current="page">High speed IO</a><a href="../../hpc/">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
+<div class="layout">
+<aside class="toc" aria-label="In this series"><b><a href="../">High speed IO</a></b><ol><li class="here">Small ports run hot: heat follows power density</li><li><a href="../part-2/">Wireless rides on fiber; at 800G the choke point is inside</a></li><li><a href="../part-3/">Cable by reach first, heat second</a></li><li><a href="../ocp/">IO sits in two places; the hot aisle is harder</a></li><li><a href="../qsfp-msa/">QSFP-DD doubles the lanes; a sliding module is hard to cool</a></li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2">What a connector does, and why the network cable splits</a></li><li><a href="#h2-3">Shape and speed are separate choices</a></li><li><a href="#h2-4">Why it gets hot</a></li><li><a href="#h2-5">2026 update</a></li><li><a href="#h2-6">Original article</a></li><li><a href="#h2-7">Keep reading</a></li></ol></aside>
+<main>
+<p class="crumb"><a href="../../">Home</a> › <a href="../">High speed IO</a> › Chapter 1 of 5</p>
+<div class="progress" aria-hidden="true"><i></i><i class="live"></i><i class="live"></i><i class="live"></i><i class="live"></i></div>
+<p class="stage">Part 1 of 5</p>
+<section id="b1"><h1>A small port needs cooling because heat follows power density, not size</h1><p class="keywords">connector / form factor / transfer rate / heat</p></section>
+<section id="b2" class="answer"><h2 id="h2-1">Short answer</h2>
+<p><strong>A port needs cooling because heat follows power density, not size: the transfer rate keeps climbing while the shell stays the same.</strong></p></section>
+<article id="body">
+<p>A port needs cooling because heat follows power density, not size. Form factor and transfer rate can be mixed and matched, and when the rate climbs inside the same small shell, the power packed into that shell climbs with it.</p>
+<p>What is a connector? Before my interview, I could not figure out this product, a name both familiar and strange. Many people have heard of it without knowing where to start, yet it is a field Taiwan's electronics industry could not do without. High-speed IO was the same for me: before I joined the industry, no amount of searching made it clear, so this series writes down what I learned after joining.</p>
+<h2 id="h2-2">What a connector does, and why the network cable splits</h2>
+<p>A connector is what the word says: a device that joins two circuits, so each product can be developed and packaged on its own, and data passes through as long as both ends agree on the communication spec. The family runs from board to board, to wire to board, to the IO port that carries heavy traffic. Nobody notices it while things run, until the charging cable is missing from the bag on a day out.</p>
+<p>This series is about the IO port, the heavy-traffic end of a connector family that runs from board to board and wire to board, a product many people have heard of without knowing where to start. When I explain optical links and passive copper to newcomers, as lost as I was before joining the industry, I start from the bit, the unit of networking, not the byte people know from storage: a link rated 800G counts gigabits, not gigabytes, each second, so in bytes it carries an eighth as much. Starting from the bit is starting from the digital world itself: every file, call or video that crosses a link is cut into a stream of zeros and ones, and the link only has to deliver each one so the far end reads it right. The plainest way to send them, NRZ, holds the line at one of two levels for each bit, low for a zero and high for a one. PAM4 splits the line into four levels, so each symbol carries two bits, and the lane moves twice the bits without switching any faster. That is how an 800G QSFP-DD800 module reaches its rating: 8<!--R:QDD-LANES--> electrical lanes, each running 100<!--R:QDD800-LANE-G--> Gb/s in PAM4, inside the QSFP-DD MSA hardware specification Rev 6.2 (2022<!--R:QDDHW-REV-YEAR-->). A server back panel holds about as many connectors as a PC has network ports, but a switch packs them far denser, and there the one-piece RJ45 cable gives way to a pluggable module and a separate cable. Turning the signal into light cuts the loss along the way, and splitting the link into module and cable segments eases maintenance and serves different uses, so the network cable becomes three parts, connector, pluggable module and cable, each with its own specialists.</p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 236" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>Twice the bits, same switching</title>
+<text x="130" y="22" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">NRZ</text>
+<text x="130" y="40" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">two levels</text>
+<rect x="30" y="52" width="200" height="76" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<g stroke="var(--mut, #5c5c5c)" stroke-width="1" stroke-dasharray="8 6"><line x1="30" y1="62" x2="230" y2="62"/><line x1="30" y1="118" x2="230" y2="118"/></g>
+<g stroke="var(--mut, #5c5c5c)" stroke-width="1"><line x1="30" y1="128" x2="30" y2="134"/><line x1="70" y1="128" x2="70" y2="134"/><line x1="110" y1="128" x2="110" y2="134"/><line x1="150" y1="128" x2="150" y2="134"/><line x1="190" y1="128" x2="190" y2="134"/><line x1="230" y1="128" x2="230" y2="134"/></g>
+<path d="M30,62 H70 V118 H110 V62 H150 V62 H190 V118 H230" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="50" y="150" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">1</text>
+<text x="90" y="150" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">0</text>
+<text x="130" y="150" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">1</text>
+<text x="170" y="150" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">1</text>
+<text x="210" y="150" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">0</text>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1"><line x1="30" y1="160" x2="70" y2="160"/><line x1="30" y1="156" x2="30" y2="164"/><line x1="70" y1="156" x2="70" y2="164"/></g>
+<text x="130" y="204" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">for each bit</text>
+<text x="350" y="22" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">PAM4</text>
+<text x="350" y="40" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">four levels</text>
+<rect x="250" y="52" width="200" height="76" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<g stroke="var(--mut, #5c5c5c)" stroke-width="1" stroke-dasharray="8 6"><line x1="250" y1="62" x2="450" y2="62"/><line x1="250" y1="81" x2="450" y2="81"/><line x1="250" y1="99" x2="450" y2="99"/><line x1="250" y1="118" x2="450" y2="118"/></g>
+<g stroke="var(--mut, #5c5c5c)" stroke-width="1"><line x1="250" y1="128" x2="250" y2="134"/><line x1="290" y1="128" x2="290" y2="134"/><line x1="330" y1="128" x2="330" y2="134"/><line x1="370" y1="128" x2="370" y2="134"/><line x1="410" y1="128" x2="410" y2="134"/><line x1="450" y1="128" x2="450" y2="134"/></g>
+<path d="M250,81 H290 V118 H330 V62 H370 V99 H410 V81 H450" fill="none" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<text x="270" y="150" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">10</text>
+<text x="310" y="150" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">00</text>
+<text x="350" y="150" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">11</text>
+<text x="390" y="150" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">01</text>
+<text x="430" y="150" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">10</text>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1"><line x1="250" y1="160" x2="290" y2="160"/><line x1="250" y1="156" x2="250" y2="164"/><line x1="290" y1="156" x2="290" y2="164"/></g>
+<text x="350" y="204" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">8 electrical lanes</text>
+<text x="350" y="224" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">100 Gb/s</text>
+<text x="240" y="182" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">without switching any faster</text>
+</svg>
+</figure>
+<h2 id="h2-3">Shape and speed are separate choices</h2>
+<p>Start from the ports you already touch, USB and Type-C. The confusion sorts into two strands: form factor, the shape of the connector, square Type-A or oval Type-C, and transfer rate, how fast the link runs. The same Type-C shell carries USB 3.2 at 5<!--R:USB32-G1--> Gb/s, 10<!--R:USB32-G2--> Gb/s or 20<!--R:USB32-G2X2--> Gb/s under the USB 3.2 specification Rev 1.0, and the 20 Gb/s mode does not get a bigger plug: it runs two lanes at 10 Gb/s each through the same oval. Thunderbolt climbs through its own rates on the same shape, so when a laptop has two Type-C ports and only one carries a lightning bolt, the two share a shape and differ in spec. The same split runs inside the server, where PCIe links the motherboard to graphics cards, network cards and memory, and each rate step there pulls signal integrity, EMI and thermal design together.</p>
+<p>In the data center the same idea returns as cable classes. A DAC is a copper cable module, an AOC an optical cable module, and a transceiver a detachable optical module with its own connector; all three plug an electrical end into the server or switch, and their different far ends open up more choices of reach and cable. DAC, AEC and AOC split by distance, by new chip development and by market demand, but none of them gets around high-speed transmission. That external link is where the main thread of this series lands. PCIe carries data inside one box; between servers and switches, the traffic leaves through these pluggable ends, and the switch faceplate is where they crowd together. The QSFP-DD MSA hardware specification Rev 6.2 (2022<!--R:QDDHW-REV-YEAR-->) fits up to 36<!--R:QDDHW-1U-MOD-MAX--> modules across one 1U faceplate and lets each module dissipate up to 25<!--R:QDDHW-MODPWR-MAX--> W, so a fully loaded faceplate could carry 900<!--R:QDD-1U-W--> W of module heat in a row of finger-sized shells. Whichever cable class sits on the far end, the electrical end in the cage is the same small, hot part, which is why the next question is heat.</p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 252" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>One electrical end, three far ends</title>
+<text x="16" y="22" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">the electrical end in the cage</text>
+<text x="464" y="22" text-anchor="end" font-size="13" fill="var(--fg, #1a1a1a)">their different far ends</text>
+<rect x="16" y="36" width="64" height="200" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<line x1="80" y1="36" x2="80" y2="236" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="128" y="60" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">DAC</text>
+<text x="128" y="102" font-size="12" fill="var(--mut, #5c5c5c)">copper cable module</text>
+<rect x="24" y="66" width="90" height="20" rx="2" fill="var(--bg, #fff)" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1"><line x1="28" y1="70" x2="28" y2="82"/><line x1="30" y1="70" x2="30" y2="82"/><line x1="32" y1="70" x2="32" y2="82"/></g>
+<rect x="114" y="72" width="252" height="8" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="366" y="66" width="90" height="20" rx="2" fill="var(--bg, #fff)" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1"><line x1="444" y1="70" x2="444" y2="82"/><line x1="446" y1="70" x2="446" y2="82"/><line x1="448" y1="70" x2="448" y2="82"/></g>
+<text x="128" y="128" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">AOC</text>
+<text x="128" y="170" font-size="12" fill="var(--mut, #5c5c5c)">optical cable module</text>
+<rect x="24" y="134" width="90" height="20" rx="2" fill="var(--bg, #fff)" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1"><line x1="28" y1="138" x2="28" y2="150"/><line x1="30" y1="138" x2="30" y2="150"/><line x1="32" y1="138" x2="32" y2="150"/></g>
+<line x1="114" y1="144" x2="366" y2="144" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="366" y="134" width="90" height="20" rx="2" fill="var(--bg, #fff)" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1"><line x1="444" y1="138" x2="444" y2="150"/><line x1="446" y1="138" x2="446" y2="150"/><line x1="448" y1="138" x2="448" y2="150"/></g>
+<text x="128" y="196" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">transceiver</text>
+<text x="128" y="238" font-size="12" fill="var(--mut, #5c5c5c)">detachable optical module with its own connector</text>
+<rect x="24" y="202" width="90" height="20" rx="2" fill="var(--bg, #fff)" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1"><line x1="28" y1="206" x2="28" y2="218"/><line x1="30" y1="206" x2="30" y2="218"/><line x1="32" y1="206" x2="32" y2="218"/></g>
+<g fill="var(--bg, #fff)" stroke="var(--fg, #1a1a1a)" stroke-width="1"><rect x="106" y="204" width="6" height="7"/><rect x="106" y="213" width="6" height="7"/></g>
+<rect x="128" y="204" width="22" height="16" rx="2" fill="var(--bg, #fff)" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1"><line x1="150" y1="209" x2="432" y2="209"/><line x1="150" y1="215" x2="432" y2="215"/></g>
+<rect x="432" y="204" width="22" height="16" rx="2" fill="var(--bg, #fff)" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+</svg>
+</figure>
+<h2 id="h2-4">Why it gets hot</h2>
+<p></p>
+<p>At first I thought an accessory drawing so few watts, less than a chip, could not get hot enough to need careful design, and hands-on validation overturned that. Only when I saw a wind-tunnel test climb to 70 °C did I understand that low power can still run hot. Taking on low-level, repetitive experiments turned out to be a better way in, and it left time to reflect. What makes a part hot is how many watts leave through each square centimeter of its cooling path, not how many watts it draws in total.</p>
+<p>Think of a candle and a room radiator. The radiator gives off far more heat, yet a hand can rest on it, because that heat is spread across a wide panel. The candle gives off much less, but packs it into a flame the size of a fingertip, and that is what burns. A pluggable module is the candle: fewer watts than the switch chip, packed into a shell the size of a finger, with most of its heat leaving through the one face that touches a heat sink. Put an example number on the module: 10<!--R:ILLUS-MOD-W--> W through a 10<!--R:ILLUS-MOD-CM2--> cm² top face pushes 1<!--R:ILLUS-MOD-FLUX--> W/cm² through that one face.</p>
+<p>Moving from 50G to 112G platforms, the cooling demand grows denser and tighter, and the hard part is the contact thermal resistance at the interface: which materials improve it, how to validate it, and how to calibrate the coefficient into a thermal simulation that can predict. Far from being a better network cable, the link behaves more like a Type-C USB port that runs hot. So when a rate step is planned, divide the module's watts by the face that touches the heat sink before deciding whether a port that small can skip thermal design.</p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 270" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>Same shell, faster lanes</title>
+<text x="270" y="20" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">The same Type-C shell</text>
+<g stroke="var(--mut, #5c5c5c)" stroke-width="1" fill="none"><line x1="150" y1="30" x2="390" y2="30"/><line x1="150" y1="30" x2="150" y2="40"/><line x1="270" y1="30" x2="270" y2="40"/><line x1="390" y1="30" x2="390" y2="40"/></g>
+<text x="12" y="69" font-size="13" fill="var(--fg, #1a1a1a)">USB 3.2</text>
+<rect x="102" y="46" width="96" height="36" rx="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="222" y="46" width="96" height="36" rx="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.12" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="342" y="46" width="96" height="36" rx="18" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="2.5" fill="none">
+<line x1="120" y1="64" x2="180" y2="64" stroke-dasharray="12 8"/>
+<line x1="240" y1="64" x2="300" y2="64" stroke-dasharray="5 5"/>
+<line x1="360" y1="58" x2="420" y2="58" stroke-dasharray="5 5"/>
+<line x1="360" y1="70" x2="420" y2="70" stroke-dasharray="5 5"/>
+</g>
+<text x="150" y="100" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">5 Gb/s</text>
+<text x="270" y="100" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">10 Gb/s</text>
+<text x="390" y="100" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">20 Gb/s</text>
+<text x="466" y="117" text-anchor="end" font-size="12" fill="var(--mut, #5c5c5c)">two lanes at 10 Gb/s each</text>
+<polygon points="33,143 24,156 30,156 27,165 36,152 30,152" fill="var(--fg, #1a1a1a)"/>
+<text x="12" y="182" font-size="12" fill="var(--mut, #5c5c5c)">lightning bolt</text>
+<rect x="102" y="136" width="96" height="36" rx="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="153,143 144,156 150,156 147,165 156,152 150,152" fill="var(--fg, #1a1a1a)"/>
+<rect x="222" y="136" width="96" height="36" rx="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.12" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="273,143 264,156 270,156 267,165 276,152 270,152" fill="var(--fg, #1a1a1a)"/>
+<rect x="342" y="136" width="96" height="36" rx="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.15" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="393,143 384,156 390,156 387,165 396,152 390,152" fill="var(--fg, #1a1a1a)"/>
+<text x="270" y="194" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">its own rates on the same shape</text>
+<line x1="102" y1="214" x2="428" y2="214" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="428,209 438,214 428,219" fill="var(--fg, #1a1a1a)"/>
+<text x="270" y="238" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">power packed into that shell</text>
+<text x="270" y="256" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">denser and tighter</text>
+</svg>
+</figure>
+<h2 id="h2-5">2026 update</h2>
+<p>The work now runs at 112G per lane, with 400G QSFP and 800G QSFP-DD, while 224G with OSFP moves into the mainstream. Each of those steps is a faster lane, not a bigger shell, the same pattern as the Type-C port and the PAM4 lanes above, so the heat behind the one face that touches the heat sink, and across a faceplate that can already carry 900<!--R:QDD-1U-W--> W, only gets tighter. I wanted to move into XDR validation and found it is only a backup need for the outside network; inside the system, PCIe 7 is the urgent axis of validation. That is the same split as above: the outside link through pluggable modules is where the backup sits, while PCIe inside the box is where the next round of validation lands. Developing base-level parts means rarely seeing the finished product, and the system integration reaches volume production about three years later through system makers, so reading the trend decides what to develop now.</p>
+<p></p>
+</article>
+<section id="b4"><h2 id="h2-6">Original article</h2>
+<span id="b4-origin" hidden></span><p>Rewritten from the author's article (2022-07-03): <a href="https://medium.com/p/a2714998cf6">https://medium.com/p/a2714998cf6</a>, <a href="https://medium.com/p/b99353f400c5">https://medium.com/p/b99353f400c5</a></p></section>
+<section id="b6"><h2 id="h2-7">Keep reading</h2>
+<nav class="pager" aria-label="Chapter navigation">
+<span></span>
+<a class="card next" rel="next" href="../part-2/"><span>Next chapter →</span><h3>Wireless rides on fiber; at 800G the choke point is inside</h3></a>
+</nav>
+<p><a href="../">Back to the series: High speed IO: from everyday ports to pluggable modules</a></p></section>
+</main>
+</div>
+</body>
+</html>
