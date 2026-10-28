@@ -3,52 +3,223 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Why does HPC need liquid cooling? | HPC</title>
-<meta name="description" content="Why air cooling runs out as HPC rack density rises, and what direct liquid cooling and immersion change.">
+<title>Air cannot carry a dense rack&#x27;s heat | HPC</title>
+<meta name="description" content="Why a dense HPC rack outgrows air: water carries thousands of times more heat per volume, so cooling moves from blowing air through the room to running liquid to the heat source, by cold plate or by immersion.">
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
 <body data-zone="engineering" data-type="chapter">
 <header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hsio/">High speed IO</a><a href="../" aria-current="page">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
 <div class="layout">
-<aside class="toc" aria-label="In this series"><b><a href="../">HPC</a></b><ol><li class="here">Why does HPC need liquid cooling?</li><li><a href="../office-immersion/">Can an office host an immersion-cooled HPC lab?</a></li><li><a href="../esd/">How do you control ESD in an HPC office lab?</a></li><li><a href="../deploy/">How is immersion cooling deployed in a data center?</a></li><li><a href="../plan/">How does cooling change facility TUE?</a></li><li><a href="../variants/">How many NICs does a PCIe GPU server need?</a></li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2">Why the heat piles up</a></li><li><a href="#h2-3">Where air runs out</a></li><li><a href="#h2-4">What liquid changes</a></li><li><a href="#h2-5">What each option costs</a></li><li><a href="#h2-6">Why servers are harder than mining rigs</a></li><li><a href="#h2-7">The facility view</a></li><li><a href="#h2-8">How it is calculated</a></li><li><a href="#h2-9">Public layer</a></li><li><a href="#h2-10">Keep reading</a></li></ol></aside>
+<aside class="toc" aria-label="In this series"><b><a href="../">HPC</a></b><ol><li class="here">Air cannot carry a dense rack&#x27;s heat</li><li><a href="../office-immersion/">Ready the floor first, then the racks</a></li><li><a href="../esd/">One common ground; humidity sets the load</a></li><li><a href="../validation/">Parts that pass alone can fail together</a></li><li><a href="../deploy/">Speed now decides the cooling choice</a></li><li><a href="../plan/">How does cooling change facility TUE?</a></li><li><a href="../variants/">How many NICs does a PCIe GPU server need?</a></li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2">Heat flux and total power climb together</a></li><li><a href="#h2-3">Where air cooling approaches its limits</a></li><li><a href="#h2-4">Early adopters: Bitcoin mining</a></li><li><a href="#h2-5">Direct liquid cooling or immersion</a></li><li><a href="#h2-6">Original article</a></li><li><a href="#h2-7">Keep reading</a></li></ol></aside>
 <main>
-<p class="crumb"><a href="../../">Home</a> › <a href="../">HPC</a> › Chapter 1 of 6</p>
-<div class="progress" aria-hidden="true"><i></i><i class="live"></i><i class="live"></i><i class="live"></i><i class="live"></i><i class="live"></i><i class="off"></i><i class="off"></i></div>
+<p class="crumb"><a href="../../">Home</a> › <a href="../">HPC</a> › Chapter 1 of 7</p>
+<div class="progress" aria-hidden="true"><i></i><i class="live"></i><i class="live"></i><i class="live"></i><i class="live"></i><i class="live"></i><i class="live"></i><i class="off"></i></div>
 <p class="stage" data-stage="why">Stage 1 of 6 · Why</p>
-<section id="b1"><h1>Why does HPC need liquid cooling?</h1><p class="keywords">rack density / air cooling limit / DLC / immersion</p></section>
+<section id="b1"><h1>Air cannot carry a dense rack&#x27;s heat, so HPC brings liquid to the source</h1><p class="keywords">rack density / air cooling limit / liquid cooling</p></section>
 <section id="b2" class="answer"><h2 id="h2-1">Short answer</h2>
-<p><strong>Air cooling loses efficiency as rack density rises; direct liquid cooling supports higher rack densities, and immersion cooling handles higher densities still.</strong></p></section>
+<p><strong>Per volume and per degree, water carries thousands of times more heat than air, so a rack planned in the hundreds of kilowatts is cooled by bringing liquid to the heat source, through cold plates or immersion.</strong></p></section>
 <article id="body">
-<h2 id="h2-2">Why the heat piles up</h2>
-<p>An HPC cluster connects many nodes, often thousands of computers, so that they work on one problem in parallel. You can speed it up by spreading the computation across the resources of one server, but that is limited by what a single system can do. Or you can configure more systems as one and distribute the work across more nodes. That second route is scale-out performance.</p>
-<p>Because of the need for horizontal scaling, control and cooling between nodes become crucial.</p>
-<h2 id="h2-3">Where air runs out</h2>
-<p>Traditional air cooling relies on coolers and Computer Room Air Conditioning (CRAC). As maximum rack density rises, its efficiency decreases. Pushing more airflow only complicates matters, because energy efficiency is low. The result is a system that is both heat-constrained and wasteful with energy.</p>
-<h2 id="h2-4">What liquid changes</h2>
-<ul>
-<li><strong>Direct Liquid Cooling (DLC)</strong> circulates coolant directly over heat components such as CPUs and GPUs. It supports higher rack densities and improves energy efficiency.</li>
-<li><strong>Immersion cooling</strong> submerges the hardware entirely in non-conductive liquid, which removes the need for air cooling infrastructure. It can handle higher rack densities still.</li>
-</ul>
-<p>Inside a single cabinet, chip temperature differences are small, and individual node temperature differences are also minimal. That helps quality control when you manage many horizontally scaled nodes.</p>
-<p>Immersion has costs too: initial investment, maintenance of the liquid cooling system, and decisions about coolant selection and handling.</p>
-<h2 id="h2-5">What each option costs</h2>
-<p>DLC coexists with existing infrastructure, and its maintenance is straightforward and repeatable. DLC has limits too, because IT components tied into a complex cold-plate system are harder to disassemble and maintain. Its extra components need preventive maintenance on mean time between failures guidelines, and it still needs air movement and the energy that goes with it. Beyond the costs above, immersion faces scalability questions in large data centers, and staff need safety training for handling the fluid.</p>
-<p>Air cooling keeps the lower upfront cost, since both liquid options cost more up front than traditional air conditioning. An existing HVAC system can also be upgraded with added cooling units, or with targeted cooling aimed directly at the racks.</p>
-<h2 id="h2-6">Why servers are harder than mining rigs</h2>
-<p>Cooling matters in Bitcoin mining as well. A mining rig uses ASIC chips that are consistent with the motherboard, so a large aluminum extruded heatsink can dissipate their heat. A server has a complex motherboard with multiple modules and chips. Its high thermal density demands specialized independent cooling solutions, which are not as straightforward.</p>
-<h2 id="h2-7">The facility view</h2>
-<p>In a data center, the cooling system is the main source of energy consumption while it keeps the equipment at its best operating temperature. Hot and cold aisle closures and natural air cooling systems have improved efficiency. Liquid cooling, especially in high-density configurations, further reduces the thermal footprint. Liquid immersion cooling is named as one of the key directions for data center energy efficiency.</p>
+<p>Anyone who has stood next to a Bitcoin mining rig already knows the problem: the fans are loud, the air coming out is hot, and on a hot day the rig cools worse, because air cooling is limited by the temperature of the room it breathes. Miners met that wall early and answered it by sinking whole rigs in non-conductive liquid, which took the heat away evenly and the noise with it. HPC racks now meet the same wall at a much larger scale, and the reason sits in the air itself.</p>
+<p>Computing grew from specialist engineering simulation into general generative models in everyday use, and as the computing load rose, managing heat in deployment and maintenance became harder; it takes real effort to tune, not just matching the numbers on a spec sheet. For the facility, the numbers are 600<!--R:G1-FAC-CURRENT-A--> A and 1200<!--R:G1-FAC-FLOW-LPM--> LPM, and I take 300<!--R:G1-RACK-KW--> kW as a single rack.</p>
+<h2 id="h2-2">Heat flux and total power climb together</h2>
+<p>HPC needs liquid cooling because air runs out before the rack does: per cubic metre and per degree, water holds about 4,170<!--R:WATER-VHC--> kJ of heat and air about 1.21<!--R:AIR-VHC--> kJ, so the same heat needs about 3,450<!--R:WATER-AIR-VHC-RATIO--> times the volume of air. That gap decides the matter at this scale: at 300<!--R:G1-RACK-KW--> kW in one rack and 1200<!--R:G1-FAC-FLOW-LPM--> LPM of facility water, the heat leaves the rack position through liquid, and at so generous a flow the water warms by only about 3.6<!--R:DT-300KW-1200LPM--> °C.</p>
+<p>The main heat sources are still the two big compute chips, but peripheral parts such as network cards are raising their power faster, and board space keeps them from growing the way compute chips do, so heat flux density and total power climb together. In the original draft, device power doubled from 700<!--R:HT-DEVICE-W-OLD--> W to 1500<!--R:HT-DEVICE-W-NEW--> W while chips demanded a lower surface temperature: total heat and total temperature go up while the surface has to stay cooler. That paradox pushed direct liquid cooling and immersion forward, through water with better heat transfer or a large volume of insulating oil.</p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 378" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>The heat paradox</title>
+<text x="240" y="22" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">device power doubled</text>
+<rect x="60" y="146" width="120" height="10" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="90" y="134" width="60" height="12" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="95.0,128 95.0,56" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="91.0,55.6 95.0,50.0 99.0,55.6" fill="var(--fg, #1a1a1a)"/>
+<polyline points="120.0,128 120.0,56" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="116.0,55.6 120.0,50.0 124.0,55.6" fill="var(--fg, #1a1a1a)"/>
+<polyline points="145.0,128 145.0,56" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="141.0,55.6 145.0,50.0 149.0,55.6" fill="var(--fg, #1a1a1a)"/>
+<rect x="300" y="146" width="120" height="10" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="330" y="134" width="60" height="12" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="330,134 390,134" fill="none" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<polyline points="335.0,128 335.0,56" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="331.0,55.6 335.0,50.0 339.0,55.6" fill="var(--fg, #1a1a1a)"/>
+<polyline points="345.0,128 345.0,56" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="341.0,55.6 345.0,50.0 349.0,55.6" fill="var(--fg, #1a1a1a)"/>
+<polyline points="355.0,128 355.0,56" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="351.0,55.6 355.0,50.0 359.0,55.6" fill="var(--fg, #1a1a1a)"/>
+<polyline points="365.0,128 365.0,56" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="361.0,55.6 365.0,50.0 369.0,55.6" fill="var(--fg, #1a1a1a)"/>
+<polyline points="375.0,128 375.0,56" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="371.0,55.6 375.0,50.0 379.0,55.6" fill="var(--fg, #1a1a1a)"/>
+<polyline points="385.0,128 385.0,56" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="381.0,55.6 385.0,50.0 389.0,55.6" fill="var(--fg, #1a1a1a)"/>
+<polyline points="196,140 276,140" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="275.0,135.0 282.0,140.0 275.0,145.0" fill="var(--fg, #1a1a1a)"/>
+<text x="120" y="178" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">700 W</text>
+<text x="360" y="178" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">1500 W</text>
+<text x="360" y="196" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">a lower surface temperature</text>
+<polyline points="8,214 472,214" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="0.5"/>
+<text x="240" y="238" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">direct liquid cooling and immersion</text>
+<rect x="40" y="314" width="160" height="8" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="90" y="302" width="60" height="12" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="80" y="278" width="80" height="24" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polyline points="60,286 80,286" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="73.0,281.0 80.0,286.0 73.0,291.0" fill="var(--fg, #1a1a1a)"/>
+<polyline points="88,286 152,286 152,294 88,294" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1" stroke-dasharray="8 6"/>
+<polyline points="80,294 60,294" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="63.0,289.0 56.0,294.0 63.0,299.0" fill="var(--fg, #1a1a1a)"/>
+<text x="120" y="346" text-anchor="middle" font-size="12" fill="var(--fg, #1a1a1a)">water with better</text>
+<text x="120" y="362" text-anchor="middle" font-size="12" fill="var(--fg, #1a1a1a)">heat transfer</text>
+<polyline points="290,256 290,326 430,326 430,256" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="291" y="266" width="138" height="59" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="0"/>
+<polyline points="290,266 430,266" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1" stroke-dasharray="8 6"/>
+<rect x="318" y="278" width="6" height="40" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="348" y="278" width="6" height="40" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="378" y="278" width="6" height="40" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="408" y="278" width="6" height="40" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<text x="360" y="346" text-anchor="middle" font-size="12" fill="var(--fg, #1a1a1a)">a large volume of</text>
+<text x="360" y="362" text-anchor="middle" font-size="12" fill="var(--fg, #1a1a1a)">insulating oil</text>
+</svg>
+<figcaption>That paradox pushed direct liquid cooling and immersion forward, through water with better heat transfer or a large volume of insulating oil.</figcaption></figure>
+<h2 id="h2-3">Where air cooling approaches its limits</h2>
+<p>High-Performance Computing (HPC) uses supercomputers and computer clusters for problems too large or too slow for a single PC or even a rack of servers, combining many computers, often thousands, into nodes that process in parallel. Scale-out performance comes from configuring multiple systems as one and distributing computation to more nodes, so control and cooling between nodes become crucial. Traditional air cooling relies on coolers and Computer Room Air Conditioning (CRAC); as maximum rack density rises, its efficiency decreases, and pushing more airflow only complicates matters because energy efficiency is low. The system ends up both heat-constrained and wasteful with energy.</p>
+<p>Air cooling is like cooling a pot of soup by running a fan across the kitchen: plenty of air moves, and little of it touches the pot. Direct liquid cooling runs a water pipe straight to the heat source, and immersion sets the whole pot in a cold bath.  In air cooling the heat goes chip, heatsink, room air, CRAC; in direct liquid cooling it goes chip, cold plate, CDU, facility water. Every stage that passes through air is a stage through the weak carrier, repeated across the thousands of nodes a cluster scales out to. From experience, an air-cooled rack reaches its top quickly as density rises.</p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 448" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>Two heat paths out of the rack</title>
+<text x="122" y="22" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">air cooling</text>
+<text x="358" y="22" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">direct liquid cooling</text>
+<polyline points="8,204 236,204" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polyline points="244,204 472,204" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="12" y="72" width="44" height="132" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="34" y="142" text-anchor="middle" font-size="12" fill="var(--fg, #1a1a1a)">CRAC</text>
+<rect x="110" y="84" width="70" height="120" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="122" y="140" width="46" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polyline points="126,140 126,158" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="132,140 132,158" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="138,140 138,158" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="144,140 144,158" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="150,140 150,158" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="156,140 156,158" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="162,140 162,158" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="130" y="158" width="30" height="6" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<text x="145" y="130" text-anchor="middle" font-size="12" fill="var(--fg, #1a1a1a)">heatsink</text>
+<text x="145" y="182" text-anchor="middle" font-size="12" fill="var(--fg, #1a1a1a)">chip</text>
+<polyline points="34,204 34,216 96,216 96,150 106,150" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1" stroke-dasharray="8 6"/>
+<polygon points="103.0,145.0 110.0,150.0 103.0,155.0" fill="var(--fg, #1a1a1a)"/>
+<polyline points="180,120 206,120 206,50 34,50 34,66" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1" stroke-dasharray="8 6"/>
+<polygon points="29.0,65.0 34.0,72.0 39.0,65.0" fill="var(--fg, #1a1a1a)"/>
+<text x="120" y="44" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">room air</text>
+<rect x="250" y="84" width="70" height="120" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="262" y="140" width="46" height="16" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<rect x="270" y="156" width="30" height="6" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<text x="285" y="130" text-anchor="middle" font-size="12" fill="var(--fg, #1a1a1a)">cold plate</text>
+<text x="285" y="182" text-anchor="middle" font-size="12" fill="var(--fg, #1a1a1a)">chip</text>
+<polyline points="308,144 376,144" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="365.0,139.0 372.0,144.0 365.0,149.0" fill="var(--fg, #1a1a1a)"/>
+<polyline points="376,152 308,152" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="319.0,147.0 312.0,152.0 319.0,157.0" fill="var(--fg, #1a1a1a)"/>
+<rect x="376" y="124" width="52" height="48" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="402" y="152" text-anchor="middle" font-size="12" fill="var(--fg, #1a1a1a)">CDU</text>
+<polyline points="392,172 392,222 472,222" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polyline points="412,172 412,212 472,212" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="461.0,217.0 468.0,222.0 461.0,227.0" fill="var(--fg, #1a1a1a)"/>
+<polygon points="423.0,207.0 416.0,212.0 423.0,217.0" fill="var(--fg, #1a1a1a)"/>
+<text x="428" y="240" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">facility water</text>
+<polyline points="8,262 472,262" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="0.5"/>
+<text x="240" y="284" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">the same heat needs</text>
+<rect x="16" y="298" width="4" height="4" fill="var(--fg, #1a1a1a)"/>
+<text x="28" y="304" text-anchor="start" font-size="12" fill="var(--fg, #1a1a1a)">water holds about 4,170 kJ</text>
+<rect x="16" y="314" width="448" height="123" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1" stroke-dasharray="8 6"/>
+<text x="240" y="370" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">air about 1.21 kJ</text>
+<text x="240" y="390" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">about 3,450 times the volume of air</text>
+</svg>
+</figure>
+<h2 id="h2-4">Early adopters: Bitcoin mining</h2>
+<p></p>
+<p>I keep mining rigs here as an example: an early adopter case worth sharing. In the field, many machines designed for cold-plate liquid cooling end up running submerged in immersion fluid instead.  An early adopter runs the trial and error before the rest of the industry follows: miners paid first for the tanks, the fluid maintenance and the coolant choices that data centers weigh now. </p>
+<p>Mining rigs make a clean case because their hardware is simpler. Their ASIC chips are consistent with the motherboard, so a large aluminum extruded heatsink can dissipate the heat, while a server has a complex motherboard with multiple modules and chips whose high thermal density demands specialized independent cooling. Mining farms also have easier network management because the nodes connect in parallel. The original set the Antminer S9 Hydro and the Antminer S21 beside AI servers to show that gap: a rig is one chip type on one board, a server is many. Immersion fully submerges mining rigs in non-conductive liquid that conducts heat better than air, dissipating it rapidly and evenly, with lower noise and in some cases waste heat recovery. </p>
+<p>Before judging a new cooling technology, look at which early adopter already runs it. </p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 176" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>Why mining rigs were easier to cool</title>
+<text x="120" y="22" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">Mining rigs</text>
+<text x="360" y="22" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">a server</text>
+<text x="120" y="44" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">a large aluminum</text>
+<text x="120" y="58" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">extruded heatsink</text>
+<rect x="20" y="68" width="200" height="40" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polyline points="28,68 28,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="36,68 36,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="44,68 44,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="52,68 52,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="60,68 60,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="68,68 68,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="76,68 76,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="84,68 84,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="92,68 92,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="100,68 100,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="108,68 108,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="116,68 116,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="124,68 124,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="132,68 132,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="140,68 140,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="148,68 148,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="156,68 156,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="164,68 164,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="172,68 172,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="180,68 180,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="188,68 188,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="196,68 196,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="204,68 204,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<polyline points="212,68 212,108" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="28" y="108" width="16" height="6" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="52" y="108" width="16" height="6" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="76" y="108" width="16" height="6" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="100" y="108" width="16" height="6" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="124" y="108" width="16" height="6" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="148" y="108" width="16" height="6" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="172" y="108" width="16" height="6" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="196" y="108" width="16" height="6" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="20" y="114" width="200" height="8" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<text x="120" y="142" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">ASIC chips</text>
+<text x="120" y="160" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">one chip type on one board</text>
+<text x="360" y="44" text-anchor="middle" font-size="12" fill="var(--accent, #0e7490)">specialized</text>
+<text x="360" y="58" text-anchor="middle" font-size="12" fill="var(--accent, #0e7490)">independent cooling</text>
+<rect x="260" y="114" width="200" height="8" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="268" y="104" width="30" height="10" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="266" y="84" width="34" height="20" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<rect x="306" y="84" width="3" height="30" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="312" y="84" width="3" height="30" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="318" y="84" width="3" height="30" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="324" y="84" width="3" height="30" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="336" y="104" width="32" height="10" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="334" y="70" width="36" height="34" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<rect x="376" y="104" width="32" height="10" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="374" y="70" width="36" height="34" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<rect x="422" y="106" width="22" height="8" fill="var(--fg, #1a1a1a)" fill-opacity="0.5" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="424" y="94" width="18" height="12" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<text x="360" y="142" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">multiple modules and chips</text>
+<text x="360" y="160" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">a server is many</text>
+</svg>
+<figcaption>Mining rigs make a clean case because their hardware is simpler.</figcaption></figure>
+<h2 id="h2-5">Direct liquid cooling or immersion</h2>
+<p>Direct Liquid Cooling (DLC) circulates coolant directly over heat components such as CPUs and GPUs; it supports higher rack densities and improves energy efficiency. Immersive cooling submerges the hardware entirely in non-conductive liquid and removes the need for air cooling infrastructure, handling higher rack densities still, and within a single cabinet the chip and node temperature differences stay small. From experience, both carry a rack well past where air cooling stops, and immersion goes further still. Immersion also brings initial investment, maintenance of the liquid cooling system, and decisions about coolant selection and handling.</p>
+<p>Many teams turn to immersion not for novelty but because it can take both air-cooled and water-cooled equipment: even if an air or water deployment falls short of plan or still carries a heavy air-conditioning load, the immersion tank can hold it after a simple modification, at the price of adapting to fluid maintenance. In a data center the cooling system is the main source of energy consumption while it keeps equipment at its optimal temperature; hot and cold aisle closures and natural air cooling have improved efficiency, liquid cooling in high-density configurations further reduces the thermal footprint, and liquid immersion cooling will be one of the key directions for improving data center energy efficiency. On the rack side, the next topics are the ORv3 high power rack, the ORv3 liquid cooled busbar, and signal integrity in immersion. So once a rack is past what air can carry, the question is no longer whether to use liquid but which path fits the room and the team: how often parts come out, whether facility water reaches the rack, and who will look after the fluid. The table below puts the three options side by side on exactly those points.</p>
+<div class="table-wrap wide"><table class="cmp">
+<thead><tr><th>Option</th><th>Use it when</th><th>Skip it when</th><th>What it costs</th></tr></thead>
+<tbody>
+<tr><th scope="row">Air cooling with CRAC</th><td data-label="Use it when">Rack density stays where air can still carry the heat</td><td data-label="Skip it when">Density keeps rising and more airflow only adds energy</td><td data-label="What it costs">Most of the room's energy goes into moving and chilling air</td></tr>
+<tr><th scope="row">Direct liquid cooling</th><td data-label="Use it when">Coolant can circulate directly over the CPUs and GPUs through cold plates</td><td data-label="Skip it when">Single components come out often, since each is tied into a cold-plate system</td><td data-label="What it costs">Pipes, leak and corrosion checks, coolant quality</td></tr>
+<tr><th scope="row">Immersion</th><td data-label="Use it when">Air-cooled and water-cooled equipment has to share one home, and chip temperatures in a cabinet should stay close</td><td data-label="Skip it when">The team cannot take on fluid maintenance yet</td><td data-label="What it costs">Initial investment, liquid system maintenance, coolant selection and handling; signal integrity in immersion becomes its own check</td></tr>
+</tbody>
+</table></div>
+<p></p>
 </article>
-<section id="b4"><h2 id="h2-8">How it is calculated</h2>
-<p>This chapter shows no numbers yet. The figures in the original article are the author&#x27;s own statements; each one will appear once it is bound to a public vendor source with a capture date.</p>
-<p>Rewritten from the author's article (2024-07-20): <a href="https://medium.com/wentsenliao/why-is-hpc-with-what-challenges-80f5a0293e25">https://medium.com/wentsenliao/why-is-hpc-with-what-challenges-80f5a0293e25</a></p></section>
-<section id="b5"><h2 id="h2-9">Public layer</h2>
-<p>Narrative with method (public layer 3).</p></section>
-<section id="b6"><h2 id="h2-10">Keep reading</h2>
-<p>This chapter answers why. The next one moves from why to where: building the lab.</p>
+<section id="b4"><h2 id="h2-6">Original article</h2>
+<span id="b4-origin" hidden></span><p>This chapter shows no numbers yet. The figures in the original article are the author&#x27;s own statements; each one will appear once it is bound to a public vendor source with a capture date.</p>
+<p>Rewritten from the author's article (2024-07-20): <a href="https://medium.com/wentsenliao/why-is-hpc-with-what-challenges-80f5a0293e25 ; https://medium.com/p/54e530e3be04">https://medium.com/wentsenliao/why-is-hpc-with-what-challenges-80f5a0293e25 ; https://medium.com/p/54e530e3be04</a></p></section>
+<section id="b6"><h2 id="h2-7">Keep reading</h2>
 <nav class="pager" aria-label="Chapter navigation">
 <span></span>
-<a class="card next" rel="next" href="../office-immersion/"><span>Next chapter →</span><h3>Can an office host an immersion-cooled HPC lab?</h3></a>
+<a class="card next" rel="next" href="../office-immersion/"><span>Next chapter →</span><h3>Ready the floor first, then the racks</h3></a>
 </nav>
 <p><a href="../">Back to the series: HPC: from hardware validation to deployment planning</a></p></section>
 </main>
