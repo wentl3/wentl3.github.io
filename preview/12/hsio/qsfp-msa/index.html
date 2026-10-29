@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QSFP-DD doubles the lanes; a sliding module is hard to cool</title>
+<meta name="description" content="QSFP-DD keeps the QSFP outline and adds a second row of contacts for twice the lanes; the hard part of cooling it was pressing a heat sink onto a module that has to slide in and out, and that bottleneck has since moved on to liquid cooling.">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-zone="engineering" data-type="chapter">
+<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../" aria-current="page">High speed IO</a><a href="../../hpc/">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
+<div class="layout">
+<aside class="toc" aria-label="In this series"><b><a href="../">High speed IO</a></b><ol><li><a href="../part-1/">Small ports run hot: heat follows power density</a></li><li><a href="../part-2/">Wireless rides on fiber; at 800G the choke point is inside</a></li><li><a href="../part-3/">Cable by reach first, heat second</a></li><li><a href="../ocp/">IO sits in two places; the hot aisle is harder</a></li><li class="here">QSFP-DD doubles the lanes; a sliding module is hard to cool</li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2">QSFP and QSFP-DD, part by part</a></li><li><a href="#h2-3">Why it gets hot: the bottleneck moves</a></li><li><a href="#h2-4">2026 update</a></li><li><a href="#h2-5">Sources</a></li><li><a href="#h2-6">Original article</a></li><li><a href="#h2-7">Keep reading</a></li></ol></aside>
+<main>
+<p class="crumb"><a href="../../">Home</a> › <a href="../">High speed IO</a> › Chapter 5 of 5</p>
+<div class="progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+<p class="stage">Part 5 of 5</p>
+<section id="b1"><h1>QSFP-DD doubles the lanes inside the QSFP outline, and the hard part is cooling a module that has to slide</h1><p class="keywords">QSFP / QSFP-DD / OSFP / MSA</p></section>
+<section id="b2" class="answer"><h2 id="h2-1">Short answer</h2>
+<p><strong>In 2022 the main challenge in IO cooling was pulling heat out of a pluggable transceiver; that is now mature, and the bottleneck has moved to liquid cooling.</strong></p></section>
+<article id="body">
+<p>From a mechanical engineer contractor to a full-time thermal engineer, I have seen thermal demand in fields. None of the skills in fixture design, numerical approximation and hands-on experiments can be ignored. IO is a small piece of the system, but the thermal work on it is not easier: comparing configurations, simulating, and validating each need design judgment, plus the skill to simplify complex geometry into a system-friendly model and to make wind tunnel results accurate enough to correlate the contact resistance in that model.</p>
+<p>QSFP-DD keeps the QSFP outline and adds a second row of contacts, doubling the electrical lanes from 4<!--R:QSFP-LANES--> to 8<!--R:QDD-LANES-->; the hard part of cooling it is that the module has to slide in and out, so its heat sink can only press on it. The earlier parts covered NIC IO configurations and the Open Compute Project; this one opens the IO itself, which grew from SFP (Small Form Factor) to QSFP (Quad Small Form Factor) and QSFP-DD (Quad Small Form Factor Double Density) to carry up to 8x the channels.</p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 240" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>A second row of contacts in the same outline</title>
+<g stroke="var(--mut, #5c5c5c)" stroke-width="1" stroke-dasharray="8 6"><line x1="80" y1="22" x2="80" y2="206"/><line x1="280" y1="22" x2="280" y2="206"/><line x1="320" y1="88" x2="320" y2="136"/></g>
+<rect x="80" y="30" width="200" height="64" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="280" y="36" width="40" height="52" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="70" y="67" text-anchor="end" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">QSFP</text>
+<rect x="306" y="40" width="12" height="8" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="306" y="52" width="12" height="8" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="306" y="64" width="12" height="8" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="306" y="76" width="12" height="8" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<text x="340" y="58" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">4</text>
+<text x="340" y="76" font-size="12" fill="var(--mut, #5c5c5c)">electrical lanes</text>
+<rect x="80" y="130" width="200" height="64" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="280" y="136" width="70" height="52" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="70" y="167" text-anchor="end" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">QSFP-DD</text>
+<rect x="336" y="140" width="12" height="8" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="336" y="152" width="12" height="8" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="336" y="164" width="12" height="8" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="336" y="176" width="12" height="8" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="298" y="140" width="12" height="8" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<rect x="298" y="152" width="12" height="8" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<rect x="298" y="164" width="12" height="8" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<rect x="298" y="176" width="12" height="8" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<text x="370" y="158" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">8</text>
+<text x="370" y="176" font-size="12" fill="var(--mut, #5c5c5c)">electrical lanes</text>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1"><line x1="320" y1="118" x2="350" y2="118"/><line x1="320" y1="113" x2="320" y2="123"/><line x1="350" y1="113" x2="350" y2="136"/></g>
+<text x="358" y="122" font-size="12" fill="var(--mut, #5c5c5c)">Longer on QSFP-DD</text>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1"><line x1="80" y1="206" x2="280" y2="206"/><line x1="80" y1="201" x2="80" y2="211"/><line x1="280" y1="201" x2="280" y2="211"/></g>
+<text x="180" y="228" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">QSFP outline</text>
+<line x1="304" y1="188" x2="304" y2="212" stroke="var(--accent, #0e7490)" stroke-width="1"/>
+<text x="298" y="228" font-size="13" fill="var(--fg, #1a1a1a)">second row of contacts</text>
+</svg>
+</figure>
+<h2 id="h2-2">QSFP and QSFP-DD, part by part</h2>
+<div class="table-wrap wide"><table class="cmp">
+<thead><tr><th>Part or limit</th><th>Hardware specification Rev 6.2 (2022<!--R:QDDHW-REV-YEAR-->)</th></tr></thead>
+<tbody>
+<tr><th scope="row">Form factors</th><td data-label="Hardware specification Rev 6.2 (2022)">SFP, QSFP and QSFP-DD; QSFP-DD doubles the bandwidth of QSFP</td></tr>
+<tr><th scope="row">Plug</th><td data-label="Hardware specification Rev 6.2 (2022)">4<!--R:QDDHW-MODTYPE-COUNT--> module types for different cooling needs, named 1 / 2 / 2A / 2B by the heat sink on the plug shell</td></tr>
+<tr><th scope="row">Cage</th><td data-label="Hardware specification Rev 6.2 (2022)">Two EMI shielding cage types: ganged (1xN) and stacked (2xN), compatible with the plug types</td></tr>
+<tr><th scope="row">Connector</th><td data-label="Hardware specification Rev 6.2 (2022)">Ganged (1x1) or stacked (2x1)</td></tr>
+<tr><th scope="row">Paddle card and connector or cage length</th><td data-label="Hardware specification Rev 6.2 (2022)">Longer on QSFP-DD, for the extra double-density row of contacts</td></tr>
+<tr><th scope="row">Plug-to-cage mating</th><td data-label="Hardware specification Rev 6.2 (2022)">Same on both; the same stopper definition keeps them compatible</td></tr>
+<tr><th scope="row">Density</th><td data-label="Hardware specification Rev 6.2 (2022)">Up to 36<!--R:QDDHW-1U-MOD-MAX--> modules in 1U of a rack, stacked, ganged or belly to belly</td></tr>
+<tr><th scope="row">Module power</th><td data-label="Hardware specification Rev 6.2 (2022)">Up to 25<!--R:QDDHW-MODPWR-MAX--> W</td></tr>
+<tr><th scope="row">Module flatness, by power class</th><td data-label="Hardware specification Rev 6.2 (2022)">Passive copper 0.15<!--R:QDDHW-PC1CU-FLAT--> mm; lower power classes 0.075<!--R:QDDHW-PC1TO4-FLAT--> mm; higher power classes 0.050<!--R:QDDHW-PC5TO8-FLAT--> mm; optional enhanced for the top class 0.025<!--R:QDDHW-PC8-ENH-FLAT--> mm</td></tr>
+</tbody>
+</table></div>
+<p>Those limits add up at the faceplate: 36<!--R:QDDHW-1U-MOD-MAX--> modules in 1U at up to 25<!--R:QDDHW-MODPWR-MAX--> W each is up to 900<!--R:QDD-1U-W--> W of module heat across one rack unit, if every port ran at the top power, which is the system view the specification gives when read together with the thermal design. Flatness follows the power of each module, not the rack total: the temperature drop across the contact is the module's power times its contact thermal resistance, so a module near 25<!--R:QDDHW-MODPWR-MAX--> W loses far more degrees through the same air gap than a passive copper plug does. To hold that drop down, the specification tightens flatness as the power class rises, from 0.15<!--R:QDDHW-PC1CU-FLAT--> mm for passive copper to 0.050<!--R:QDDHW-PC5TO8-FLAT--> mm for the higher classes.</p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 140" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>A full 1U faceplate adds up</title>
+<text x="44" y="22" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">36 modules in 1U</text>
+<text x="460" y="22" text-anchor="end" font-size="13" fill="var(--fg, #1a1a1a)">25 W each</text>
+<rect x="44" y="34" width="416" height="56" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1"><line x1="34" y1="34" x2="34" y2="90"/><line x1="29" y1="34" x2="39" y2="34"/><line x1="29" y1="90" x2="39" y2="90"/></g>
+<text x="26" y="66" text-anchor="end" font-size="12" fill="var(--mut, #5c5c5c)">1U</text>
+<rect x="54.0" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="76.2" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="98.4" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="120.7" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="142.9" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="165.1" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="187.3" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="209.6" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="231.8" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="254.0" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="276.2" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="298.4" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="320.7" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="342.9" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="365.1" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="387.3" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="409.6" y="41" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="431.8" y="41" width="18" height="18" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<rect x="54.0" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="76.2" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="98.4" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="120.7" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="142.9" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="165.1" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="187.3" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="209.6" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="231.8" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="254.0" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="276.2" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="298.4" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="320.7" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="342.9" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="365.1" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="387.3" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="409.6" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<rect x="431.8" y="63" width="18" height="18" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<line x1="440.8" y1="41" x2="440.8" y2="28" stroke="var(--accent, #0e7490)" stroke-width="1"/>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1"><line x1="52" y1="102" x2="452" y2="102"/><line x1="52" y1="97" x2="52" y2="102"/><line x1="452" y1="97" x2="452" y2="102"/><line x1="252" y1="102" x2="252" y2="108"/></g>
+<text x="252" y="126" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">900 W of module heat</text>
+</svg>
+</figure>
+<h2 id="h2-3">Why it gets hot: the bottleneck moves</h2>
+<p></p>
+<p>A thermal white paper published by the MSA shows what an IO thermal engineer does day to day: lay out ganged cages belly to belly or stacked cages on one side, optimize the heat sink by simulation and release a thermal model to customers, then validate the design and its manufacturing quality on limit samples and correlate the simulation for contact resistance. The work is close to general thermal work, but when this article first ran, its answer was in bold: <strong>the main challenge in IO cooling is bottlenecked at how to pull out heat from the pluggable transceiver.</strong> A fixed heat sink on a PCB can use TIM and a high-pressure clip; a pluggable transceiver moves, so that static recipe no longer applies.</p>
+<p>A fixed heat sink is a lid clamped onto a pot: paste in between, pressed hard, and it never moves. A pluggable module is a drawer: it has to slide in and out by hand, so the heat sink above it can only rest on it under a clip. Every gap between the drawer and what sits on it is air, and air insulates; flatness, clip force and interface material are three ways to close that gap without jamming the drawer.</p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 186" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>Where the heat gets stuck in a pluggable</title>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1.5">
+<line x1="180" y1="12" x2="180" y2="34"/>
+<line x1="210" y1="12" x2="210" y2="34"/>
+<line x1="240" y1="12" x2="240" y2="34"/>
+<line x1="270" y1="12" x2="270" y2="34"/>
+<line x1="300" y1="12" x2="300" y2="34"/>
+<line x1="330" y1="12" x2="330" y2="34"/>
+<line x1="360" y1="12" x2="360" y2="34"/>
+<line x1="390" y1="12" x2="390" y2="34"/>
+</g>
+<rect x="160" y="34" width="240" height="22" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="410" y="50" font-size="13" fill="var(--fg, #1a1a1a)">heat sink</text>
+<line x1="150" y1="14" x2="150" y2="42" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="145,42 155,42 150,50" fill="var(--fg, #1a1a1a)"/>
+<text x="140" y="30" text-anchor="end" font-size="13" fill="var(--fg, #1a1a1a)">clip</text>
+<polygon points="160,56 400,56 400,62 280,70 160,62" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<text x="150" y="64" text-anchor="end" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">contact resistance</text>
+<text x="150" y="80" text-anchor="end" font-size="12" fill="var(--mut, #5c5c5c)">air insulates</text>
+<text x="410" y="70" font-size="13" fill="var(--fg, #1a1a1a)">flatness</text>
+<text x="410" y="86" font-size="12" fill="var(--mut, #5c5c5c)">0.050 mm</text>
+<polygon points="160,62 280,70 400,62 400,112 160,112" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<g stroke="var(--mut, #5c5c5c)" stroke-width="1" stroke-dasharray="8 6">
+<line x1="190" y1="104" x2="190" y2="44"/>
+<line x1="370" y1="104" x2="370" y2="44"/>
+</g>
+<polygon points="185,46 195,46 190,38" fill="var(--mut, #5c5c5c)"/>
+<polygon points="365,46 375,46 370,38" fill="var(--mut, #5c5c5c)"/>
+<text x="280" y="90" text-anchor="middle" font-size="14" fill="var(--fg, #1a1a1a)">pluggable module</text>
+<text x="280" y="106" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">25 W</text>
+<line x1="186" y1="134" x2="374" y2="134" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="186,129 176,134 186,139" fill="var(--fg, #1a1a1a)"/>
+<polygon points="374,129 384,134 374,139" fill="var(--fg, #1a1a1a)"/>
+<text x="280" y="160" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">slide in and out</text>
+</svg>
+</figure>
+<p>The specification answered with three approaches. Module surface flatness compensates for the caved surface of cast shell parts (the table above gives the Rev 6.2 values by power class). The heat sink on the shell nose and on the EMI cage carries most of the heat, but fins on the shell are limited by the form factor, which is why the next form factors, OSFP and OSFP-XD, were then in development. The clip sets the contact pressure: more downward force lowers contact resistance, but insertion and extraction force limits cap it. Beyond the pressure value, the design moved from metal-to-metal contact to thermal interface material, surface treatments and validation fixtures, and every vent opened in the cage for airflow is traded against mechanical, signal integrity and EMC needs, such as the grounding spring for EMC and the bypass connector that keeps SI loss off the PCB routing.</p>
+<p>None of these levers is free, because each one pushes against a different part of the same drawer: a flatter shell costs casting precision, a bigger heat sink runs out of room inside the form factor, a harder clip makes the module harder to slide in and out, and a wider vent weakens shielding and grounding. The table puts the four side by side, each with what it buys for the contact and what caps it, so a design reads as one setting per row rather than one number to push.</p>
+<div class="table-wrap wide"><table class="cmp">
+<thead><tr><th>Lever</th><th>What it buys</th><th>What limits it</th></tr></thead>
+<tbody>
+<tr><th scope="row">Surface flatness</th><td data-label="What it buys">Less air trapped in the contact; it compensates for the caved surface of cast shell parts</td><td data-label="What limits it">How flat a cast shell can be made; the specification sets the tighter values only for the higher power classes</td></tr>
+<tr><th scope="row">Heat sink on the shell nose and the EMI cage</th><td data-label="What it buys">Carries most of the heat</td><td data-label="What limits it">Fins on the shell are limited by the form factor, which pushed the next form factors, OSFP and OSFP-XD</td></tr>
+<tr><th scope="row">Clip force</th><td data-label="What it buys">More downward force lowers contact resistance</td><td data-label="What limits it">Insertion and extraction force limits for the cage</td></tr>
+<tr><th scope="row">Vents in the cage</th><td data-label="What it buys">Airflow onto the module</td><td data-label="What limits it">Mechanical, signal integrity and EMC needs, such as the grounding spring for EMC and the bypass connector that keeps SI loss off the PCB routing</td></tr>
+</tbody>
+</table></div>
+<p>Reading the specification and the thermal design together shows both the work done inside a component and what it is worth in the system. When change runs faster than it can be followed, go back to the simple, reliable way, as always.</p>
+<p>In the early air-cooling work, validating an idea and talking it through was not simple, and it took a lot of effort to settle a design. Today, pulling heat out of a pluggable module through its contact thermal resistance is already mature. The bottleneck now sits in the push for liquid cooling.  Solving one bottleneck hands the limit to the next weakest link. </p>
+<p>Liquid cooling is pushed to reduce air cooling, yet the system still has to be reliable, and blind mating on rack slide rails is hard to quantify and validate. Hot-plugging with liquid cooling is harder still: it has to stay sealed and keep good contact, and because the plastic must be tough enough to last, the surfaces more easily end up at uneven heights instead of lying flat. That is where the bottleneck went. </p>
+<p>When the new tricks change faster than they can be followed, start with the simple, reliable way, as always, with the hardware sitting in insulating liquid. </p>
+<h2 id="h2-4">2026 update</h2>
+<p>QSFP and QSFP-DD are still enough today, though in the projects I see about half already use OSFP, and OSFP-XD is starting to be promoted; against the old pace of one generation every three years, the change is much faster. Heat sinks are no longer split into so many variants; the choice follows the vendor's recommended material and the samples from a project, so the type names above are background rather than a menu.</p>
+<p>The 2021<!--R:QDDTWP-YEAR--> MSA thermal white paper targets at least 25<!--R:QDDTWP-PORT-PWR-MIN--> W per port, studied at a worst-case data center ambient of 46<!--R:QDDTWP-AMB--> °C. At 32<!--R:QDDTWP-DENSE-PORTS-MIN--> or more ports in 1U, the same 2021<!--R:QDDTWP-YEAR--> paper finds tapered heat sinks on the cage top help dense faceplates.</p>
+<p></p>
+<p>The HPC series takes the same question into liquid cooling, starting from there.</p>
+<p>A single port already holds a plug, a cage, a connector, four module types and a flatness value per power class, and each of them keeps changing, from QSFP to QSFP-DD and on to OSFP and OSFP-XD. What kept it workable is that the MSA is an agreement among many sources: the members argue over each part until it converges into one specification and one white paper that everyone can design to. The next piece steps back from that single module to the career map around it, planned the same way: many moving parts, settled one agreement at a time.</p>
+<h2 id="h2-5">Sources</h2>
+<ul>
+<li>QSFP-DD MSA, QSFP-DD/QSFP-DD800/QSFP112 Hardware Specification, Rev 6.2, 2022<!--R:QDDHW-REV-YEAR-->.</li>
+<li>QSFP-DD MSA Thermal Whitepaper, Optimizing QSFP-DD Systems to Achieve at Least 25<!--R:QDDTWP-PORT-PWR-MIN--> Watt Thermal Port Performance, 2021<!--R:QDDTWP-YEAR-->.</li>
+</ul>
+</article>
+<section id="b4"><h2 id="h2-6">Original article</h2>
+<span id="b4-origin" hidden></span><p>Rewritten from the author's article (2022-07-25): <a href="https://medium.com/p/6e7eaf3e4993">https://medium.com/p/6e7eaf3e4993</a></p></section>
+<section id="b6"><h2 id="h2-7">Keep reading</h2>
+<nav class="pager" aria-label="Chapter navigation">
+<a class="card" rel="prev" href="../ocp/"><span>← Previous chapter</span><h3>IO sits in two places; the hot aisle is harder</h3></a>
+
+</nav>
+<p><a href="../">Back to the series: High speed IO: from everyday ports to pluggable modules</a></p></section>
+</main>
+</div>
+</body>
+</html>

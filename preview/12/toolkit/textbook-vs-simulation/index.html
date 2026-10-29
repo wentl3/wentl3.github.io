@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Textbook estimates bound a CFD result | Toolkit</title>
+<meta name="description" content="CFD is practical but limited. Operating points, air density at altitude and dimensionless analysis give quick estimates that bound a simulation, and a trade-off table says when to use a hand estimate, a correlation, system decomposition or full CFD.">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-zone="engineering" data-type="chapter">
+<header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hsio/">High speed IO</a><a href="../../hpc/">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
+<div class="layout">
+<aside class="toc" aria-label="In this series"><b><a href="../">Toolkit</a></b><ol><li><a href="../newbie-thermal/">Copy the recipe once, then repeat runs</a></li><li class="here">Textbook estimates bound a CFD result</li><li><a href="../functional-dimensioning/"><span lang="zh-Hant">品質標誌標在疊加的主導尺寸</span></a></li><li><a href="../dfss-quality/"><span lang="zh-Hant">DFSS、DMAIC 都先過量測這一關</span></a></li><li><a href="../thermal-pm/"><span lang="zh-Hant">散熱工程師的專案管理</span></a></li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2">Operating point, pressure drop and density</a></li><li><a href="#h2-3">Dimensionless analysis and flow principles</a></li><li><a href="#h2-4">Spec values and experience values, side by side</a></li><li><a href="#h2-5">Original article</a></li><li><a href="#h2-6">Keep reading</a></li></ol></aside>
+<main>
+<p class="crumb"><a href="../../">Home</a> › <a href="../">Toolkit</a> › Chapter 2 of 5</p>
+<div class="progress" aria-hidden="true"><i></i><i></i><i class="live"></i><i class="live"></i><i class="live"></i></div>
+<p class="stage">Part 2 of 5</p>
+<section id="b1"><h1>Textbook estimates bound a CFD result</h1><p class="keywords">CFD / operating point / dimensionless analysis</p></section>
+<section id="b2" class="answer"><h2 id="h2-1">Short answer</h2>
+<p><strong>Dimensionless analysis provides useful guidelines within a limited range, so textbook estimates complement CFD rather than replace it.</strong></p></section>
+<article id="body">
+<p>A textbook estimate does not replace CFD; it bounds it: before the run it gives the range a result should land in, and after the run it tells you whether to trust the picture. In thermal design, CFD is practical but has its limitations, and textbook knowledge is what fills the gap.</p>
+<h2 id="h2-2">Operating point, pressure drop and density</h2>
+<p>Every component has its own operating point, and finding it starts with the data sheet: a graph reader pulls a fan curve out of an image, so the operating point and the distance to the stall region can be checked before any model exists. A partial model has to respect total and internal equilibrium without accumulating impedance twice, and heat transfer then needs both flow and temperature, so the system is split into two regions that still add up to the total impedance. The bezel and the IO area carry their own static-pressure range while the rest of a switch shows lower impedance; the original post estimated an operating condition of about 6 CFM per QDD2x1 or 4 CFM per QDD to size transceiver cooling; the post gave no module power behind those airflows, so they size the air per port, not a temperature.</p>
+<p>Altitude is where a hand estimate earns its place. A fan moves air in buckets of a fixed volume; at altitude the buckets stay the same size but the air in them is thinner, so each bucket carries less heat away. Lower density derates both the fan curve and the impedance, so the operating point drops in pressure but lands near the same CFM, while the mass of air the fan moves drops. The air temperature rise is ΔT = P / (ρ · cp · V̇), about 1.76<!--R:AIR-CFM-K--> × P / CFM in °C at sea level. At 3,000<!--R:TK-TVS-ALT--> m the standard-atmosphere density is 0.74<!--R:ISA-RHO-3000--> of sea level, so the same rise grows 1.35<!--R:TK-TVS-GAIN--> times: a module assumed at 10<!--R:TK-NT-P--> W and 4 CFM goes from 1.76<!--R:AIR-CFM-K--> × 10<!--R:TK-NT-P--> / 4 = 4.4<!--R:TK-TVS-DT0--> °C to 4.4<!--R:TK-TVS-DT0--> × 1.35<!--R:TK-TVS-GAIN--> ≈ 5.9<!--R:TK-TVS-DT3K--> °C. Local heat transfer (h <em> A </em> dT) does not shift by the same factor as the main flow (Cp * dT), because the main flow preheats, so laminar formulas alone are not enough; for chips on the board a preheated ambient plus package thermal-resistance values tells whether natural convection is sufficient or a heatsink is needed. </p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 212" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>Same bucket, thinner air</title>
+<text x="130" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">sea level</text>
+<text x="350" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">3,000 m</text>
+<polyline points="75,36 75,140 185,140 185,36" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polyline points="295,36 295,140 405,140 405,36" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<circle cx="90" cy="52" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="90" cy="68" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="90" cy="84" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="90" cy="100" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="90" cy="116" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="90" cy="132" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="106" cy="52" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="106" cy="68" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="106" cy="84" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="106" cy="100" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="106" cy="116" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="106" cy="132" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="122" cy="52" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="122" cy="68" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="122" cy="84" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="122" cy="100" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="122" cy="116" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="122" cy="132" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="138" cy="52" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="138" cy="68" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="138" cy="84" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="138" cy="100" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="138" cy="116" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="138" cy="132" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="154" cy="52" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="154" cy="68" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="154" cy="84" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="154" cy="100" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="154" cy="116" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="154" cy="132" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="170" cy="52" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="170" cy="68" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="170" cy="84" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="170" cy="100" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="170" cy="116" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="170" cy="132" r="3" fill="var(--fg, #1a1a1a)"/>
+<circle cx="310" cy="52" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="310" cy="72" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="310" cy="112" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="310" cy="132" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="330" cy="52" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="330" cy="92" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="330" cy="112" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="350" cy="72" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="350" cy="92" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="350" cy="132" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="370" cy="52" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="370" cy="72" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="370" cy="112" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="370" cy="132" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="390" cy="52" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="390" cy="92" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<circle cx="390" cy="112" r="3" fill="var(--fg, #1a1a1a)" fill-opacity="0.55"/>
+<line x1="193" y1="88" x2="287" y2="88" stroke="var(--mut, #5c5c5c)" stroke-width="1" stroke-dasharray="8 6"/>
+<text x="240" y="80" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">same size</text>
+<text x="422" y="80" font-size="12" fill="var(--mut, #5c5c5c)">thinner</text>
+<text x="422" y="98" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">0.74</text>
+<text x="130" y="160" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">4 CFM</text>
+<text x="350" y="160" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">4 CFM</text>
+<text x="20" y="196" font-size="13" fill="var(--fg, #1a1a1a)">ΔT</text>
+<text x="130" y="196" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">4.4 °C</text>
+<line x1="172" y1="191" x2="292.0" y2="191.0" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<polygon points="300,191 292.0,187.0 292.0,195.0" fill="var(--mut, #5c5c5c)"/>
+<text x="236" y="184" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">1.35 times</text>
+<text x="350" y="196" text-anchor="middle" font-size="14" font-weight="600" fill="var(--accent, #0e7490)">5.9 °C</text>
+</svg>
+</figure>
+<h2 id="h2-3">Dimensionless analysis and flow principles</h2>
+<p>Dimensionless analysis is common in research on heat transfer, but practical engineering asks for something it cannot give: it assumes a fixed flow area, while a design keeps changing heatsink sizes and venting locations under size and manufacturing constraints. Dimensionless analysis provides useful guidelines within a limited range but becomes less feasible when system sizes and venting areas change. That is why practical tools and calculators matter: they let an engineer evaluate a design draft quickly and answer a customer without waiting for a full model. Natural convection is the clearest case, since projects need approximations for venting size, temperature and pressure rather than a CFD run for every industrial-design change.</p>
+<p>The principles split into flow-only work and flow with heat transfer. On the flow side, a simplified model can approximate flow distribution and derate impedance through total-pressure extraction, and contact resistance can be represented by surface properties instead of meshing a thin grease or air layer. With heat transfer, the original also weighed air against liquid; for air, the deciding factor is heat-transfer area. What changes in the liquid-cooling era is something I cannot say, so this page stays with air. A network-card estimate follows the same pattern: power and thermal resistance set the tier, thermal resistance falls with flow speed, and the temperature rise scales with power. Each method below answers a different question at a different cost, so the choice starts from what has to be decided now: a first answer for a customer, a comparison of variants, a model to share, or the final design.</p>
+<div class="table-wrap wide"><table class="cmp">
+<thead><tr><th>Method</th><th>Use it when</th><th>Cost</th></tr></thead>
+<tbody>
+<tr><th scope="row">Hand estimate (P = ṁ · cp · ΔT)</th><td data-label="Use it when">A first answer to a customer, a sanity check on a CFD result, scaling for altitude or power</td><td data-label="Cost">Assumes uniform flow; says nothing about hot spots</td></tr>
+<tr><th scope="row">Dimensionless correlation</th><td data-label="Use it when">Comparing variants inside a fixed flow area</td><td data-label="Cost">Becomes less feasible when system sizes and venting areas change</td></tr>
+<tr><th scope="row">System decomposition</th><td data-label="Use it when">Sharing a component model with a customer who owns the system</td><td data-label="Cost">Hides interactions between neighbouring components; the customer still has to integrate the model and fix the absolute operating values</td></tr>
+<tr><th scope="row">Full CFD</th><td data-label="Use it when">Flow distribution, hot spots, the final design</td><td data-label="Cost">Model build and run time; only as good as its impedance and contact-resistance inputs</td></tr>
+</tbody>
+</table></div>
+<h2 id="h2-4">Spec values and experience values, side by side</h2>
+<p></p>
+<p>A textbook or a simulation hands back a value; the question is what to put beside it. White papers and specifications can be compared side by side with real case experience, with the experience value added in brackets.  A specification gives the floor; experience gives the position.</p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 226" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>Spec values and experience values, side by side</title>
+<text x="110" y="52" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">A textbook or a simulation</text>
+<rect x="50" y="64" width="120" height="34" rx="4" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="110" y="86" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">hands back a value</text>
+<line x1="170" y1="81" x2="330" y2="81" stroke="var(--mut, #5c5c5c)" stroke-width="1" stroke-dasharray="8 6"/>
+<path d="M 340 62 h -8 v 38 h 8 M 380 62 h 8 v 38 h -8" fill="none" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<circle cx="360" cy="81" r="6" fill="var(--accent, #0e7490)"/>
+<text x="360" y="50" text-anchor="middle" font-size="13" font-weight="600" fill="var(--accent, #0e7490)">experience</text>
+<text x="360" y="120" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">in brackets</text>
+<line x1="30" y1="168" x2="450" y2="168" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="40" y1="168" x2="32" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="54" y1="168" x2="46" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="68" y1="168" x2="60" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="82" y1="168" x2="74" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="96" y1="168" x2="88" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="110" y1="168" x2="102" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="124" y1="168" x2="116" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="138" y1="168" x2="130" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="152" y1="168" x2="144" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="166" y1="168" x2="158" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="180" y1="168" x2="172" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="194" y1="168" x2="186" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="208" y1="168" x2="200" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="222" y1="168" x2="214" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="236" y1="168" x2="228" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="250" y1="168" x2="242" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="264" y1="168" x2="256" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="278" y1="168" x2="270" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="292" y1="168" x2="284" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="306" y1="168" x2="298" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="320" y1="168" x2="312" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="334" y1="168" x2="326" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="348" y1="168" x2="340" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="362" y1="168" x2="354" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="376" y1="168" x2="368" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="390" y1="168" x2="382" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="404" y1="168" x2="396" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="418" y1="168" x2="410" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="432" y1="168" x2="424" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="446" y1="168" x2="438" y2="178" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="430" y1="81" x2="430" y2="168" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<line x1="424" y1="81" x2="436" y2="81" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<line x1="424" y1="168" x2="436" y2="168" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
+<text x="424" y="140" text-anchor="end" font-size="12" fill="var(--mut, #5c5c5c)">gives the position</text>
+<text x="110" y="198" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">A specification</text>
+<text x="110" y="214" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">gives the floor</text>
+</svg>
+<figcaption>A specification gives the floor; experience gives the position.</figcaption></figure>
+<p>From 50G to 112G platforms, cooling has to be denser and more compact, and beyond that the push is for new innovation such as pluggable parts; the hard part is how to improve the interface contact thermal resistance, which materials and properties to use, and how to verify them and calibrate the thermal-resistance coefficients into a thermal simulation that can predict and estimate. A simulation reaches that point only after its coefficients have been checked against experience. Next to every number taken from a textbook, a white paper or a specification, put an experience value in brackets.</p>
+<p></p>
+</article>
+<section id="b4"><h2 id="h2-5">Original article</h2>
+<span id="b4-origin" hidden></span><p>Rewritten from the author's article (2023-07-22): <a href="https://medium.com/p/466bde2fb321">https://medium.com/p/466bde2fb321</a></p></section>
+<section id="b6"><h2 id="h2-6">Keep reading</h2>
+<p>The next page moves from estimating a design to dimensioning it by function.</p>
+<nav class="pager" aria-label="Chapter navigation">
+<a class="card" rel="prev" href="../newbie-thermal/"><span>← Previous chapter</span><h3>Copy the recipe once, then repeat runs</h3></a>
+<a class="card next" rel="next" href="../functional-dimensioning/"><span>Next chapter →</span><h3><span lang="zh-Hant">品質標誌標在疊加的主導尺寸</span></h3></a>
+</nav>
+<p><a href="../">Back to the series: Toolkit: what school projects don&#x27;t teach</a></p></section>
+</main>
+</div>
+</body>
+</html>
