@@ -1,5 +1,17 @@
 {
  "keys": {
+  "AIR-CFM-K": {
+   "captured": "2026-11-21",
+   "display": "1.76",
+   "source_url": "https://doi.org/10.1063/1.1285884",
+   "tier": "Estimated"
+  },
+  "AIR-VHC": {
+   "captured": "2026-11-21",
+   "display": "1.21",
+   "source_url": "https://doi.org/10.1063/1.1285884",
+   "tier": "External"
+  },
   "B200-AIR-TUE": {
    "captured": "2026-10-01",
    "display": "2.04",
@@ -120,6 +132,114 @@
    "source_url": "https://docs.nvidia.com/dgx-superpod/reference-architecture-scalable-infrastructure-b200/latest/network-fabrics.html",
    "tier": "Vendor"
   },
+  "DT-300KW-1200LPM": {
+   "captured": "2026-11-21",
+   "display": "3.6",
+   "source_url": "https://iapws.org/relguide/IAPWS-95.html",
+   "tier": "Estimated"
+  },
+  "DT-300KW-600LPM": {
+   "captured": "2026-11-21",
+   "display": "7.2",
+   "source_url": "https://iapws.org/relguide/IAPWS-95.html",
+   "tier": "Estimated"
+  },
+  "ESD-RH-DRY-LOW": {
+   "captured": "2026-11-21",
+   "display": "30",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "ESD-RH-EN-HIGH": {
+   "captured": "2026-11-21",
+   "display": "60",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "ESD-RH-EN-LOW": {
+   "captured": "2026-11-21",
+   "display": "40",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "ESD-RH-ZH-HIGH": {
+   "captured": "2026-11-21",
+   "display": "70",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "ESD-RH-ZH-LOW": {
+   "captured": "2026-11-21",
+   "display": "60",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "G1-ESD-COND-MAX-KOHM": {
+   "captured": "2026-11-21",
+   "display": "10",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "G1-ESD-DISS-MAX-GOHM": {
+   "captured": "2026-11-21",
+   "display": "100",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "G1-ESD-FIELD-KV": {
+   "captured": "2026-11-21",
+   "display": "2",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "G1-ESD-FLOOR-HIGH-GOHM": {
+   "captured": "2026-11-21",
+   "display": "1",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "G1-ESD-FLOOR-LOW-KOHM": {
+   "captured": "2026-11-21",
+   "display": "100",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "G1-ESD-INSUL-CM": {
+   "captured": "2026-11-21",
+   "display": "30",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "G1-ESD-LIQ-MJ": {
+   "captured": "2026-11-21",
+   "display": "1",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "G1-ESD-LIQ-PSM": {
+   "captured": "2026-11-21",
+   "display": "100",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "G1-ESD-PATH-HIGH-MOHM": {
+   "captured": "2026-11-21",
+   "display": "10",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "G1-ESD-PATH-LOW-KOHM": {
+   "captured": "2026-11-21",
+   "display": "750",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
+  "G1-ESD-STRAP-MOHM": {
+   "captured": "2026-11-21",
+   "display": "1",
+   "source_url": "https://medium.com/wentsenliao/why-esd-matters-in-hpc-office-e063ac0c4b21",
+   "tier": "Assumption"
+  },
   "HGX-RA-GPUS-PER-NIC": {
    "captured": "2026-09-11",
    "display": "1",
@@ -204,41 +324,23 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/hgx-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
-  "HSIO-TB-GEN": {
-   "captured": "2026-10-21",
-   "display": "4",
-   "source_url": "https://www.intel.com/content/www/us/en/architecture-and-technology/thunderbolt/overview.html",
-   "tier": "Vendor"
-  },
-  "HSIO-TB4-MIN-GBPS": {
-   "captured": "2026-10-21",
-   "display": "40",
-   "source_url": "https://www.intel.com/content/www/us/en/architecture-and-technology/thunderbolt/overview.html",
-   "tier": "Vendor"
-  },
-  "HSIO-USB-SPEC-VERSION": {
-   "captured": "2026-10-21",
-   "display": "3.2",
-   "source_url": "https://www.usb.org/usb-32-0",
-   "tier": "Vendor"
-  },
-  "HSIO-USB32-GBPS-HIGH": {
-   "captured": "2026-10-21",
-   "display": "20",
-   "source_url": "https://www.usb.org/usb-32-0",
-   "tier": "Vendor"
-  },
-  "HSIO-USB32-GBPS-LOW": {
-   "captured": "2026-10-21",
-   "display": "5",
-   "source_url": "https://www.usb.org/usb-32-0",
-   "tier": "Vendor"
-  },
-  "HSIO-USB32-GBPS-MID": {
-   "captured": "2026-10-21",
+  "ILLUS-MOD-CM2": {
+   "captured": "2026-11-21",
    "display": "10",
-   "source_url": "https://www.usb.org/usb-32-0",
-   "tier": "Vendor"
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "ILLUS-MOD-FLUX": {
+   "captured": "2026-11-21",
+   "display": "1",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "ILLUS-MOD-W": {
+   "captured": "2026-11-21",
+   "display": "10",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
   },
   "NVL72-RA-GPUS-PER-NIC": {
    "captured": "2026-09-11",
@@ -323,6 +425,12 @@
    "display": "1",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
+  },
+  "OCP-ILLUS-PREHEAT": {
+   "captured": "2026-11-21",
+   "display": "10",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
   },
   "PLAN-AIR-FANKW": {
    "captured": "2026-10-20",
@@ -420,6 +528,102 @@
    "source_url": "tools/planner/index.html",
    "tier": "Estimated"
   },
+  "QDD-1U-W": {
+   "captured": "2026-11-21",
+   "display": "900",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2022/03/QSFP-DD-Hardware-Rev6.2.pdf",
+   "tier": "External"
+  },
+  "QDD-LANES": {
+   "captured": "2026-11-21",
+   "display": "8",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2022/03/QSFP-DD-Hardware-Rev6.2.pdf",
+   "tier": "External"
+  },
+  "QDD800-LANE-G": {
+   "captured": "2026-11-21",
+   "display": "100",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2022/03/QSFP-DD-Hardware-Rev6.2.pdf",
+   "tier": "External"
+  },
+  "QDDHW-1U-MOD-MAX": {
+   "captured": "2026-10-27",
+   "display": "36",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2022/03/QSFP-DD-Hardware-Rev6.2.pdf",
+   "tier": "External"
+  },
+  "QDDHW-MODPWR-MAX": {
+   "captured": "2026-10-27",
+   "display": "25",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2022/03/QSFP-DD-Hardware-Rev6.2.pdf",
+   "tier": "External"
+  },
+  "QDDHW-MODTYPE-COUNT": {
+   "captured": "2026-10-27",
+   "display": "4",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2022/03/QSFP-DD-Hardware-Rev6.2.pdf",
+   "tier": "External"
+  },
+  "QDDHW-PC1CU-FLAT": {
+   "captured": "2026-10-27",
+   "display": "0.15",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2022/03/QSFP-DD-Hardware-Rev6.2.pdf",
+   "tier": "External"
+  },
+  "QDDHW-PC1TO4-FLAT": {
+   "captured": "2026-10-27",
+   "display": "0.075",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2022/03/QSFP-DD-Hardware-Rev6.2.pdf",
+   "tier": "External"
+  },
+  "QDDHW-PC5TO8-FLAT": {
+   "captured": "2026-10-27",
+   "display": "0.050",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2022/03/QSFP-DD-Hardware-Rev6.2.pdf",
+   "tier": "External"
+  },
+  "QDDHW-PC8-ENH-FLAT": {
+   "captured": "2026-10-27",
+   "display": "0.025",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2022/03/QSFP-DD-Hardware-Rev6.2.pdf",
+   "tier": "External"
+  },
+  "QDDHW-REV-YEAR": {
+   "captured": "2026-10-27",
+   "display": "2022",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2022/03/QSFP-DD-Hardware-Rev6.2.pdf",
+   "tier": "External"
+  },
+  "QDDTWP-AMB": {
+   "captured": "2026-10-27",
+   "display": "46",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2021/01/2021-QSFP-DD-MSA-Thermal-Whitepaper-Final.pdf",
+   "tier": "External"
+  },
+  "QDDTWP-DENSE-PORTS-MIN": {
+   "captured": "2026-10-27",
+   "display": "32",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2021/01/2021-QSFP-DD-MSA-Thermal-Whitepaper-Final.pdf",
+   "tier": "External"
+  },
+  "QDDTWP-PORT-PWR-MIN": {
+   "captured": "2026-10-27",
+   "display": "25",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2021/01/2021-QSFP-DD-MSA-Thermal-Whitepaper-Final.pdf",
+   "tier": "External"
+  },
+  "QDDTWP-YEAR": {
+   "captured": "2026-10-27",
+   "display": "2021",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2021/01/2021-QSFP-DD-MSA-Thermal-Whitepaper-Final.pdf",
+   "tier": "External"
+  },
+  "QSFP-LANES": {
+   "captured": "2026-11-21",
+   "display": "4",
+   "source_url": "https://www.qsfp-dd.com/wp-content/uploads/2022/03/QSFP-DD-Hardware-Rev6.2.pdf",
+   "tier": "External"
+  },
   "RTXPRO-RA-256-GPUS": {
    "captured": "2026-09-11",
    "display": "256",
@@ -516,6 +720,204 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
+  "TK-DFSS-DOE-EFF": {
+   "captured": "2026-11-21",
+   "display": "0.5",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-DFSS-DOE-N1": {
+   "captured": "2026-11-21",
+   "display": "0.42",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-DFSS-DOE-N2": {
+   "captured": "2026-11-21",
+   "display": "0.14",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-DFSS-DOE-R1": {
+   "captured": "2026-11-21",
+   "display": "1.2",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-DFSS-DOE-R2": {
+   "captured": "2026-11-21",
+   "display": "3.5",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-DFSS-DOE-REP": {
+   "captured": "2026-11-21",
+   "display": "9",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-DFSS-GRR-MS": {
+   "captured": "2026-11-21",
+   "display": "0.3",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-DFSS-GRR-MS2": {
+   "captured": "2026-11-21",
+   "display": "0.1",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-DFSS-GRR-PCT": {
+   "captured": "2026-11-21",
+   "display": "30",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-DFSS-GRR-TV": {
+   "captured": "2026-11-21",
+   "display": "1.0",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-FD-A": {
+   "captured": "2026-11-21",
+   "display": "0.3",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-FD-A2": {
+   "captured": "2026-11-21",
+   "display": "0.15",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-FD-B": {
+   "captured": "2026-11-21",
+   "display": "0.05",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-FD-RSS": {
+   "captured": "2026-11-21",
+   "display": "0.31",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-FD-RSS2": {
+   "captured": "2026-11-21",
+   "display": "0.17",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-FD-SHARE": {
+   "captured": "2026-11-21",
+   "display": "92",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-FD-VA": {
+   "captured": "2026-11-21",
+   "display": "0.09",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-FD-VT": {
+   "captured": "2026-11-21",
+   "display": "0.0975",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-FD-WC": {
+   "captured": "2026-11-21",
+   "display": "0.45",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-NT-CFM3": {
+   "captured": "2026-11-21",
+   "display": "3",
+   "source_url": "https://medium.com/p/4ca54722ff50",
+   "tier": "Assumption"
+  },
+  "TK-NT-CFM4": {
+   "captured": "2026-11-21",
+   "display": "4",
+   "source_url": "https://medium.com/p/4ca54722ff50",
+   "tier": "Assumption"
+  },
+  "TK-NT-CFM5": {
+   "captured": "2026-11-21",
+   "display": "5",
+   "source_url": "https://medium.com/p/4ca54722ff50",
+   "tier": "Assumption"
+  },
+  "TK-NT-DT3": {
+   "captured": "2026-11-21",
+   "display": "5.9",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-NT-DT5": {
+   "captured": "2026-11-21",
+   "display": "3.5",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-NT-P": {
+   "captured": "2026-11-21",
+   "display": "10",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-TVS-ALT": {
+   "captured": "2026-11-21",
+   "display": "3000",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-TVS-CFM": {
+   "captured": "2023-07-22",
+   "display": "4",
+   "source_url": "https://medium.com/p/466bde2fb321",
+   "tier": "Assumption"
+  },
+  "TK-TVS-CFM2X1": {
+   "captured": "2026-11-21",
+   "display": "6",
+   "source_url": "https://medium.com/p/466bde2fb321",
+   "tier": "Assumption"
+  },
+  "TK-TVS-DT0": {
+   "captured": "2026-11-21",
+   "display": "4.4",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "TK-TVS-DT3K": {
+   "captured": "2026-11-21",
+   "display": "5.9",
+   "source_url": "https://wentl3.github.io/toolkit/worked-examples/",
+   "tier": "Estimated"
+  },
+  "USB32-G1": {
+   "captured": "2026-11-21",
+   "display": "5",
+   "source_url": "https://www.usb.org/usb-32-0",
+   "tier": "External"
+  },
+  "USB32-G2": {
+   "captured": "2026-11-21",
+   "display": "10",
+   "source_url": "https://www.usb.org/usb-32-0",
+   "tier": "External"
+  },
+  "USB32-G2X2": {
+   "captured": "2026-11-21",
+   "display": "20",
+   "source_url": "https://www.usb.org/usb-32-0",
+   "tier": "External"
+  },
   "VAR-V0-ENDPOINTLINKS": {
    "captured": "2026-09-11",
    "display": "128",
@@ -596,13 +998,13 @@
   },
   "VAR-V1-ENDPOINTLINKS": {
    "captured": "2026-09-11",
-   "display": "96",
+   "display": "258",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
   "VAR-V1-FABRICLINKS": {
    "captured": "2026-09-11",
-   "display": "96",
+   "display": "192",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
@@ -626,7 +1028,7 @@
   },
   "VAR-V1-LEAF": {
    "captured": "2026-09-11",
-   "display": "3",
+   "display": "6",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
@@ -638,7 +1040,7 @@
   },
   "VAR-V1-NICPORTS": {
    "captured": "2026-09-11",
-   "display": "96",
+   "display": "258",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
@@ -650,13 +1052,13 @@
   },
   "VAR-V1-NODES": {
    "captured": "2026-09-11",
-   "display": "32",
+   "display": "86",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
   "VAR-V1-OSR": {
    "captured": "2026-09-11",
-   "display": "0.5",
+   "display": "0.67",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
@@ -668,13 +1070,169 @@
   },
   "VAR-V1-SPINE": {
    "captured": "2026-09-11",
+   "display": "4",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1a-ENDPOINTLINKS": {
+   "captured": "2026-09-11",
+   "display": "86",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1a-FABRICLINKS": {
+   "captured": "2026-09-11",
+   "display": "64",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1a-GPUS-PER-NIC": {
+   "captured": "2026-09-11",
+   "display": "3",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V1a-GPUS-PER-NODE": {
+   "captured": "2026-09-11",
+   "display": "3",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V1a-INJECT-GBPS": {
+   "captured": "2026-09-11",
+   "display": "133.33",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1a-LEAF": {
+   "captured": "2026-09-11",
    "display": "2",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1a-NIC-GBPS": {
+   "captured": "2026-09-11",
+   "display": "400",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V1a-NICPORTS": {
+   "captured": "2026-09-11",
+   "display": "86",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1a-NICS": {
+   "captured": "2026-09-11",
+   "display": "1",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V1a-NODES": {
+   "captured": "2026-09-11",
+   "display": "86",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V1a-OSR": {
+   "captured": "2026-09-11",
+   "display": "0.67",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1a-PLANES": {
+   "captured": "2026-09-11",
+   "display": "1",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V1a-SPINE": {
+   "captured": "2026-09-11",
+   "display": "2",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1b-ENDPOINTLINKS": {
+   "captured": "2026-09-11",
+   "display": "172",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1b-FABRICLINKS": {
+   "captured": "2026-09-11",
+   "display": "128",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1b-GPUS-PER-NIC": {
+   "captured": "2026-09-11",
+   "display": "1.5",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V1b-GPUS-PER-NODE": {
+   "captured": "2026-09-11",
+   "display": "3",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V1b-INJECT-GBPS": {
+   "captured": "2026-09-11",
+   "display": "266.67",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1b-LEAF": {
+   "captured": "2026-09-11",
+   "display": "4",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1b-NIC-GBPS": {
+   "captured": "2026-09-11",
+   "display": "400",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V1b-NICPORTS": {
+   "captured": "2026-09-11",
+   "display": "172",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1b-NICS": {
+   "captured": "2026-09-11",
+   "display": "2",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V1b-NODES": {
+   "captured": "2026-09-11",
+   "display": "86",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V1b-OSR": {
+   "captured": "2026-09-11",
+   "display": "0.67",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V1b-PLANES": {
+   "captured": "2026-09-11",
+   "display": "2",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V1b-SPINE": {
+   "captured": "2026-09-11",
+   "display": "4",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
   "VAR-V2-ENDPOINTLINKS": {
    "captured": "2026-09-11",
-   "display": "64",
+   "display": "86",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
@@ -716,7 +1274,7 @@
   },
   "VAR-V2-NICPORTS": {
    "captured": "2026-09-11",
-   "display": "64",
+   "display": "86",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
@@ -728,13 +1286,13 @@
   },
   "VAR-V2-NODES": {
    "captured": "2026-09-11",
-   "display": "32",
+   "display": "43",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
   "VAR-V2-OSR": {
    "captured": "2026-09-11",
-   "display": "0.5",
+   "display": "0.67",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
@@ -750,9 +1308,165 @@
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
+  "VAR-V2a-ENDPOINTLINKS": {
+   "captured": "2026-09-11",
+   "display": "43",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2a-FABRICLINKS": {
+   "captured": "2026-09-11",
+   "display": "32",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2a-GPUS-PER-NIC": {
+   "captured": "2026-09-11",
+   "display": "6",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V2a-GPUS-PER-NODE": {
+   "captured": "2026-09-11",
+   "display": "6",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V2a-INJECT-GBPS": {
+   "captured": "2026-09-11",
+   "display": "66.67",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2a-LEAF": {
+   "captured": "2026-09-11",
+   "display": "1",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2a-NIC-GBPS": {
+   "captured": "2026-09-11",
+   "display": "400",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V2a-NICPORTS": {
+   "captured": "2026-09-11",
+   "display": "43",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2a-NICS": {
+   "captured": "2026-09-11",
+   "display": "1",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V2a-NODES": {
+   "captured": "2026-09-11",
+   "display": "43",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V2a-OSR": {
+   "captured": "2026-09-11",
+   "display": "0.67",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2a-PLANES": {
+   "captured": "2026-09-11",
+   "display": "1",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V2a-SPINE": {
+   "captured": "2026-09-11",
+   "display": "2",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2b-ENDPOINTLINKS": {
+   "captured": "2026-09-11",
+   "display": "129",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2b-FABRICLINKS": {
+   "captured": "2026-09-11",
+   "display": "96",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2b-GPUS-PER-NIC": {
+   "captured": "2026-09-11",
+   "display": "2",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V2b-GPUS-PER-NODE": {
+   "captured": "2026-09-11",
+   "display": "6",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V2b-INJECT-GBPS": {
+   "captured": "2026-09-11",
+   "display": "200",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2b-LEAF": {
+   "captured": "2026-09-11",
+   "display": "3",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2b-NIC-GBPS": {
+   "captured": "2026-09-11",
+   "display": "400",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V2b-NICPORTS": {
+   "captured": "2026-09-11",
+   "display": "129",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2b-NICS": {
+   "captured": "2026-09-11",
+   "display": "3",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V2b-NODES": {
+   "captured": "2026-09-11",
+   "display": "43",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V2b-OSR": {
+   "captured": "2026-09-11",
+   "display": "0.67",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
+  "VAR-V2b-PLANES": {
+   "captured": "2026-09-11",
+   "display": "3",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Vendor"
+  },
+  "VAR-V2b-SPINE": {
+   "captured": "2026-09-11",
+   "display": "2",
+   "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
+   "tier": "Estimated"
+  },
   "VAR-V3-ENDPOINTLINKS": {
    "captured": "2026-09-11",
-   "display": "192",
+   "display": "258",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
@@ -794,7 +1508,7 @@
   },
   "VAR-V3-NICPORTS": {
    "captured": "2026-09-11",
-   "display": "192",
+   "display": "258",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
@@ -806,13 +1520,13 @@
   },
   "VAR-V3-NODES": {
    "captured": "2026-09-11",
-   "display": "32",
+   "display": "43",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Vendor"
   },
   "VAR-V3-OSR": {
    "captured": "2026-09-11",
-   "display": "0.25",
+   "display": "0.34",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
@@ -830,7 +1544,7 @@
   },
   "VAR-V4-ENDPOINTLINKS": {
    "captured": "2026-09-11",
-   "display": "64",
+   "display": "86",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
@@ -872,7 +1586,7 @@
   },
   "VAR-V4-NICPORTS": {
    "captured": "2026-09-11",
-   "display": "64",
+   "display": "86",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
@@ -884,13 +1598,13 @@
   },
   "VAR-V4-NODES": {
    "captured": "2026-09-11",
-   "display": "32",
+   "display": "43",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Assumption"
   },
   "VAR-V4-OSR": {
    "captured": "2026-09-11",
-   "display": "0.5",
+   "display": "0.67",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
   },
@@ -905,6 +1619,30 @@
    "display": "4",
    "source_url": "https://docs.nvidia.com/enterprise-reference-architectures/rtx-pro-ai-factory/latest/network-logical-architecture.html",
    "tier": "Estimated"
+  },
+  "WATER-AIR-VHC-RATIO": {
+   "captured": "2026-11-21",
+   "display": "3450",
+   "source_url": "https://doi.org/10.1063/1.1285884",
+   "tier": "External"
+  },
+  "WATER-SAT-0C": {
+   "captured": "2026-11-21",
+   "display": "4.85",
+   "source_url": "https://iapws.org/relguide/IAPWS-95.html",
+   "tier": "External"
+  },
+  "WATER-SAT-20C": {
+   "captured": "2026-11-21",
+   "display": "17.3",
+   "source_url": "https://iapws.org/relguide/IAPWS-95.html",
+   "tier": "External"
+  },
+  "WATER-VHC": {
+   "captured": "2026-11-21",
+   "display": "4170",
+   "source_url": "https://iapws.org/relguide/IAPWS-95.html",
+   "tier": "External"
   }
  }
 }

@@ -16,13 +16,17 @@ case "$mode" in
 esac
 [ "$mode" = remove ] || [ -d "$src" ] || { echo "src 不存在：$src" >&2; exit 2; }
 git_id=(-c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com")
+# 清暫存目錄不准讓已成功的發佈變失敗：push 後 git 背景 gc / maintenance 可能還在寫 .git
+# → rm -rf 報 Directory not empty、set -e 把 rc 變 1（CI 40448027200 / 40448650898）。
+export GIT_CONFIG_COUNT=2 GIT_CONFIG_KEY_0=gc.auto GIT_CONFIG_VALUE_0=0 GIT_CONFIG_KEY_1=maintenance.auto GIT_CONFIG_VALUE_1=false
+cleanup() { rm -rf "$1" 2>/dev/null || true; }
 
 for attempt in 1 2 3; do
   work=$(mktemp -d); dst="$work/pages"
   if git ls-remote --exit-code --heads "$url" gh-pages >/dev/null 2>&1; then
     git clone -q --depth 1 --branch gh-pages "$url" "$dst"
   elif [ "$mode" = remove ]; then
-    echo "無 gh-pages，無預覽可清"; rm -rf "$work"; exit 0
+    echo "無 gh-pages，無預覽可清"; cleanup "$work"; exit 0
   else
     git init -q -b gh-pages "$dst"; git -C "$dst" remote add origin "$url"
   fi
@@ -38,9 +42,9 @@ for attempt in 1 2 3; do
     rm -rf "${dst:?}/preview/$pr"
   fi
   git -C "$dst" add -A
-  if git -C "$dst" diff --cached --quiet; then echo "無變更（${mode}）"; rm -rf "$work"; exit 0; fi
+  if git -C "$dst" diff --cached --quiet; then echo "無變更（${mode}）"; cleanup "$work"; exit 0; fi
   git -C "$dst" "${git_id[@]}" commit -q -m "pages: $mode${pr:+ #$pr}"
-  if git -C "$dst" push -q origin gh-pages; then echo "已發佈（${mode}${pr:+ #$pr}）"; rm -rf "$work"; exit 0; fi
-  echo "push 衝突，重試 $attempt/3" >&2; rm -rf "$work"
+  if git -C "$dst" push -q origin gh-pages; then echo "已發佈（${mode}${pr:+ #$pr}）"; cleanup "$work"; exit 0; fi
+  echo "push 衝突，重試 $attempt/3" >&2; cleanup "$work"
 done
 echo "發佈失敗" >&2; exit 1

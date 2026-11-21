@@ -3,74 +3,222 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Which cable fits a data center link? | High speed IO</title>
-<meta name="description" content="In a data center, reach picks the cable class among DAC, AEC, AOC and coherent optics, and every class swaps one thermal problem for another.">
+<title>Cable by reach first, heat second | High speed IO</title>
+<meta name="description" content="Inside a data center, reach sorts the cables into DAC, AEC, AOC and coherent optics; every step further adds a part that draws power, and the heat budget for it is fixed when the project opens.">
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
 <body data-zone="engineering" data-type="chapter">
 <header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../" aria-current="page">High speed IO</a><a href="../../hpc/">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
 <div class="layout">
-<aside class="toc" aria-label="In this series"><b><a href="../">High speed IO</a></b><ol><li><a href="../part-1/">How do you read a high-speed IO port?</a></li><li><a href="../part-2/">Wired or wireless, fiber or copper?</a></li><li class="here">Which cable fits a data center link?</li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2">How a packet moves through a data center</a></li><li><a href="#h2-3">Four cable classes, by reach</a></li><li><a href="#h2-4">What each class costs in heat</a></li><li><a href="#h2-5">The limit of the claim</a></li><li><a href="#h2-6">The NIC end of the link</a></li><li><a href="#h2-7">Where this leaves the series</a></li><li><a href="#h2-8">Numbers not shown</a></li><li><a href="#h2-9">How it is calculated</a></li><li><a href="#h2-10">Public layer</a></li><li><a href="#h2-11">Keep reading</a></li></ol></aside>
+<aside class="toc" aria-label="In this series"><b><a href="../">High speed IO</a></b><ol><li><a href="../part-1/">Small ports run hot: heat follows power density</a></li><li><a href="../part-2/">Wireless rides on fiber; at 800G the choke point is inside</a></li><li class="here">Cable by reach first, heat second</li><li><a href="../ocp/">IO sits in two places; the hot aisle is harder</a></li><li><a href="../qsfp-msa/">QSFP-DD doubles the lanes; a sliding module is hard to cool</a></li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2">Cable classes: DAC / AEC / AOC / coherent</a></li><li><a href="#h2-3">2026 update</a></li><li><a href="#h2-4">Why it gets hot</a></li><li><a href="#h2-5">Original article</a></li><li><a href="#h2-6">Keep reading</a></li></ol></aside>
 <main>
-<p class="crumb"><a href="../../">Home</a> › <a href="../">High speed IO</a> › Chapter 3 of 3</p>
-<div class="progress" aria-hidden="true"><i></i><i></i><i></i><i class="off"></i><i class="off"></i></div>
-<p class="stage">Part 3 of 3</p>
-<section id="b1"><h1>Which cable fits a data center link, and what heat comes with it?</h1><p class="keywords">DAC / AEC / AOC / NIC</p></section>
+<p class="crumb"><a href="../../">Home</a> › <a href="../">High speed IO</a> › Chapter 3 of 5</p>
+<div class="progress" aria-hidden="true"><i></i><i></i><i></i><i class="live"></i><i class="live"></i></div>
+<p class="stage">Part 3 of 5</p>
+<section id="b1"><h1>Choose a data center cable by reach first, then budget the heat that reach adds</h1><p class="keywords">DAC / AEC / AOC / NIC</p></section>
 <section id="b2" class="answer"><h2 id="h2-1">Short answer</h2>
-<p><strong>In a data center, reach picks the cable class, and every class swaps one thermal problem for another: thick copper blocks airflow, while thin active cables and optics make heat of their own.</strong></p></section>
+<p><strong>Choose by reach first, then by heat: every class that reaches further adds an active part, and that part&#x27;s watts go into the budget on the day the project opens.</strong></p></section>
 <article id="body">
-<p>This part follows one packet through a data center and asks what each cable on the path does to the heat budget.</p>
-<h2 id="h2-2">How a packet moves through a data center</h2>
-<ul>
-<li>A packet from a user's software goes from the carrier's base station to the data center.</li>
-<li>It travels over optical fiber to a network switch, then over copper to the servers that compute.</li>
-<li>After computing, the server sends the packet back through the network interface card (NIC) to the switch and the data center backbone, and on to the user.</li>
-<li>Fiber to the switch and copper to the server is the economic model that spreads the cost of building a data center.</li>
-</ul>
-<h2 id="h2-3">Four cable classes, by reach</h2>
+<p>Press start on a phone's navigation, and the route comes back within moments. How does the data get sent, computed and returned that fast? The previous part covered connector forms and fiber and copper networks; this one follows that question into the data centers of the network cloud, where computing is spread out while messages are still sent and received centrally.</p>
+<p>A user's packet goes from the carrier's base station to the data center of the software service. Fiber carries it to the network switches, and copper hands it to the server cluster that computes. When the computing is done, the network interface card (NIC) sends the packet back to the switch and the data center backbone, and on to the user; the split keeps the cost of building a data center spread out.</p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 316" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>Fiber to the switches, copper to the servers</title>
+<rect x="170" y="14" width="140" height="32" rx="16" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="240" y="35" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">data center backbone</text>
+<polyline points="170,28 88,28 88,110" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polyline points="310,28 388,28 388,110" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polyline points="170,32 92,32 92,110" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polyline points="310,32 392,32 392,110" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="102" y="62" font-size="13" fill="var(--fg, #1a1a1a)">coherent optics</text>
+<text x="102" y="78" font-size="12" fill="var(--mut, #5c5c5c)">Longest of the four</text>
+<text x="378" y="70" text-anchor="end" font-size="12" fill="var(--mut, #5c5c5c)">Fiber</text>
+<rect x="70" y="110" width="130" height="26" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="80" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="94" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="108" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="122" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="136" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="150" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="164" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="178" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="280" y="110" width="130" height="26" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="290" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="304" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="318" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="332" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="346" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="360" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="374" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="388" y="118" width="9" height="10" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<text x="100" y="102" font-size="13" fill="var(--fg, #1a1a1a)">network switches</text>
+<line x1="200" y1="119" x2="280" y2="119" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="200" y1="127" x2="280" y2="127" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<ellipse cx="240" cy="123" rx="8" ry="12" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<text x="240" y="106" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">AOC</text>
+<text x="240" y="152" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">Long reach</text>
+<line x1="95" y1="136" x2="114" y2="244" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="110" y1="136" x2="194" y2="244" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="370" y1="136" x2="286" y2="244" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="385" y1="136" x2="366" y2="244" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="150" y1="136" x2="354" y2="244" stroke="var(--fg, #1a1a1a)" stroke-width="1.5" stroke-dasharray="8 6"/>
+<line x1="165" y1="136" x2="274" y2="244" stroke="var(--fg, #1a1a1a)" stroke-width="1.5" stroke-dasharray="8 6"/>
+<line x1="315" y1="136" x2="206" y2="244" stroke="var(--fg, #1a1a1a)" stroke-width="1.5" stroke-dasharray="8 6"/>
+<line x1="330" y1="136" x2="126" y2="244" stroke="var(--fg, #1a1a1a)" stroke-width="1.5" stroke-dasharray="8 6"/>
+<rect x="44" y="172" width="108" height="40" rx="6" fill="var(--bg, #fff)" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<text x="98" y="189" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">DAC</text>
+<text x="98" y="205" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">inside a rack</text>
+<rect x="184" y="174" width="112" height="40" rx="6" fill="var(--bg, #fff)" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<text x="240" y="191" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">AEC</text>
+<text x="240" y="207" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">Longer than a DAC</text>
+<text x="404" y="196" font-size="12" fill="var(--mut, #5c5c5c)">copper</text>
+<rect x="104" y="244" width="32" height="10" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<rect x="88" y="258" width="64" height="24" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="94" y1="270" x2="106" y2="270" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="112" y1="270" x2="124" y2="270" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="130" y1="270" x2="142" y2="270" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="184" y="244" width="32" height="10" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<rect x="168" y="258" width="64" height="24" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="174" y1="270" x2="186" y2="270" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="192" y1="270" x2="204" y2="270" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="210" y1="270" x2="222" y2="270" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="264" y="244" width="32" height="10" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<rect x="248" y="258" width="64" height="24" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="254" y1="270" x2="266" y2="270" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="272" y1="270" x2="284" y2="270" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="290" y1="270" x2="302" y2="270" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<rect x="344" y="244" width="32" height="10" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<rect x="328" y="258" width="64" height="24" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="334" y1="270" x2="346" y2="270" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="352" y1="270" x2="364" y2="270" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="370" y1="270" x2="382" y2="270" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<text x="398" y="254" font-size="13" font-weight="600" fill="var(--accent, #0e7490)">NIC</text>
+<text x="240" y="304" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">server cluster</text>
+</svg>
+</figure>
+<h2 id="h2-2">Cable classes: DAC / AEC / AOC / coherent</h2>
+<p>Across the data center, high-speed IO splits into three pluggable classes by reach, and the list runs to four: DAC, AEC, AOC and coherent optics. In a compact data center, cooling limits performance and is also one factor in PUE, so each class carries a heat cost as well as a reach.</p>
+<p>So choose a data center cable by reach first, then budget the heat that reach adds. Reach is where the choice starts, not where it ends: each step down the table buys distance by adding one more part that draws power, a signal chip, a conversion to light, a temperature controller and heavier computation. Read the table that way, top to bottom, and the last column is the layer of heat each step stacks on the one before; that stack is what the wattage and margin fixed at project start have to cover.</p>
 <div class="table-wrap wide"><table class="cmp">
-<thead><tr><th>Class</th><th>What it is</th><th>Reach, in order</th><th>Reach, number</th></tr></thead>
+<thead><tr><th>Class</th><th>What it is</th><th>Reach (relative, shortest first)</th><th>Heat cost, which also counts toward the data center's PUE</th></tr></thead>
 <tbody>
-<tr><th scope="row">DAC (direct attach cable)</th><td data-label="What it is">Plain copper wire; used for servers inside a rack</td><td data-label="Reach, in order">Shortest of the four</td><td data-label="Reach, number"><em>Not shown.</em> The figure is the author's own and no vendor datasheet has been read. Until: a datasheet is read.</td></tr>
-<tr><th scope="row">AEC (active electrical cable)</th><td data-label="What it is">A DAC plus a chip that improves the signal; needs less high-purity material and a thinner gauge than a DAC</td><td data-label="Reach, in order">Longer than a DAC</td><td data-label="Reach, number"><em>Not shown.</em> The figure in the original is not confirmed by any datasheet. Until: a vendor datasheet or industry agreement is read.</td></tr>
-<tr><th scope="row">AOC (active optical cable)</th><td data-label="What it is">Optical fiber; less distortion and a longer reach</td><td data-label="Reach, in order">Longer than an AEC</td><td data-label="Reach, number"><em>Not shown.</em> The figure in the original disagrees with common specifications. Until: a vendor datasheet or the Ethernet standard is read.</td></tr>
-<tr><th scope="row">Coherent optics</th><td data-label="What it is">An AOC-style link with coherent light-source control and chip computation to make up for loss over long distance</td><td data-label="Reach, in order">Longest of the four</td><td data-label="Reach, number"><em>Not shown.</em> The figure is the author's own and no datasheet has been read. Until: a vendor datasheet is read.</td></tr>
+<tr><th scope="row">DAC (direct attach cable)</th><td data-label="What it is">Plain copper wire; common for servers inside a rack</td><td data-label="Reach (relative, shortest first)">Shortest; inside a rack</td><td data-label="Heat cost, which also counts toward the data center&#x27;s PUE">Thick 24 AWG wire makes cooling at the switch cluster hard and gets in the way of rack exhaust</td></tr>
+<tr><th scope="row">AEC (active electrical cable)</th><td data-label="What it is">A DAC plus a chip that improves the signal, so it uses less of the costly high-purity copper and a thinner gauge</td><td data-label="Reach (relative, shortest first)">Longer than a DAC</td><td data-label="Heat cost, which also counts toward the data center&#x27;s PUE">Thinner 30 AWG wire does not block airflow and is easier to route, but the chip itself draws power</td></tr>
+<tr><th scope="row">AOC (active optical cable)</th><td data-label="What it is">Optical fiber; less distortion and a longer reach</td><td data-label="Reach (relative, shortest first)">Long reach</td><td data-label="Heat cost, which also counts toward the data center&#x27;s PUE">A 3.0 mm fiber cable eases switch exhaust and raises cable density, but converting energy adds waste heat that needs a thermal design</td></tr>
+<tr><th scope="row">Coherent optics</th><td data-label="What it is">Adds coherent light-source control and chip computation to make up for loss over long distance</td><td data-label="Reach (relative, shortest first)">Longest of the four</td><td data-label="Heat cost, which also counts toward the data center&#x27;s PUE">Adds a temperature-control element, and the heavier processor load means a higher energy density to remove</td></tr>
 </tbody>
 </table></div>
-<h2 id="h2-4">What each class costs in heat</h2>
-<ul>
-<li><strong>DAC.</strong> The thick gauge makes cooling at the switch cluster hard and makes rack exhaust harder.</li>
-<li><strong>AEC.</strong> The chip cleans up the signal, so the wire can be thinner. It does not block airflow and is easier to route.</li>
-<li><strong>AOC.</strong> A thin fiber cable eases switch exhaust and raises cable density. The extra energy conversion adds waste heat that needs thermal design.</li>
-<li><strong>Coherent optics.</strong> They add a temperature-control element, and the heavier processor load means more energy density to handle.</li>
-</ul>
-<h2 id="h2-5">The limit of the claim</h2>
-<p>In a compact data center, heat limits performance and is also one factor in PUE.</p>
-<p>The thin cables are not a free fix: an AOC adds waste heat from energy conversion, and coherent optics add temperature-control parts and a heavier processor load, so both need a thermal design.</p>
-<p>A pluggable cable can look like a USB lead and still need a thermal design.</p>
-<h2 id="h2-6">The NIC end of the link</h2>
-<ul>
-<li>Data center NICs come in several form factors.</li>
-<li>The heat sink on the IO side makes the contrast between transfer speed and thermal design easy to see.</li>
-</ul>
-<h2 id="h2-7">Where this leaves the series</h2>
-<p>When the modules are compared, cost and physical operating mode come first and thermal design follows. High-speed IO is the infrastructure of future communication and also one indicator of data center power performance.</p>
-<h2 id="h2-8">Numbers not shown</h2>
-<ul>
-<li><strong>Reach of each cable class.</strong> Why: the four figures in the original article are the author's own statements and have not been checked against a vendor datasheet; some of them disagree with common specifications. Until: a datasheet or the Ethernet standard is read and bound to the registry with its read date.</li>
-<li><strong>Wire gauge of the DAC and the AEC.</strong> Why: the original gives gauge figures that are unchecked, and its diameters for the same wires are typing slips. Until: a vendor datasheet is read.</li>
-<li><strong>Fiber cable diameter of the AOC.</strong> Why: the figure is the author's own and unchecked. Until: a vendor datasheet is read.</li>
-</ul>
+<h2 id="h2-3">2026 update</h2>
+<p>The limit of a copper cable has to be read together with rate and distance: as rates rose, copper reach shrank from 15 m in the early days to 2 m now, after the rate upgrades.</p>
+<h2 id="h2-4">Why it gets hot</h2>
+<p></p>
+<p>Copper behaves like a voice down a hallway: the faster you talk, the shorter the hall in which the words still arrive clear. That is why copper reach shrinks each time the rate climbs. An AEC posts a listener halfway who repeats every word, and an AOC swaps the voice for a flashlight; both reach further, and both pay for it in power that turns into heat: the DAC is plain copper, the AEC adds a chip, the AOC adds the conversion to light, and coherent optics add temperature control and heavier computation. That is why a cable that looks like a USB lead still gets a heat sink over its port on a data center NIC.</p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 236" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>Reach is bought with watts</title>
+<g stroke="var(--fg, #1a1a1a)" stroke-width="1.5" fill="none"><line x1="30" y1="190" x2="30" y2="44"/><line x1="30" y1="190" x2="462" y2="190"/></g>
+<polygon points="25,44 35,44 30,34" fill="var(--fg, #1a1a1a)"/>
+<polygon points="462,185 472,190 462,195" fill="var(--fg, #1a1a1a)"/>
+<text x="42" y="40" font-size="13" fill="var(--mut, #5c5c5c)">heat</text>
+<text x="472" y="228" text-anchor="end" font-size="13" fill="var(--mut, #5c5c5c)">reach</text>
+<rect x="44" y="164" width="96" height="26" fill="var(--fg, #1a1a1a)" fill-opacity="0.12" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="152" y="164" width="96" height="26" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="152" y="132" width="96" height="32" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<rect x="191" y="139" width="18" height="18" fill="none" stroke="var(--accent, #0e7490)" stroke-width="1.5"/>
+<rect x="260" y="164" width="96" height="26" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="260" y="132" width="96" height="32" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="260" y="100" width="96" height="32" fill="var(--fg, #1a1a1a)" fill-opacity="0.12" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<path d="M294,116 L318,116 M312,110 L320,116 L312,122" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="368" y="164" width="96" height="26" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="368" y="132" width="96" height="32" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="368" y="100" width="96" height="32" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="368" y="72" width="96" height="28" fill="var(--fg, #1a1a1a)" fill-opacity="0.12" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<rect x="413" y="76" width="6" height="14" rx="3" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/><circle cx="416" cy="93" r="4" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<text x="92" y="156" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">plain copper</text>
+<text x="200" y="124" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">adds a chip</text>
+<text x="308" y="76" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">adds the conversion</text>
+<text x="308" y="92" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">to light</text>
+<text x="416" y="48" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">add temperature</text>
+<text x="416" y="64" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">control</text>
+<text x="92" y="210" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">DAC</text>
+<text x="200" y="210" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">AEC</text>
+<text x="308" y="210" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">AOC</text>
+<text x="416" y="210" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">coherent optics</text>
+</svg>
+</figure>
+<p>When a system maker or the switch side opens a project, it specifies the form factor and the target wattage up front, with a safety margin built in.  The wattage and its margin come first; the modules are chosen to fit inside them. </p>
+<p>The wattage and the margin still let the team estimate the application scenario and the transfer speed, choose which pluggable modules to pair and how to distribute them, and hand that to the proposal and the thermal simulation. The margin matters most when the rate climbs: copper reach shrinks with each rate upgrade, so a link that once fit a DAC may now need a chip or light, and the watts step up with it.  Plan each rate upgrade as a cable-class review: list which runs fall past the new copper reach, and add their chips' watts to the margin before the modules are picked. </p>
+<figure class="concept tw-fig" style="max-width:480px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 272" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
+<title>Talk faster, shorter hall</title>
+<text x="8" y="38" font-size="12" fill="var(--mut, #5c5c5c)">in the early days</text>
+<rect x="125" y="22" width="340" height="24" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="none"/>
+<line x1="125" y1="22" x2="465" y2="22" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="125" y1="46" x2="465" y2="46" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="465" y1="22" x2="465" y2="46" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<circle cx="135" cy="34" r="5" fill="var(--fg, #1a1a1a)"/>
+<path d="M145,27 Q149,34 145,41" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<path d="M167,27 Q171,34 167,41" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<path d="M189,27 Q193,34 189,41" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<path d="M211,27 Q215,34 211,41" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="125" y1="56" x2="465" y2="56" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="125" y1="52" x2="125" y2="60" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="465" y1="52" x2="465" y2="60" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<text x="295" y="72" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">15 m</text>
+<text x="8" y="108" font-size="12" fill="var(--mut, #5c5c5c)">now</text>
+<rect x="125" y="92" width="45" height="24" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="none"/>
+<line x1="125" y1="92" x2="170" y2="92" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<line x1="125" y1="116" x2="170" y2="116" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<line x1="170" y1="92" x2="170" y2="116" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
+<circle cx="133" cy="104" r="5" fill="var(--fg, #1a1a1a)"/>
+<path d="M140.0,97 Q144.0,104 140.0,111" fill="none" stroke="var(--accent, #0e7490)" stroke-width="1"/>
+<path d="M144.5,97 Q148.5,104 144.5,111" fill="none" stroke="var(--accent, #0e7490)" stroke-width="1"/>
+<path d="M149.0,97 Q153.0,104 149.0,111" fill="none" stroke="var(--accent, #0e7490)" stroke-width="1"/>
+<path d="M153.5,97 Q157.5,104 153.5,111" fill="none" stroke="var(--accent, #0e7490)" stroke-width="1"/>
+<path d="M158.0,97 Q162.0,104 158.0,111" fill="none" stroke="var(--accent, #0e7490)" stroke-width="1"/>
+<path d="M162.5,97 Q166.5,104 162.5,111" fill="none" stroke="var(--accent, #0e7490)" stroke-width="1"/>
+<line x1="125" y1="126" x2="170" y2="126" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="125" y1="122" x2="125" y2="130" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="170" y1="122" x2="170" y2="130" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<text x="148" y="142" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">2 m</text>
+<text x="182" y="108" font-size="12" fill="var(--mut, #5c5c5c)">the faster you talk</text>
+<text x="8" y="179" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">AEC</text>
+<rect x="125" y="162" width="91" height="24" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="none"/>
+<line x1="125" y1="162" x2="216" y2="162" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="125" y1="186" x2="216" y2="186" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<line x1="216" y1="162" x2="216" y2="186" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<circle cx="133" cy="174" r="5" fill="var(--fg, #1a1a1a)"/>
+<path d="M140.0,167 Q144.0,174 140.0,181" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<path d="M144.5,167 Q148.5,174 144.5,181" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<path d="M149.0,167 Q153.0,174 149.0,181" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<path d="M153.5,167 Q157.5,174 153.5,181" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<path d="M158.0,167 Q162.0,174 158.0,181" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<path d="M162.5,167 Q166.5,174 162.5,181" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<circle cx="174.33333333333334" cy="174" r="5" fill="var(--fg, #1a1a1a)"/>
+<path d="M181.33333333333334,167 Q185.33333333333334,174 181.33333333333334,181" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<path d="M185.83333333333334,167 Q189.83333333333334,174 185.83333333333334,181" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<path d="M190.33333333333334,167 Q194.33333333333334,174 190.33333333333334,181" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<path d="M194.83333333333334,167 Q198.83333333333334,174 194.83333333333334,181" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<path d="M199.33333333333334,167 Q203.33333333333334,174 199.33333333333334,181" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<path d="M203.83333333333334,167 Q207.83333333333334,174 203.83333333333334,181" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<line x1="170" y1="162" x2="170" y2="152" stroke="var(--mut, #5c5c5c)" stroke-width="1"/>
+<text x="228" y="178" font-size="12" fill="var(--mut, #5c5c5c)">a listener halfway</text>
+<text x="8" y="243" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">AOC</text>
+<rect x="125" y="233" width="18" height="10" rx="2" fill="var(--fg, #1a1a1a)" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
+<polygon points="143,233 465,220 465,256 143,243" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1" stroke-dasharray="8 6"/>
+<text x="155" y="268" font-size="12" fill="var(--mut, #5c5c5c)">a flashlight</text>
+</svg>
+</figure>
+<p>The heat problem of a cable is half decided on the day the project opens.</p>
+<p></p>
+<p>The original series ran from the IO met in daily life, form factor and transfer rate, through wired and wireless links and the split between optical and electrical signals, to the data center, where AOC links feed the switches and the NIC hands work to servers over AEC and DAC. At every layer, reliable and energy-saving high-speed IO is required, and it is one indicator of how a data center performs on power.</p>
 </article>
-<section id="b4"><h2 id="h2-9">How it is calculated</h2>
-<p>No number appears on this page. The reach and the wire sizes in the original article are the author&#x27;s own statements, and some of them disagree with common specifications, so each is withheld until a vendor datasheet or the Ethernet standard is read. The table and the last section show what is held back and what would release it.</p>
-<p>Rewritten from the author's article (2022-07-03): <a href="https://medium.com/wentsenliao/what-thermal-is-in-high-speed-io-part-3-a462b372d16a">https://medium.com/wentsenliao/what-thermal-is-in-high-speed-io-part-3-a462b372d16a</a></p></section>
-<section id="b5"><h2 id="h2-10">Public layer</h2>
-<p>Narrative with method (public layer 3).</p></section>
-<section id="b6"><h2 id="h2-11">Keep reading</h2>
+<section id="b4"><h2 id="h2-5">Original article</h2>
+<span id="b4-origin" hidden></span><p>Rewritten from the author's article (2022-07-03): <a href="https://medium.com/wentsenliao/what-thermal-is-in-high-speed-io-part-3-a462b372d16a">https://medium.com/wentsenliao/what-thermal-is-in-high-speed-io-part-3-a462b372d16a</a></p></section>
+<section id="b6"><h2 id="h2-6">Keep reading</h2>
 <nav class="pager" aria-label="Chapter navigation">
-<a class="card" rel="prev" href="../part-2/"><span>← Previous chapter</span><h3>Wired or wireless, fiber or copper?</h3></a>
-
+<a class="card" rel="prev" href="../part-2/"><span>← Previous chapter</span><h3>Wireless rides on fiber; at 800G the choke point is inside</h3></a>
+<a class="card next" rel="next" href="../ocp/"><span>Next chapter →</span><h3>IO sits in two places; the hot aisle is harder</h3></a>
 </nav>
 <p><a href="../">Back to the series: High speed IO: from everyday ports to pluggable modules</a></p></section>
 </main>

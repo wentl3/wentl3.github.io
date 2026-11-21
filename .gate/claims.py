@@ -41,7 +41,7 @@ def page_section(rel, raw, ev, registry, internal):
     for m in gate.DATA_R_RE.finditer(raw):
         inner = re.sub(r'<[^>]+>', '', m.group(3)).strip()
         rows.append((gate.line_of(raw, m.start()), inner, m.group(2)))
-    rows.sort()
+    rows.sort(key=lambda r: (r[0], r[1] or '', r[2] or ''))
     out = [f'### `{rel}`', '']
     if rows:
         out += ['| 行 | 數字 | R:KEY | 等級 | 來源網址 | 擷取日 |', '|---|---|---|---|---|---|']

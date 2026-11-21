@@ -58,7 +58,7 @@ figure.tool-step .chain { color: var(--fg); margin: .4rem 0 0; }
 .bar .lang-switch { font-family: var(--sans); font-size: .75rem; border: 1px solid var(--line); border-radius: 999px;
                     padding: 2px 10px; text-decoration: none; }
 .bar .lang-switch b { color: var(--accent); }
-/* WO-PS45 版面 A 版（Wen 10-27 全選 A；樣稿 docs/pending/site-layout/mockup/mock.css）。
+/* WO-PS45 版面 A 版（Wen 10-27 全選 A）。
    卡片三狀態：實線 = 已上站可點、虛線 .soon + .tag.coming = 未上站（不可點）、主色邊 .tool = 工具。 */
 .card, .crumb, .tag, .btn, .proof, .toc, .pager, .progress-label, .pill, .axis-label, .kw, .desc, .count, .answer h2 {
   font-family: var(--sans); }
