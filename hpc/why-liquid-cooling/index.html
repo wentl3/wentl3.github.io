@@ -20,10 +20,10 @@
 <p><strong>Per volume and per degree, water carries thousands of times more heat than air, so a rack planned in the hundreds of kilowatts is cooled by bringing liquid to the heat source, through cold plates or immersion.</strong></p></section>
 <article id="body">
 <p>Anyone who has stood next to a Bitcoin mining rig already knows the problem: the fans are loud, the air coming out is hot, and on a hot day the rig cools worse, because air cooling is limited by the temperature of the room it breathes. Miners met that wall early and answered it by sinking whole rigs in non-conductive liquid, which took the heat away evenly and the noise with it. HPC racks now meet the same wall at a much larger scale, and the reason sits in the air itself.</p>
-<p>Computing grew from specialist engineering simulation into general generative models in everyday use, and as the computing load rose, managing heat in deployment and maintenance became harder; it takes real effort to tune, not just matching the numbers on a spec sheet. For the facility, the numbers are 600<!--R:G1-FAC-CURRENT-A--> A and 1200<!--R:G1-FAC-FLOW-LPM--> LPM, and I take 300<!--R:G1-RACK-KW--> kW as a single rack.</p>
+<p>Computing grew from specialist engineering simulation into general generative models in everyday use, and as the computing load rose, managing heat in deployment and maintenance became harder; it takes real effort to tune, not just matching the numbers on a spec sheet. For the facility, the numbers are 600<!--C:C-EXP-G1-FAC-CURRENT-A--> A and 1200<!--C:C-EXP-G1-FAC-FLOW-LPM--> LPM, and I take 300<!--C:C-EXP-G1-RACK-KW--> kW as a single rack.</p>
 <h2 id="h2-2">Heat flux and total power climb together</h2>
-<p>HPC needs liquid cooling because air runs out before the rack does: per cubic metre and per degree, water holds about 4,170<!--R:WATER-VHC--> kJ of heat and air about 1.21<!--R:AIR-VHC--> kJ, so the same heat needs about 3,450<!--R:WATER-AIR-VHC-RATIO--> times the volume of air. That gap decides the matter at this scale: at 300<!--R:G1-RACK-KW--> kW in one rack and 1200<!--R:G1-FAC-FLOW-LPM--> LPM of facility water, the heat leaves the rack position through liquid, and at so generous a flow the water warms by only about 3.6<!--R:DT-300KW-1200LPM--> °C.</p>
-<p>The main heat sources are still the two big compute chips, but peripheral parts such as network cards are raising their power faster, and board space keeps them from growing the way compute chips do, so heat flux density and total power climb together. In the original draft, device power doubled from 700<!--R:HT-DEVICE-W-OLD--> W to 1500<!--R:HT-DEVICE-W-NEW--> W while chips demanded a lower surface temperature: total heat and total temperature go up while the surface has to stay cooler. That paradox pushed direct liquid cooling and immersion forward, through water with better heat transfer or a large volume of insulating oil.</p>
+<p>HPC needs liquid cooling because air runs out before the rack does: per cubic metre and per degree, water holds about 4170<!--R:WATER-VHC--> kJ of heat and air about 1.21<!--R:AIR-VHC--> kJ, so the same heat needs about 3450<!--R:WATER-AIR-VHC-RATIO--> times the volume of air. That gap decides the matter at this scale: at 300<!--C:C-EXP-G1-RACK-KW--> kW in one rack and 1200<!--C:C-EXP-G1-FAC-FLOW-LPM--> LPM of facility water, the heat leaves the rack position through liquid, and at so generous a flow the water warms by only about 3.6<!--R:DT-300KW-1200LPM--> °C.</p>
+<p>The main heat sources are still the two big compute chips, but peripheral parts such as network cards are raising their power faster, and board space keeps them from growing the way compute chips do, so heat flux density and total power climb together. In the original draft, device power doubled from 700<!--C:C-EXP-HT-DEVICE-W-OLD--> W to 1500<!--C:C-EXP-HT-DEVICE-W-NEW--> W while chips demanded a lower surface temperature: total heat and total temperature go up while the surface has to stay cooler. That paradox pushed direct liquid cooling and immersion forward, through water with better heat transfer or a large volume of insulating oil.</p>
 <figure class="concept tw-fig" style="max-width:480px">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 378" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
 <title>The heat paradox</title>
@@ -53,8 +53,8 @@
 <polygon points="381.0,55.6 385.0,50.0 389.0,55.6" fill="var(--fg, #1a1a1a)"/>
 <polyline points="196,140 276,140" fill="none" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
 <polygon points="275.0,135.0 282.0,140.0 275.0,145.0" fill="var(--fg, #1a1a1a)"/>
-<text x="120" y="178" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">700 W</text>
-<text x="360" y="178" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">1500 W</text>
+<text x="120" y="178" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">700 W<!--C:C-EXP-HT-DEVICE-W-OLD--></text>
+<text x="360" y="178" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">1500 W<!--C:C-EXP-HT-DEVICE-W-NEW--></text>
 <text x="360" y="196" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">a lower surface temperature</text>
 <polyline points="8,214 472,214" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="0.5"/>
 <text x="240" y="238" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">direct liquid cooling and immersion</text>
@@ -127,10 +127,10 @@
 <polyline points="8,262 472,262" fill="none" stroke="var(--mut, #5c5c5c)" stroke-width="0.5"/>
 <text x="240" y="284" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">the same heat needs</text>
 <rect x="16" y="298" width="4" height="4" fill="var(--fg, #1a1a1a)"/>
-<text x="28" y="304" text-anchor="start" font-size="12" fill="var(--fg, #1a1a1a)">water holds about 4,170 kJ</text>
+<text x="28" y="304" text-anchor="start" font-size="12" fill="var(--fg, #1a1a1a)">water holds about 4170 kJ</text>
 <rect x="16" y="314" width="448" height="123" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1" stroke-dasharray="8 6"/>
 <text x="240" y="370" text-anchor="middle" font-size="13" fill="var(--fg, #1a1a1a)">air about 1.21 kJ</text>
-<text x="240" y="390" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">about 3,450 times the volume of air</text>
+<text x="240" y="390" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">about 3450 times the volume of air</text>
 </svg>
 </figure>
 <h2 id="h2-4">Early adopters: Bitcoin mining</h2>

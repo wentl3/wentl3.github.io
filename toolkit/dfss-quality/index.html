@@ -10,11 +10,11 @@
 <body data-zone="engineering" data-type="chapter">
 <header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hsio/">High speed IO</a><a href="../../hpc/">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
 <div class="layout">
-<aside class="toc" aria-label="In this series"><b><a href="../">Toolkit</a></b><ol><li><a href="../newbie-thermal/">Copy the recipe once, then repeat runs</a></li><li><a href="../textbook-vs-simulation/">Textbook estimates bound a CFD result</a></li><li><a href="../functional-dimensioning/"><span lang="zh-Hant">品質標誌標在疊加的主導尺寸</span></a></li><li class="here"><span lang="zh-Hant">DFSS、DMAIC 都先過量測這一關</span></li><li><a href="../thermal-pm/"><span lang="zh-Hant">散熱工程師的專案管理</span></a></li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2"><span lang="zh-Hant">三套方法：什麼時候用哪一套</span></a></li><li><a href="#h2-3"><span lang="zh-Hant">gage R&amp;R：量測的晃動要比差異小得多</span></a></li><li><a href="#h2-4"><span lang="zh-Hant">DOE：慢慢來比較快</span></a></li><li><a href="#h2-5">Original article</a></li><li><a href="#h2-6">Keep reading</a></li></ol></aside>
+<aside class="toc" aria-label="In this series"><b><a href="../">Toolkit</a></b><ol><li><a href="../newbie-thermal/">Copy the recipe once, then repeat runs</a></li><li><a href="../textbook-vs-simulation/">Textbook estimates bound a CFD result</a></li><li><a href="../functional-dimensioning/"><span lang="zh-Hant">品質標誌標在疊加的主導尺寸</span></a></li><li class="here"><span lang="zh-Hant">DFSS、DMAIC 都先過量測這一關</span></li><li><a href="../thermal-pm/"><span lang="zh-Hant">散熱工程師的專案管理</span></a></li><li><a href="../worked-examples/"><span lang="zh-Hant">示範算例：輸入、公式、結果</span></a></li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2"><span lang="zh-Hant">三套方法：什麼時候用哪一套</span></a></li><li><a href="#h2-3"><span lang="zh-Hant">gage R&amp;R：量測的晃動要比差異小得多</span></a></li><li><a href="#h2-4"><span lang="zh-Hant">DOE：慢慢來比較快</span></a></li><li><a href="#h2-5">Original article</a></li><li><a href="#h2-6">Keep reading</a></li></ol></aside>
 <main>
-<p class="crumb"><a href="../../">Home</a> › <a href="../">Toolkit</a> › Chapter 4 of 5</p>
-<div class="progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i class="live"></i></div>
-<p class="stage">Part 4 of 5</p>
+<p class="crumb"><a href="../../">Home</a> › <a href="../">Toolkit</a> › Chapter 4 of 6</p>
+<div class="progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i class="live"></i><i class="live"></i></div>
+<p class="stage">Part 4 of 6</p>
 <section id="b1"><h1><span lang="zh-Hant">DFSS 管新設計、DMAIC 改既有流程，兩條路都先過量測這一關</span></h1></section>
 <section id="b2" class="answer"><h2 id="h2-1">Short answer</h2>
 <p><strong><span lang="zh-Hant">DFSS 管新設計、DMAIC 改既有流程、Lean 消除浪費；三條路的測量階段都先做 gage R&amp;R，量測的晃動要比想分辨的差異小得多，實驗設計才分得出好壞。</span></strong></p></section>
@@ -65,46 +65,46 @@
 <figcaption><span lang="zh-Hant">DFSS 管新設計、DMAIC 改既有流程、Lean 消除浪費</span></figcaption></figure>
 <h2 id="h2-3"><span lang="zh-Hant">gage R&amp;R：量測的晃動要比差異小得多</span></h2>
 <p><span lang="zh-Hant">gage R&amp;R 像先檢查體重計：想看出一週瘦了多少，體重計每站上去一次就跳一下，跳的幅度比你想看出的變化還大，量再多次也說不出瘦了沒。實驗也一樣，量測系統的晃動要比想分辨的設計差異小得多。</span></p>
-<p><span lang="zh-Hant">很多 gage R&amp;R 可以追蹤實驗架設是否有代表性，可以跨人、跨次數分段。 算法是把晃動和總變異相比：%GRR = 量測變異 σ ÷ 總變異 σ。例如同一批散熱片跨人、跨次重複量測，量測變異 σ 0.3</span><!--R:TK-DFSS-GRR-MS--><span lang="zh-Hant"> °C、總變異 σ 1.0</span><!--R:TK-DFSS-GRR-TV--><span lang="zh-Hant"> °C，%GRR = 0.3</span><!--R:TK-DFSS-GRR-MS--> ÷ 1.0<!--R:TK-DFSS-GRR-TV--> = 30<!--R:TK-DFSS-GRR-PCT--><span lang="zh-Hant">%，剛好踩在業界常用的上限：低於 10</span><!--R:AIAG-GRR-OK--><span lang="zh-Hant">% 可接受，超過 30</span><!--R:AIAG-GRR-BAD--><span lang="zh-Hant">% 不可接受。這時該修的是熱電偶貼法、治具或操作步驟，不是加做實驗；量測 σ 要壓到約 0.1</span><!--R:TK-DFSS-GRR-MS2--><span lang="zh-Hant"> °C，%GRR 才回到 10</span><!--R:AIAG-GRR-OK--><span lang="zh-Hant">% 附近。</span></p>
+<p><span lang="zh-Hant">很多 gage R&amp;R 可以追蹤實驗架設是否有代表性，可以跨人、跨次數分段。 算法是把晃動和總變異相比：%GRR = 量測變異 σ ÷ 總變異 σ。例如同一批散熱片跨人、跨次重複量測，量測變異 σ </span>0.3<!--R:TK-DFSS-GRR-MS--><span lang="zh-Hant"> °C、總變異 σ </span>1.0<!--R:TK-DFSS-GRR-TV--><span lang="zh-Hant"> °C，%GRR = </span>0.3<!--R:TK-DFSS-GRR-MS--> ÷ 1.0<!--R:TK-DFSS-GRR-TV--> = 30<!--R:TK-DFSS-GRR-PCT--><span lang="zh-Hant">%，剛好踩在業界常用的上限：低於 </span>10<!--C:C-EXP-AIAG-GRR-OK--><span lang="zh-Hant">% 可接受，超過 </span>30<!--C:C-EXP-AIAG-GRR-BAD--><span lang="zh-Hant">% 不可接受。這時該修的是熱電偶貼法、治具或操作步驟，不是加做實驗；量測 σ 要壓到約 </span>0.1<!--R:TK-DFSS-GRR-MS2--><span lang="zh-Hant"> °C，%GRR 才回到 </span>10<!--C:C-EXP-AIAG-GRR-OK--><span lang="zh-Hant">% 附近。</span></p>
 <figure class="concept tw-fig" style="max-width:480px">
 <svg lang="zh-Hant" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 210" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
 <title>量測變異占總變異多少</title>
-<text x="40" y="30" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">總變異 σ 1.0 °C</text>
+<text data-r="TK-DFSS-GRR-TV" x="40" y="30" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">總變異 σ 1.0 °C</text>
 <rect x="40" y="40" width="400" height="24" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
 <rect x="40" y="40" width="120" height="24" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
-<text x="168" y="57" font-size="13" font-weight="600" fill="var(--accent, #0e7490)">30%</text>
-<text x="40" y="82" font-size="12" fill="var(--accent, #0e7490)">量測變異 σ 0.3 °C</text>
-<text x="40" y="112" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">約 0.1 °C</text>
+<text data-r="TK-DFSS-GRR-PCT" x="168" y="57" font-size="13" font-weight="600" fill="var(--accent, #0e7490)">30%</text>
+<text data-r="TK-DFSS-GRR-MS" x="40" y="82" font-size="12" fill="var(--accent, #0e7490)">量測變異 σ 0.3 °C</text>
+<text data-r="TK-DFSS-GRR-MS2" x="40" y="112" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">約 0.1 °C</text>
 <rect x="40" y="122" width="400" height="24" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
 <rect x="40" y="122" width="40" height="24" fill="var(--fg, #1a1a1a)" fill-opacity="0.15" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
-<text x="88" y="139" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">10%</text>
+<text x="88" y="139" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">10%<!--C:C-EXP-AIAG-GRR-OK--></text>
 <line x1="40" y1="176" x2="440" y2="176" stroke="var(--fg, #1a1a1a)" stroke-width="1"/>
 <line x1="80" y1="170" x2="80" y2="182" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
 <line x1="160" y1="170" x2="160" y2="182" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
-<text x="80" y="198" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">10%</text>
-<text x="160" y="198" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">30%</text>
+<text x="80" y="198" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">10%<!--C:C-EXP-AIAG-GRR-OK--></text>
+<text x="160" y="198" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">30%<!--C:C-EXP-AIAG-GRR-BAD--></text>
 <text x="40" y="166" font-size="12" fill="var(--mut, #5c5c5c)">可接受</text>
 <text x="168" y="166" font-size="12" fill="var(--mut, #5c5c5c)">不可接受</text>
 </svg>
 </figure>
 <h2 id="h2-4"><span lang="zh-Hant">DOE：慢慢來比較快</span></h2>
 <p></p>
-<p><span lang="zh-Hant">實驗設計的了解，慢慢來比較快（slow is fast）：抓住量化分析，避免報告時被追問、回頭補作業。  慢一點（slow）設計實驗，快一點過審。 量測沒過關就做 DOE，會白做。假設兩組散熱設計真的差 0.5</span><!--R:TK-DFSS-DOE-EFF--><span lang="zh-Hant"> °C，量測 σ 0.3</span><!--R:TK-DFSS-GRR-MS--><span lang="zh-Hant"> °C：兩次讀數相減，雜訊是 0.3</span><!--R:TK-DFSS-GRR-MS--><span lang="zh-Hant"> 乘上根號二 ≈ 0.42</span><!--R:TK-DFSS-DOE-N1--><span lang="zh-Hant"> °C，效應只有雜訊的 1.2</span><!--R:TK-DFSS-DOE-R1--><span lang="zh-Hant"> 倍，因子效應被雜訊蓋住。把量測 σ 修到 0.1</span><!--R:TK-DFSS-GRR-MS2--><span lang="zh-Hant"> °C，雜訊降到 0.14</span><!--R:TK-DFSS-DOE-N2--><span lang="zh-Hant"> °C，效應是雜訊的 3.5</span><!--R:TK-DFSS-DOE-R2--><span lang="zh-Hant"> 倍，一次就看得出。不修量測、改用重複次數硬壓，雜訊只隨次數的平方根下降，要重複 9</span><!--R:TK-DFSS-DOE-REP--><span lang="zh-Hant"> 次才追得上：這就是慢慢來（slow）反而快的算術。 職場報告是門藝術，多變數一起抓方向當然更好；但在熱仿真與樣品量測之間，要做成本與成果的取捨。  所以先慢下來（slow）把量測修到 %GRR 10</span><!--R:AIAG-GRR-OK--><span lang="zh-Hant">% 以下，再開 DOE 與仿真。</span></p>
+<p><span lang="zh-Hant">實驗設計的了解，慢慢來比較快（slow is fast）：抓住量化分析，避免報告時被追問、回頭補作業。  慢一點（slow）設計實驗，快一點過審。 量測沒過關就做 DOE，會白做。假設兩組散熱設計真的差 </span>0.5<!--R:TK-DFSS-DOE-EFF--><span lang="zh-Hant"> °C，量測 σ </span>0.3<!--R:TK-DFSS-GRR-MS--><span lang="zh-Hant"> °C：兩次讀數相減，雜訊是 </span>0.3<!--R:TK-DFSS-GRR-MS--><span lang="zh-Hant"> 乘上根號二 ≈ </span>0.42<!--R:TK-DFSS-DOE-N1--><span lang="zh-Hant"> °C，效應只有雜訊的 </span>1.2<!--R:TK-DFSS-DOE-R1--><span lang="zh-Hant"> 倍，因子效應被雜訊蓋住。把量測 σ 修到 </span>0.1<!--R:TK-DFSS-GRR-MS2--><span lang="zh-Hant"> °C，雜訊降到 </span>0.14<!--R:TK-DFSS-DOE-N2--><span lang="zh-Hant"> °C，效應是雜訊的 </span>3.5<!--R:TK-DFSS-DOE-R2--><span lang="zh-Hant"> 倍，一次就看得出。不修量測、改用重複次數硬壓，雜訊只隨次數的平方根下降，要重複 </span>9<!--R:TK-DFSS-DOE-REP--><span lang="zh-Hant"> 次才追得上：這就是慢慢來（slow）反而快的算術。 職場報告是門藝術，多變數一起抓方向當然更好；但在熱仿真與樣品量測之間，要做成本與成果的取捨。  所以先慢下來（slow）把量測修到 %GRR </span>10<!--C:C-EXP-AIAG-GRR-OK--><span lang="zh-Hant">% 以下，再開 DOE 與仿真。</span></p>
 <figure class="concept tw-fig" style="max-width:480px">
 <svg lang="zh-Hant" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 198" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
 <title>慢慢來比較快</title>
-<text x="120" y="52" text-anchor="end" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">量測 σ 0.3 °C</text>
+<text data-r="TK-DFSS-GRR-MS" x="120" y="52" text-anchor="end" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">量測 σ 0.3 °C</text>
 <rect x="130" y="30" width="200" height="16" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
-<text x="336" y="43" font-size="12" fill="var(--fg, #1a1a1a)">0.5 °C</text>
+<text data-r="TK-DFSS-DOE-EFF" x="336" y="43" font-size="12" fill="var(--fg, #1a1a1a)">0.5 °C</text>
 <rect x="130" y="52" width="168" height="16" fill="var(--fg, #1a1a1a)" fill-opacity="0.15" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
-<text x="304" y="65" font-size="12" fill="var(--fg, #1a1a1a)">0.42 °C</text>
+<text data-r="TK-DFSS-DOE-N1" x="304" y="65" font-size="12" fill="var(--fg, #1a1a1a)">0.42 °C</text>
 <text x="392" y="46" font-size="14" font-weight="600" fill="var(--fg, #1a1a1a)">1.2 倍</text>
 <text x="392" y="64" font-size="12" fill="var(--mut, #5c5c5c)">被雜訊蓋住</text>
-<text x="120" y="122" text-anchor="end" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">修到 0.1 °C</text>
+<text data-r="TK-DFSS-GRR-MS2" x="120" y="122" text-anchor="end" font-size="13" font-weight="600" fill="var(--fg, #1a1a1a)">修到 0.1 °C</text>
 <rect x="130" y="100" width="200" height="16" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
-<text x="336" y="113" font-size="12" fill="var(--fg, #1a1a1a)">0.5 °C</text>
+<text data-r="TK-DFSS-DOE-EFF" x="336" y="113" font-size="12" fill="var(--fg, #1a1a1a)">0.5 °C</text>
 <rect x="130" y="122" width="56" height="16" fill="var(--fg, #1a1a1a)" fill-opacity="0.15" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
-<text x="192" y="135" font-size="12" fill="var(--fg, #1a1a1a)">0.14 °C</text>
+<text data-r="TK-DFSS-DOE-N2" x="192" y="135" font-size="12" fill="var(--fg, #1a1a1a)">0.14 °C</text>
 <text x="392" y="116" font-size="14" font-weight="600" fill="var(--accent, #0e7490)">3.5 倍</text>
 <text x="392" y="134" font-size="12" fill="var(--accent, #0e7490)">一次就看得出</text>
 <text x="136" y="43" font-size="12" fill="var(--mut, #5c5c5c)">效應</text>

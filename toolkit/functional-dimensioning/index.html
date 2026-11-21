@@ -10,11 +10,11 @@
 <body data-zone="engineering" data-type="chapter">
 <header class="site-header"><div class="bar"><a class="brand" href="../../">Wen&#x27;s writing blog</a><nav aria-label="Sections"><a href="../../hsio/">High speed IO</a><a href="../../hpc/">HPC</a><a href="../../tools/">Tools</a><a href="../../reading/" hreflang="zh-Hant">Reading</a></nav></div></header>
 <div class="layout">
-<aside class="toc" aria-label="In this series"><b><a href="../">Toolkit</a></b><ol><li><a href="../newbie-thermal/">Copy the recipe once, then repeat runs</a></li><li><a href="../textbook-vs-simulation/">Textbook estimates bound a CFD result</a></li><li class="here"><span lang="zh-Hant">品質標誌標在疊加的主導尺寸</span></li><li><a href="../dfss-quality/"><span lang="zh-Hant">DFSS、DMAIC 都先過量測這一關</span></a></li><li><a href="../thermal-pm/"><span lang="zh-Hant">散熱工程師的專案管理</span></a></li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2"><span lang="zh-Hant">表面處理</span></a></li><li><a href="#h2-3"><span lang="zh-Hant">GD&amp;T 與品質標誌</span></a></li><li><a href="#h2-4"><span lang="zh-Hant">公差疊加：誰站得最前面</span></a></li><li><a href="#h2-5"><span lang="zh-Hant">和品管一起學</span></a></li><li><a href="#h2-6">Original article</a></li><li><a href="#h2-7">Keep reading</a></li></ol></aside>
+<aside class="toc" aria-label="In this series"><b><a href="../">Toolkit</a></b><ol><li><a href="../newbie-thermal/">Copy the recipe once, then repeat runs</a></li><li><a href="../textbook-vs-simulation/">Textbook estimates bound a CFD result</a></li><li class="here"><span lang="zh-Hant">品質標誌標在疊加的主導尺寸</span></li><li><a href="../dfss-quality/"><span lang="zh-Hant">DFSS、DMAIC 都先過量測這一關</span></a></li><li><a href="../thermal-pm/"><span lang="zh-Hant">散熱工程師的專案管理</span></a></li><li><a href="../worked-examples/"><span lang="zh-Hant">示範算例：輸入、公式、結果</span></a></li></ol><b>On this page</b><ol><li><a href="#h2-1">Short answer</a></li><li><a href="#h2-2"><span lang="zh-Hant">表面處理</span></a></li><li><a href="#h2-3"><span lang="zh-Hant">GD&amp;T 與品質標誌</span></a></li><li><a href="#h2-4"><span lang="zh-Hant">公差疊加：誰站得最前面</span></a></li><li><a href="#h2-5"><span lang="zh-Hant">和品管一起學</span></a></li><li><a href="#h2-6">Original article</a></li><li><a href="#h2-7">Keep reading</a></li></ol></aside>
 <main>
-<p class="crumb"><a href="../../">Home</a> › <a href="../">Toolkit</a> › Chapter 3 of 5</p>
-<div class="progress" aria-hidden="true"><i></i><i></i><i></i><i class="live"></i><i class="live"></i></div>
-<p class="stage">Part 3 of 5</p>
+<p class="crumb"><a href="../../">Home</a> › <a href="../">Toolkit</a> › Chapter 3 of 6</p>
+<div class="progress" aria-hidden="true"><i></i><i></i><i></i><i class="live"></i><i class="live"></i><i class="live"></i></div>
+<p class="stage">Part 3 of 6</p>
 <section id="b1"><h1><span lang="zh-Hant">參考尺寸、表面處理、GD&amp;T、品質標誌，各自決定檢驗盯哪裡</span></h1><p class="keywords"><span lang="zh-Hant">功能尺寸標註</span></p></section>
 <section id="b2" class="answer"><h2 id="h2-1">Short answer</h2>
 <p><strong><span lang="zh-Hant">參考尺寸決定哪些尺寸不進檢驗；品質標誌則先做一次公差疊加，標在佔主導地位的那個尺寸上，收緊公差也先收它。</span></strong></p></section>
@@ -53,7 +53,7 @@
 <p><span lang="zh-Hant">品質標誌是在圖上標出關鍵尺寸的方法，在首件檢驗完成後使用，有兩個用途：一是聚焦必須符合規範的關鍵尺寸，例如弧形特徵的定位決定 PCB 能否正確裝進背殼；二是開發完成後在來料檢驗時監控，不讓問題拖到上產線才發現。 再往下分，有專管直接影響訊號完整性（signal integrity）尺寸的 SI 品質標誌，也有專管在公差分析（tolerance analysis）中佔主導地位尺寸的 TA 品質標誌；一般品質標誌加上這兩類，機構工程師能從設計一路監控到量產。</span></p>
 <h2 id="h2-4"><span lang="zh-Hant">公差疊加：誰站得最前面</span></h2>
 <p><span lang="zh-Hant">公差疊加像一排人往前站：每個人都只往前多站一點，排到最後一個人就超出線外。最壞情況算法假設每個人同時站滿；統計算法認為大家不會同時站滿，但站得最前面的那一個，仍然決定整排會不會出線。</span></p>
-<p><span lang="zh-Hant">例如四個尺寸串成一條裝配鏈：A ±0.3</span><!--R:TK-FD-A--><span lang="zh-Hant"> mm，B、C、D 各 ±0.05</span><!--R:TK-FD-B--><span lang="zh-Hant"> mm。最壞情況逐項相加：0.3</span><!--R:TK-FD-A--> + 0.05<!--R:TK-FD-B--> + 0.05<!--R:TK-FD-B--> + 0.05<!--R:TK-FD-B--> = ±0.45<!--R:TK-FD-WC--><span lang="zh-Hant"> mm。方根和：√(0.3</span><!--R:TK-FD-A-->² + 0.05<!--R:TK-FD-B-->² + 0.05<!--R:TK-FD-B-->² + 0.05<!--R:TK-FD-B-->²) ≈ ±0.31<!--R:TK-FD-RSS--><span lang="zh-Hant"> mm，其中 A 一項的變異 0.09</span><!--R:TK-FD-VA--><span lang="zh-Hant"> 占總變異 0.0975</span><!--R:TK-FD-VT--><span lang="zh-Hant"> 的 92</span><!--R:TK-FD-SHARE--><span lang="zh-Hant">%。公差分析（TA）品質標誌專管的「佔主導地位」尺寸，就是這樣算出來的：B、C、D 收得再緊，疊加也降不到 ±0.3</span><!--R:TK-FD-A--><span lang="zh-Hant"> mm 以下；把 A 收到 ±0.15</span><!--R:TK-FD-A2--><span lang="zh-Hant"> mm，疊加就降到約 ±0.17</span><!--R:TK-FD-RSS2--><span lang="zh-Hant"> mm。</span></p>
+<p><span lang="zh-Hant">例如四個尺寸串成一條裝配鏈：A ±</span>0.3<!--R:TK-FD-A--><span lang="zh-Hant"> mm，B、C、D 各 ±</span>0.05<!--R:TK-FD-B--><span lang="zh-Hant"> mm。最壞情況逐項相加：</span>0.3<!--R:TK-FD-A--> + 0.05<!--R:TK-FD-B--> + 0.05<!--R:TK-FD-B--> + 0.05<!--R:TK-FD-B--> = ±0.45<!--R:TK-FD-WC--><span lang="zh-Hant"> mm。方根和：√(</span>0.3<!--R:TK-FD-A-->² + 0.05<!--R:TK-FD-B-->² + 0.05<!--R:TK-FD-B-->² + 0.05<!--R:TK-FD-B-->²) ≈ ±0.31<!--R:TK-FD-RSS--><span lang="zh-Hant"> mm，其中 A 一項的變異 </span>0.09<!--R:TK-FD-VA--><span lang="zh-Hant"> 占總變異 </span>0.0975<!--R:TK-FD-VT--><span lang="zh-Hant"> 的 </span>92<!--R:TK-FD-SHARE--><span lang="zh-Hant">%。公差分析（TA）品質標誌專管的「佔主導地位」尺寸，就是這樣算出來的：B、C、D 收得再緊，疊加也降不到 ±</span>0.3<!--R:TK-FD-A--><span lang="zh-Hant"> mm 以下；把 A 收到 ±</span>0.15<!--R:TK-FD-A2--><span lang="zh-Hant"> mm，疊加就降到約 ±</span>0.17<!--R:TK-FD-RSS2--><span lang="zh-Hant"> mm。</span></p>
 <figure class="concept tw-fig" style="max-width:480px">
 <svg lang="zh-Hant" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 256" width="100%" role="img" font-family="system-ui, -apple-system, sans-serif">
 <title>公差疊加：誰站得最前面</title>
@@ -61,7 +61,7 @@
 <text x="130" y="22" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">裝配鏈</text>
 <text x="120" y="52" text-anchor="end" font-size="13" font-weight="600" fill="var(--accent, #0e7490)">A ±0.3 mm</text>
 <rect x="130" y="38" width="150" height="20" fill="var(--accent, #0e7490)" fill-opacity="0.15" stroke="var(--accent, #0e7490)" stroke-width="2.5"/>
-<text x="288" y="52" font-size="13" font-weight="600" fill="var(--accent, #0e7490)">92%</text>
+<text data-r="TK-FD-SHARE" x="288" y="52" font-size="13" font-weight="600" fill="var(--accent, #0e7490)">92%</text>
 <text x="120" y="83" text-anchor="end" font-size="13" fill="var(--fg, #1a1a1a)">B</text>
 <rect x="130" y="70" width="25" height="16" fill="var(--fg, #1a1a1a)" fill-opacity="0.06" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
 <text x="120" y="105" text-anchor="end" font-size="13" fill="var(--fg, #1a1a1a)">C</text>

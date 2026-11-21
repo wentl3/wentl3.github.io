@@ -75,13 +75,13 @@
 <h2 id="h2-4">At 800G the choke point moves inside the server</h2>
 <p></p>
 <p>Network interface cards have moved from 400G to 800G. Extending the external link through cages and pluggables and then testing it back in the system showed that internal transfer is another choke point. At 800G, internal PCIe 5 struggles to keep up, and PCIe 6 almost always arrives together with a new mainboard rather than as a separate upgrade. Each speed step outside has to be checked against the next narrower link inside, because the choke point moves rather than disappears.</p>
-<p>The arithmetic shows how narrow that internal link is. Each PCIe Gen 5 lane runs 32<!--R:PCIE5-GT--> GT/s, so PCIe Gen 5 x16 moves 512<!--R:PCIE5-X16--> Gb/s each way before encoding overhead, well short of 800G: the choke point sits on the PCIe link, not on the cable. PCIe Gen 6 doubles the lane rate to 64<!--R:PCIE6-GT--> GT/s, and x16 reaches 1,024<!--R:PCIE6-X16--> Gb/s, enough to clear 800G. So an 800G card has two ways past the choke point, and each has a price. Pick the host link before the optics, because the slot, not the cable, decides which card can run at line rate.</p>
+<p>The arithmetic shows how narrow that internal link is. Each PCIe Gen 5 lane runs 32<!--C:C-EXP-PCIE5-GT--> GT/s, so PCIe Gen 5 x16 moves 512<!--C:C-EXP-PCIE5-X16--> Gb/s each way before encoding overhead, well short of 800G: the choke point sits on the PCIe link, not on the cable. PCIe Gen 6 doubles the lane rate to 64<!--C:C-EXP-PCIE6-GT--> GT/s, and x16 reaches 1024<!--C:C-EXP-PCIE6-X16--> Gb/s, enough to clear 800G. So an 800G card has two ways past the choke point, and each has a price. Pick the host link before the optics, because the slot, not the cable, decides which card can run at line rate.</p>
 <div class="table-wrap wide"><table class="cmp">
 <thead><tr><th>Host link</th><th>Raw bandwidth each way</th><th>Clears 800G</th><th>What it costs</th></tr></thead>
 <tbody>
-<tr><th scope="row">One PCIe Gen 5 x16</th><td data-label="Raw bandwidth each way">512<!--R:PCIE5-X16--> Gb/s</td><td data-label="Clears 800G">No</td><td data-label="What it costs">The card runs below line rate</td></tr>
-<tr><th scope="row">Two PCIe Gen 5 x16 links (or one x32)</th><td data-label="Raw bandwidth each way">1,024<!--R:PCIE5-2X16--> Gb/s</td><td data-label="Clears 800G">Yes</td><td data-label="What it costs">Two slots or a wider connector, and the card splits traffic across two links</td></tr>
-<tr><th scope="row">One PCIe Gen 6 x16</th><td data-label="Raw bandwidth each way">1,024<!--R:PCIE6-X16--> Gb/s</td><td data-label="Clears 800G">Yes</td><td data-label="What it costs">A newer platform: PCIe 6 almost always arrives with the mainboard</td></tr>
+<tr><th scope="row">One PCIe Gen 5 x16</th><td data-label="Raw bandwidth each way">512<!--C:C-EXP-PCIE5-X16--> Gb/s</td><td data-label="Clears 800G">No</td><td data-label="What it costs">The card runs below line rate</td></tr>
+<tr><th scope="row">Two PCIe Gen 5 x16 links (or one x32)</th><td data-label="Raw bandwidth each way">1024<!--C:C-EXP-PCIE5-2X16--> Gb/s</td><td data-label="Clears 800G">Yes</td><td data-label="What it costs">Two slots or a wider connector, and the card splits traffic across two links</td></tr>
+<tr><th scope="row">One PCIe Gen 6 x16</th><td data-label="Raw bandwidth each way">1024<!--C:C-EXP-PCIE6-X16--> Gb/s</td><td data-label="Clears 800G">Yes</td><td data-label="What it costs">A newer platform: PCIe 6 almost always arrives with the mainboard</td></tr>
 </tbody>
 </table></div>
 <figure class="concept tw-fig" style="max-width:480px">
@@ -109,7 +109,7 @@
 <rect x="380" y="77" width="84" height="102" rx="4" fill="var(--bg, #fff)" stroke="var(--fg, #1a1a1a)" stroke-width="1.5"/>
 <text x="422" y="133" text-anchor="middle" font-size="14" fill="var(--fg, #1a1a1a)">server</text>
 <text x="320" y="44" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">PCIe Gen 6 x16</text>
-<text x="320" y="62" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">1,024 Gb/s</text>
+<text x="320" y="62" text-anchor="middle" font-size="12" fill="var(--mut, #5c5c5c)">1024 Gb/s</text>
 <text x="320" y="202" text-anchor="middle" font-size="12" fill="var(--fg, #1a1a1a)">PCIe Gen 5 x16</text>
 <text x="320" y="219" text-anchor="middle" font-size="13" font-weight="600" fill="var(--accent, #0e7490)">512 Gb/s</text>
 <text x="366" y="219" text-anchor="start" font-size="12" fill="var(--mut, #5c5c5c)">choke point</text>
