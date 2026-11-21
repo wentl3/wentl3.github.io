@@ -14,6 +14,9 @@
   UNBOUND-NUMBER 帶單位的數字或表格裸數字沒有綁 `N<!--R:KEY-->`（白名單優先；`<select>` / `<option>` 內文字不查）
   CLAIM-ID       宣稱數字 `N<!--C:ID-->`（經歷軸線等非量測值，台帳 B3 / B12）視同已綁、不要網址，
                  但 ID 必須在宣稱登記簿（--claims-registry）；沒給登記簿 = 一律不算綁（fail closed）
+  PRIVATE-PATH   輸出含私有路徑（docs/architecture/、catalog/sources/、使用者家目錄絕對路徑）（WO-PS47）
+  EXT-SCRIPT     外部 <script src=https…> 無確切版本或無 integrity；或 JS 動態載入 import("https:/src="https:（WO-PS47）
+  EXT-CSS        外部樣式表（<link rel=stylesheet> / @import url(https…)）總數 > MAX_EXTERNAL_CSS（上限只准調低）
   MANIFEST-*     匯出清單（export-manifest.json）缺檔 / 雜湊不符 / 清單外檔案
   RENDER-CHECK   （可選）render.mjs --check 非 0；node 或 render.mjs 不在 → SKIP，不算失敗
 輸出不回顯命中的隱私詞本身（公開 repo 的 Actions log 是公開的），只印規則、檔、行、詞表行號。
@@ -32,6 +35,13 @@ TEXT_EXT = {'.html', '.htm', '.css', '.js', '.mjs', '.json', '.svg', '.xml', '.t
 SKIP_DIRS = {'.git'}                    # 不掃、不入清單
 GATE_DIRS = ('.gate/', '.github/')      # 只驗雜湊，不做內容掃描（規則字面本身會命中自己）
 MANIFEST = 'export-manifest.json'
+MAX_EXTERNAL_CSS = 1                    # WO-PS47：站上現有 1 條 Google Fonts @import；只准往下調
+PRIVATE_PATH_RE = re.compile(r'docs/architecture/|catalog/sources/|/Use' + r'rs/')
+EXT_SCRIPT_TAG_RE = re.compile(r'<script\b[^>]*\bsrc\s*=\s*["\']?((?:https?:)?//[^"\'\s>]+)[^>]*>', re.I)
+EXT_SCRIPT_DYN_RE = re.compile(r'(?:\bimport\s*\(|\bsrc\s*=)\s*["\'](?:https?:)?//', re.I)
+EXT_CSS_LINK_RE = re.compile(r'<link\b[^>]*\brel\s*=\s*["\']?stylesheet[^>]*>', re.I)
+EXT_CSS_IMPORT_RE = re.compile(r'@import\s+(?:url\(\s*)?["\']?(?:https?:)?//', re.I)
+EXACT_VERSION_RE = re.compile(r'[@/]v?\d+\.\d+\.\d+(?:[/.\-?#]|$)')
 DEFAULT_INTERNAL = ['內部', '雇主內部', 'internal']
 DEFAULT_UNITS = ['kW', 'MW', 'W', 'kg', 'GPU', 'PUE', 'TUE', 'L/min', 'LPM', 'Gbps', 'GB', 'TB', 'CFM',
                  'kPa', 'Pa', 'bar', 'm³/h', 'm3/h', '°C', '℃', '%', 'RU']
@@ -83,6 +93,18 @@ def load_claim_ids(path):
     return set(j)
 
 
+def load_claims(path):
+    with open(path, encoding='utf-8') as f:
+        j = json.load(f)
+    if isinstance(j, dict) and 'claims' in j:
+        return {k: (v.get('text') if isinstance(v, dict) else None) for k, v in j['claims'].items()}
+    return {k: None for k in (j['ids'] if isinstance(j, dict) else j)}
+
+
+def claim_nums(text):
+    return {x.replace(',', '') for x in re.findall(r'\d[\d,]*(?:\.\d+)?', text)}
+
+
 def is_internal(rec, internal):
     return (rec.get('tier') or '').strip().lower() in [x.strip().lower() for x in internal]
 
@@ -106,7 +128,29 @@ def sha256(path):
     return h.hexdigest()
 
 
+def scan_public(rel, raw, cfg, F):
+    """WO-PS47：私有路徑外露、外部執行資源未鎖、外部樣式表計數。"""
+    for m in PRIVATE_PATH_RE.finditer(raw):
+        F.append(('PRIVATE-PATH', rel, line_of(raw, m.start()), '輸出含私有路徑'))
+    for m in EXT_SCRIPT_TAG_RE.finditer(raw):
+        pinned = EXACT_VERSION_RE.search(m.group(1)) and re.search(r'\bintegrity\s*=', m.group(0), re.I)
+        if not pinned:
+            F.append(('EXT-SCRIPT', rel, line_of(raw, m.start()), '外部腳本無確切版本或無 integrity'))
+    js = [(m.start(1), m.group(1)) for m in re.finditer(r'<script\b[^>]*>(.*?)</script>', raw, re.S | re.I)] \
+        if rel.lower().endswith(('.html', '.htm')) else [(0, raw)] if rel.lower().endswith(('.js', '.mjs')) else []
+    for off, body in js:
+        for m in EXT_SCRIPT_DYN_RE.finditer(body):
+            F.append(('EXT-SCRIPT', rel, line_of(raw, off + m.start()), 'JS 動態載入外部資源（無法鎖 integrity）'))
+    n = 0
+    for m in EXT_CSS_LINK_RE.finditer(raw):
+        if re.search(r'\bhref\s*=\s*["\']?(?:https?:)?//', m.group(0), re.I):
+            n += 1
+    n += len(EXT_CSS_IMPORT_RE.findall(raw))
+    cfg['ext_css'] = cfg.get('ext_css', 0) + n
+
+
 def scan_text(rel, raw, cfg, F):
+    scan_public(rel, raw, cfg, F)
     # --- 隱私詞 + IPv4
     for n, rx in cfg['terms']:
         for m in rx.finditer(raw):
@@ -158,14 +202,24 @@ def scan_text(rel, raw, cfg, F):
     # --- 宣稱數字：N[單位]<!--C:ID-->，ID 在登記簿才算綁
     unit_alt = '|'.join(re.escape(u) for u in sorted(cfg['units'], key=len, reverse=True))
     reg = cfg.get('claims')
-    for m in re.finditer(r'(?<![\w.])\d[\d,]*(?:\.\d+)?(?:[ \t]*(?:' + unit_alt + r'))?' + CLAIM_MARK, raw):
+    for m in re.finditer(r'(?<![\w.])(\d[\d,]*(?:\.\d+)?)(?:[ \t]*(?:' + unit_alt + r'))?' + CLAIM_MARK, raw):
         ln = line_of(raw, m.start())
+        cid = m.group(2)
         if reg is None:
             F.append(('CLAIM-ID', rel, ln, f'宣稱數字 {m.group(1)} 需要 --claims-registry'))
-        elif m.group(1) not in reg:
-            F.append(('CLAIM-ID', rel, ln, f'宣稱 ID {m.group(1)} 不在宣稱登記簿'))
+        elif cid not in reg:
+            F.append(('CLAIM-ID', rel, ln, f'宣稱 ID {cid} 不在宣稱登記簿'))
         else:
-            spans.append((m.start(), m.end()))
+            txt = reg.get(cid) if isinstance(reg, dict) else None
+            if txt and m.group(1).replace(',', '') not in claim_nums(txt):
+                F.append(('CLAIM-VALUE', rel, ln, f'{cid} 頁面 {m.group(1)} ≠ 宣稱登記簿 text「{txt}」'))
+            else:
+                spans.append((m.start(), m.end()))
+    for m in re.finditer(r'<!--C:', raw):
+        if not re.match(r'<!--C:[A-Za-z0-9._-]+-->', raw[m.start():m.start() + 200]):
+            F.append(('C-MARKER', rel, line_of(raw, m.start()), '宣稱標記不完整或 ID 為空（需 <!--C:ID-->）'))
+    for m in re.finditer(r'(?:&lt;|&#0*60;|&#x0*3c;)!--[RC]:', raw, re.I):
+        F.append(('MARKER-UNRESTORED', rel, line_of(raw, m.start()), '頁面出現可見的標記字樣（建置沒還原 <!--R: / <!--C:）'))
     # --- 無等級數字（白名單優先）
     t = raw
     for m in re.finditer(r'<(script|style)\b.*?</\1>', raw, re.S | re.I):
@@ -229,14 +283,14 @@ def run_render(cfg, F, notes):
         F.append(('RENDER-CHECK', 'render.mjs', 0, f'exit {r.returncode}：{tail}'))
 
 
-def run_gate(site, terms, evidence, internal=None, units=None, require_manifest=False, claims=None, **render):
+def run_gate(site, terms, evidence, internal=None, units=None, require_manifest=False, claims=None, max_external_css=MAX_EXTERNAL_CSS, **render):
     """回傳 (findings, notes, nfiles)。terms / evidence / claims（宣稱登記簿，可省）為檔案路徑。"""
     t0 = time.time()
     internal = internal or DEFAULT_INTERNAL
     ev = load_evidence(evidence)
     cfg = {'terms': load_terms(terms), 'evidence': ev, 'internal': internal, 'units': units or DEFAULT_UNITS,
            'internal_keys': [k for k, v in ev.items() if isinstance(v, dict) and is_internal(v, internal)],
-           'claims': load_claim_ids(claims) if claims else None, **render}
+           'claims': load_claims(claims) if claims else None, 'max_external_css': max_external_css, **render}
     F, notes = [], []
     files = list_files(site)
     if require_manifest:
@@ -246,6 +300,9 @@ def run_gate(site, terms, evidence, internal=None, units=None, require_manifest=
             continue
         with open(os.path.join(site, rel), encoding='utf-8', errors='replace') as f:
             scan_text(rel, f.read(), cfg, F)
+    if cfg.get('ext_css', 0) > cfg['max_external_css']:
+        F.append(('EXT-CSS', '(site)', 0, f'外部樣式表 {cfg["ext_css"]} 條 > 上限 {cfg["max_external_css"]}'))
+    notes.append(f'external_css: {cfg.get("ext_css", 0)} (max {cfg["max_external_css"]})')
     run_render(cfg, F, notes)
     notes.append(f'{len(files)} files, {time.time() - t0:.2f}s')
     return F, notes, len(files)
@@ -260,6 +317,7 @@ def main(argv=None):
     ap.add_argument('--units', default=','.join(DEFAULT_UNITS))
     ap.add_argument('--require-manifest', action='store_true')
     ap.add_argument('--claims-registry', help='宣稱登記簿 JSON；`N<!--C:ID-->` 的 ID 必須在內')
+    ap.add_argument('--max-external-css', type=int, default=MAX_EXTERNAL_CSS, help='外部樣式表上限（只准調低）')
     ap.add_argument('--render-mjs')
     ap.add_argument('--render-data')
     ap.add_argument('--render-file', action='append', default=[])
@@ -273,7 +331,7 @@ def main(argv=None):
             print(f'GATE FAILED: 找不到 {p}（fail closed）')
             return 1
     F, notes, _ = run_gate(a.site, a.terms, a.evidence, a.internal_tiers.split(','), a.units.split(','),
-                           a.require_manifest, a.claims_registry, render_mjs=a.render_mjs, render_data=a.render_data,
+                           a.require_manifest, a.claims_registry, a.max_external_css, render_mjs=a.render_mjs, render_data=a.render_data,
                            render_files=a.render_file, require_render=a.require_render)
     for rule, f, ln, msg in F:
         print(f'{f}:{ln} {rule} {msg}')
