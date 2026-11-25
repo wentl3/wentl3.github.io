@@ -1,0 +1,3 @@
+iso-numeric.json: ISO 3166-1 numeric → alpha-2 table, derived from pipeline/data/iso3166.json,
+which records its source as i18n-iso-countries@7.11.0 codes.json (MIT licence;
+https://github.com/michaelwittig/node-i18n-iso-countries). ISO 3166 codes themselves are facts.

@@ -1,0 +1,6 @@
+world-atlas@2 countries-110m.json (TopoJSON of Natural Earth 1:110m Admin 0 – Countries).
+Taken from the S0.5 prototype (docs/prototype/s05-map-prototype.html), which inlined it unmodified.
+
+Package licence: ISC, Copyright 2013-2019 Michael Bostock
+(see https://github.com/topojson/world-atlas/blob/master/LICENSE for the full text).
+Underlying data: Natural Earth (https://www.naturalearthdata.com/), public domain.
