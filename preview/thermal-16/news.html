@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>散熱新聞面板</title>
+<!-- D-036: 新聞頁 (WO-86), no build, no external domains; layout = `07` §0 新聞頁 + N-01～N-09 -->
+<style>
+:root{--bg:#eef2f3;--surface:#fff;--line:#cfd8db;--fg:#14232a;--muted:#56676e;--accent:#0b7f8c;--warn-bg:#fff3df;--warn-fg:#7a4a00;--f-body:"Helvetica Neue","PingFang TC","Noto Sans TC",Arial,sans-serif;--f-mono:ui-monospace,Menlo,monospace;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a1e;--surface:#15242a;--line:#2a3d44;--fg:#e3edef;--muted:#93a7ad;--accent:#4cc3cf;--warn-bg:#3a2c12;--warn-fg:#f3cf8a;color-scheme:dark}}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 var(--f-body)}
+.wrap{padding:12px 16px 32px;max-width:1440px;margin:0 auto;display:grid;gap:12px}
+h1,h2,h3{margin:0}h1{font-size:1.35rem}h2{font-size:.9rem;letter-spacing:.06em;color:var(--muted)}h3{font-size:.95rem}
+a{color:var(--accent)}a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-size:.82rem}.muted{color:var(--muted)}.small{font-size:.75rem}
+#news-header{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.controls,.ctl{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}.ctl{gap:6px}
+.ctl-label{font-weight:600;font-size:.75rem;letter-spacing:.06em;color:var(--muted)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.seg button,.chip{font:500 .85rem var(--f-body);border:0;background:var(--surface);color:var(--fg);padding:5px 10px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.chip{border:1px solid var(--line);border-radius:999px}.chip.more{margin-top:6px}
+.badge{margin-left:8px;padding:1px 6px;border-radius:3px;font-size:.75rem}.badge.stale,.badge.offline{background:var(--warn-bg);color:var(--warn-fg)}
+.cell{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px;min-width:0;display:grid;gap:6px;align-content:start}
+.cols{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}@media (max-width:960px){.cols{grid-template-columns:minmax(0,1fr)}}
+.tag.conf{color:var(--accent)}.undated,.unclassified{margin-top:4px}
+.trow{display:grid;gap:4px}.trow>.nrow strong{flex:1 1 24ch}
+.col,.vgroup{display:grid;gap:4px;align-content:start;min-width:0}
+.nlist{list-style:none;margin:0;padding:0;display:grid;gap:6px}.nrow{display:flex;flex-wrap:wrap;gap:2px 8px;align-items:baseline;overflow-wrap:anywhere}
+.chsum,.nsum{margin:2px 0;font-size:.82rem}.chsum{padding-left:8px;border-left:2px solid var(--accent)}.nrow>.nsum{flex:1 0 100%;color:var(--muted)}
+.list{display:grid;gap:8px}.note{font-size:.82rem;color:var(--muted);margin:6px 0 0}
+.tbl-wrap{overflow:auto;max-height:640px}table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{text-align:left;padding:6px 8px;border-top:1px solid var(--line);vertical-align:top}
+thead th{border-top:0;font-size:.75rem;letter-spacing:.06em;color:var(--muted);white-space:nowrap;position:sticky;top:0;background:var(--surface)}
+.tag{font-size:.7rem;font-weight:600;padding:0 6px;border-radius:3px;border:1px solid currentColor;white-space:nowrap;color:var(--muted)}
+.state{color:var(--muted);font-style:italic;margin:6px 0;display:flex;gap:8px;align-items:center}
+.state.offline,.state.error{color:var(--warn-fg);background:var(--warn-bg);padding:6px 10px;border-radius:4px;font-style:normal}
+select{font:inherit;padding:3px 6px}
+</style>
+<script type="module" src="news/main.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header id="news-header" data-panel="news-header"></header>
+  <section class="cell"><h2>本週各來源重點濃縮</h2><div id="news-digest" data-panel="news-digest"></div></section>
+  <section class="cell"><h2>本週大事（多家媒體同報）</h2><div id="news-top" data-panel="news-top"></div></section>
+  <section class="cell"><h2>展會</h2><div id="news-conf" data-panel="news-conf"></div></section>
+  <section class="cell"><h2>渠道分欄</h2><div id="news-channels" data-panel="news-channels"></div></section>
+  <section class="cell"><h2>浸沒競品動態</h2><div id="news-immersion" data-panel="news-immersion"></div></section>
+  <section class="cell"><h2>國家政策變化（近 90 天）</h2><div id="news-policy" data-panel="news-policy"></div></section>
+  <section class="cell"><h2>協會規格版本</h2><div id="news-assoc" data-panel="news-assoc"></div></section>
+  <section class="cell"><h2>PFAS 與兩相冷卻液</h2><div id="news-pfas" data-panel="news-pfas"></div></section>
+  <section class="cell"><h2>證據層部署與單櫃 kW</h2><div id="news-evidence" data-panel="news-evidence"></div></section>
+</div>
+</body>
+</html>
