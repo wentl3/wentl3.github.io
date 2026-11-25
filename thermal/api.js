@@ -112,12 +112,26 @@ async function news(P) {
   if (P.days && !["7", "30"].includes(P.days)) throw err(400);
   return load(`news/d_${P.days || 7}`);
 }
+async function digest(P) {
+  need(P, ["scenario"]);
+  const d = await load("digest"), s = P.scenario || "all";
+  if (!d[s]) throw err(400);
+  return d[s];
+}
+async function strategy(P) {
+  need(P, ["country", "scenario"]);
+  if (!/^[A-Z]{2}$/.test(P.country || "") || !SC.slice(1).includes(P.scenario)) throw err(400);
+  const d = await load("strategy");
+  return d[`${P.country}|${P.scenario}`] || d._default;
+}
 
 export async function getJson(path, params = {}) {
   const P = {};
   for (const [k, v] of Object.entries(params)) if (v !== undefined && v !== null && v !== "") P[k] = String(v);
   let out;
-  if (["meta", "vendors", "headlines", "digest", "strategy"].includes(path)) out = await load(path);
+  if (["meta", "vendors", "headlines"].includes(path)) out = await load(path);
+  else if (path === "digest") out = await digest(P);
+  else if (path === "strategy") out = await strategy(P);
   else if (path === "items") out = await items(P);
   else if (path === "events") out = await events(P);
   else if (path === "library") out = await listOf("library", "items", P, 100);
