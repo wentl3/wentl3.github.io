@@ -17,7 +17,8 @@ export function renderTop(node, { data, loading, error, retry, days, expanded, o
       el("div", { class: "nrow" }, el("strong", { text: text(r.title) || "（無標題）" }),
         el("span", { class: "tag", text: `${Number.isFinite(r.domains) ? r.domains : 0} 個網域` }),
         el("span", { class: "mono", text: d || "日期未知" }),
-        !open && items.length ? el("button", { type: "button", class: "chip", onclick: () => onExpand(key), text: "展開各網域" }) : null),
+        !open && items.length ? el("button", { type: "button", class: "chip", onclick: () => onExpand(key), text: "展開各網域" }) : null,
+        r.summary_zh ? el("p", { class: "nsum", text: r.summary_zh }) : null),
       open ? el("ul", { class: "nlist" }, ...items.map((it) => headlineRow(it))) : null);
   })));
 }
