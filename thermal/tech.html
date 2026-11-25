@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>硬體與散熱動態</title>
+<!-- D-029: second page (WO-50), no build, no external domains; layout = `07` §0 第二頁 + H-01～H-05; own CSS (index.html's is inline) -->
+<style>
+:root {
+  --bg: #eef2f3; --surface: #ffffff; --line: #cfd8db; --fg: #14232a; --muted: #56676e;
+  --accent: #0b7f8c; --accent-soft: #d3ecee; --warn-bg: #fff3df; --warn-fg: #7a4a00; --reg: #c4581f;
+  --f-body: "Helvetica Neue", "PingFang TC", "Noto Sans TC", Arial, sans-serif;
+  --f-mono: ui-monospace, Menlo, monospace;
+  --c-Air: #7a8b92; --c-DLC_cold_plate: #0b7f8c; --c-DLC_other: #5bb5c0; --c-DLC_unspecified: #a9d6dc; --c-1PIC: #c4581f; --c-2PIC: #e3a15c; --c-Other: #b9a8d6;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1a1e; --surface: #15242a; --line: #2a3d44; --fg: #e3edef; --muted: #93a7ad;
+  --accent: #4cc3cf; --accent-soft: #163a40; --warn-bg: #3a2c12; --warn-fg: #f3cf8a; --reg: #f08a4b; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.55 var(--f-body); }
+.wrap { padding: 12px 16px 32px; max-width: 1440px; margin: 0 auto; display: grid; gap: 12px; }
+h1, h2, h3 { margin: 0; }
+h1 { font-size: 1.35rem; }
+h2 { font-size: .9rem; letter-spacing: .06em; color: var(--muted); }
+h3 { font-size: .95rem; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mono { font-family: var(--f-mono); font-size: .82rem; }
+.muted { color: var(--muted); }
+.small { font-size: .75rem; }
+#tech-header { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+.ctl { display: flex; gap: 6px; align-items: center; }
+.ctl-label { font-weight: 600; font-size: .75rem; letter-spacing: .06em; color: var(--muted); }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.seg button, .chip { font: 500 .85rem var(--f-body); border: 0; background: var(--surface); color: var(--fg); padding: 5px 10px; cursor: pointer; }
+.seg button:disabled { opacity: .45; cursor: not-allowed; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.chip { border: 1px solid var(--line); border-radius: 999px; }
+.chip.more { margin-top: 6px; }
+.badge { margin-left: 8px; padding: 1px 6px; border-radius: 3px; font-size: .75rem; }
+.badge.stale, .badge.offline { background: var(--warn-bg); color: var(--warn-fg); }
+.stage { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 12px; align-items: start; }
+.main { display: grid; gap: 12px; min-width: 0; }
+@media (max-width: 960px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+.cell { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px; min-width: 0; display: grid; gap: 6px; align-content: start; }
+.panel-head { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin-bottom: 6px; }
+.tbl-wrap { overflow: auto; max-height: 640px; }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+th, td { text-align: left; padding: 6px 8px; border-top: 1px solid var(--line); vertical-align: top; }
+thead th { border-top: 0; font-size: .75rem; letter-spacing: .06em; color: var(--muted); white-space: nowrap; position: sticky; top: 0; background: var(--surface); }
+tr.prow td:nth-child(1), tr.prow td:nth-child(6), tr.prow td:nth-child(7), .cellbtn .mono { white-space: nowrap; } /* 日期／動作／來源數／矩陣格日期不折行；窄螢幕由 .tbl-wrap 橫向捲動 */
+.pmore td { font-size: .82rem; padding-block: 3px; }
+.pdetail td { background: var(--accent-soft); }
+.linkbtn { font: 600 .88rem var(--f-body); background: none; border: 0; padding: 0; color: var(--accent); cursor: pointer; text-align: left; text-decoration: underline; }
+.cellbtn { display: grid; gap: 2px; text-align: left; font: inherit; color: var(--fg); background: none; border: 1px solid var(--line); border-radius: 4px; padding: 3px 6px; cursor: pointer; }
+.cellbtn[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
+td.null { font-size: .8rem; font-style: italic; }
+.tag { font-size: .7rem; font-weight: 600; padding: 0 6px; border-radius: 3px; border: 1px solid currentColor; white-space: nowrap; }
+.tag.ok { color: var(--accent); } .tag.tech, .tag.muted { color: var(--muted); }
+.list { display: grid; gap: 6px; }
+.item { border-top: 1px solid var(--line); padding-block: 8px; display: grid; gap: 3px; }
+.item:first-of-type { border-top: 0; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; color: var(--muted); font-size: .8rem; }
+.assoc { display: grid; gap: 2px; margin-bottom: 8px; }
+.note { font-size: .82rem; color: var(--muted); margin: 0 0 6px; }
+.state { color: var(--muted); font-style: italic; margin: 6px 0; display: flex; gap: 8px; align-items: center; }
+.state.offline, .state.error { color: var(--warn-fg); background: var(--warn-bg); padding: 6px 10px; border-radius: 4px; font-style: normal; }
+q { font-size: .88rem; }
+svg.trend { display: block; width: 100%; min-width: 560px; max-height: 340px; }
+.axis { font: 10px var(--f-mono); fill: var(--muted); text-anchor: middle; } /* H-05: 色塊用 --c-<鍵>，點週＝篩 H-02 */
+g.wk { cursor: pointer; } g.wk .hit { fill: transparent; } g.wk:hover .hit, g.wk[aria-pressed="true"] .hit { fill: var(--accent-soft); }
+.seg.zero { fill: var(--line); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: .75rem; color: var(--muted); }
+.sw { display: inline-block; width: 10px; height: 10px; margin-right: 4px; border-radius: 2px; }
+.trend-sum { margin: 0; font-weight: 600; }
+.seg.k-Air { fill: var(--c-Air); } .sw.k-Air { background: var(--c-Air); }
+.seg.k-DLC_cold_plate { fill: var(--c-DLC_cold_plate); } .sw.k-DLC_cold_plate { background: var(--c-DLC_cold_plate); }
+.seg.k-DLC_other { fill: var(--c-DLC_other); } .sw.k-DLC_other { background: var(--c-DLC_other); }
+.seg.k-DLC_unspecified { fill: var(--c-DLC_unspecified); } .sw.k-DLC_unspecified { background: var(--c-DLC_unspecified); }
+.seg.k-1PIC { fill: var(--c-1PIC); } .sw.k-1PIC { background: var(--c-1PIC); }
+.seg.k-2PIC { fill: var(--c-2PIC); } .sw.k-2PIC { background: var(--c-2PIC); }
+.seg.k-Other { fill: var(--c-Other); } .sw.k-Other { background: var(--c-Other); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<script type="module" src="tech/main.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header id="tech-header" data-panel="tech-header"></header>
+  <div class="stage">
+    <div class="main" id="tech-main">
+      <section class="cell"><h2>產品動態</h2><div id="tech-products" data-panel="tech-products"></div></section>
+      <section class="cell"><h2>平台 × 散熱方式</h2><div id="tech-matrix" data-panel="tech-matrix"></div></section>
+      <section class="cell"><h2>散熱方式週趨勢</h2><div id="tech-trend" data-panel="tech-trend"></div></section>
+    </div>
+    <aside class="cell"><h2>協會與標準</h2><div id="tech-assoc" data-panel="tech-assoc"></div></aside>
+  </div>
+</div>
+</body>
+</html>
