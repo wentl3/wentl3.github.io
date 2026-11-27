@@ -1,1 +1,1 @@
-{"":{},"S-HEAT":{},"S-EFF":{},"S-EDGE":{},"S-MIL":{}}
+{"":{"US":{"counts":{"standard":{"accepted":1,"unverified":0}},"constraints":{},"events":{"reg":1,"deploy":0,"rumour":0,"reg_structure":{}}}},"S-HEAT":{},"S-EFF":{"US":{"counts":{"standard":{"accepted":1,"unverified":0}},"constraints":{},"events":{"reg":1,"deploy":0,"rumour":0,"reg_structure":{}}}},"S-EDGE":{},"S-MIL":{}}

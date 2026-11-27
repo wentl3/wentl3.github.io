@@ -17,5 +17,6 @@ export function renderImmersion(node, { data, loading, error, retry, days }) {
     el("ul", { class: "nlist" }, ...arr(g.items).slice(0, VENDOR_CAP).map((it) => el("li", { class: "nrow" },
       el("span", { class: "mono", text: itemDate(it) }),
       ...arr(it.actions).map((a) => el("span", { class: "tag muted", text: text(a) })),
-      link(it.url, text(it.title) || text(it.url) || "（無標題）")))))));
+      link(it.url, text(it.title) || text(it.url) || "（無標題）"),
+      it.summary_zh ? el("p", { class: "nsum", text: it.summary_zh }) : null))))));
 }

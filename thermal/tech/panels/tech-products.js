@@ -37,6 +37,7 @@ export function renderProducts(node, { data, loading, error, retry, days, win = 
       el("td", { class: "mono", text: (r.sources || []).length })));
     if (open) {
       body.append(el("tr", { class: "pdetail" }, el("td", { colspan: HEAD.length },
+        r.summary_zh ? el("p", { text: r.summary_zh }) : null,
         r.quote ? el("q", { text: r.quote }) : null,
         r.subtype_quote ? el("div", { class: "muted small", text: `DLC 類型依據：${r.subtype_quote}` }) : null,
         el("div", { class: "meta" }, el("span", { text: "原文：" }), link(r.url, r.title || r.url || "原文"), el("span", { class: "tag ok", text: "AI 抽取・逐字引文" })))));

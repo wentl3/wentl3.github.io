@@ -59,7 +59,7 @@ export function renderPolicy(node, { data, loading, error, retry, country, topic
   cur ? el("p", { class: "note cond", text: conditionLine(countries, cur) }) : null,
   shown.length ? el("div", { class: "tbl-wrap" }, el("table", {}, head(["國家", "議題", "日期", "標題", "原文", "來源類別"]),
     el("tbody", {}, ...shown.map((r) => el("tr", { class: "prow" }, el("td", { text: r.countryText }), el("td", { text: topicsOf(r) }),
-      el("td", { class: "mono", text: text(r.date).slice(0, 10) || "日期不明" }), el("td", { text: text(r.title) }), el("td", {}, link(r.url, "原文")), el("td", { text: src(r) }))))))
+      el("td", { class: "mono", text: text(r.date).slice(0, 10) || "日期不明" }), el("td", {}, text(r.title), r.summary_zh ? el("p", { class: "nsum", text: r.summary_zh }) : null), el("td", {}, link(r.url, "原文")), el("td", { text: src(r) }))))))
     : el("p", { class: "state empty", text: "近 90 天未查到變更（未查到≠沒有）" })].filter(Boolean));
   if (!hasHl) return;
   box.append(el("h3", { text: "標題級（未抽取）" }),

@@ -4,6 +4,7 @@ import { describe, newsQuery, parseNews } from "./common.js";
 import { renderAssoc } from "./panels/news-assoc.js";
 import { renderConf } from "./panels/news-conf.js";
 import { renderChannels } from "./panels/news-channels.js";
+import { renderDigest } from "./panels/news-digest.js";
 import { renderEvidence } from "./panels/news-evidence.js";
 import { renderHeader } from "./panels/news-header.js";
 import { renderImmersion } from "./panels/news-immersion.js";
@@ -12,9 +13,10 @@ import { renderPolicy } from "./panels/news-policy.js";
 import { renderTop } from "./panels/news-top.js";
 
 export function mountNews(nodes, { fetchJson = getJson, search = "", save = () => {} } = {}) {
-  const s = { ...parseNews(search), meta: null, metaError: null, data: null, error: null, loading: true, expanded: new Set(), country: "", topic: "", pfasAll: false, evTab: "deploy", evFilter: "", countries: null };
-  let seq = 0;
+  const s = { ...parseNews(search), meta: null, metaError: null, data: null, error: null, loading: true, expanded: new Set(), country: "", topic: "", pfasAll: false, evTab: "deploy", evFilter: "", countries: null, digestScenario: "all", digest: null, digestError: null, digestLoading: true };
+  let seq = 0, dSeq = 0;
   const head = () => renderHeader(nodes.header, { days: s.days, meta: s.meta, metaError: s.metaError, data: s.data, onDays: (days) => set({ days }) });
+  const paintDigest = () => nodes.digest && renderDigest(nodes.digest, { scenario: s.digestScenario, data: s.digest, loading: s.digestLoading, error: s.digestError, retry: () => loadDigest(s.digestScenario), onScenario: (sc) => sc !== s.digestScenario && loadDigest(sc) });
   const paint = () => {
     const c = { data: s.data, loading: s.loading, error: s.error, retry: load, days: s.days };
     head();
@@ -28,22 +30,15 @@ export function mountNews(nodes, { fetchJson = getJson, search = "", save = () =
     renderPfas(nodes.pfas, { ...c, all: s.pfasAll, onAll: () => { s.pfasAll = true; paint(); } });
     if (nodes.evidence) renderEvidence(nodes.evidence, { ...c, tab: s.evTab, filter: s.evFilter, onTab: (v) => { s.evTab = v; paint(); }, onFilter: (v) => { s.evFilter = v; paint(); } });
   };
-  async function load() {
-    const n = ++seq;
-    Object.assign(s, { loading: true, error: null, expanded: new Set(), country: "", topic: "", pfasAll: false, evTab: "deploy", evFilter: "" });
-    paint();
-    try {
-      const d = await fetchJson("news", { days: s.days });
-      if (n !== seq) return;
-      s.data = d;
-    } catch (e) {
-      if (n !== seq) return;
-      s.data = null;
-      s.error = describe(e);
-    }
-    s.loading = false;
-    paint();
+  async function fetchInto(p, q, dk, ek, lk, draw, sq) {
+    const n = sq();
+    s[lk] = true; s[ek] = null; draw();
+    try { const d = await fetchJson(p, q); if (n !== sq(1)) return; s[dk] = d; }
+    catch (e) { if (n !== sq(1)) return; s[dk] = null; s[ek] = describe(e); }
+    s[lk] = false; draw();
   }
+  const load = () => (Object.assign(s, { expanded: new Set(), country: "", topic: "", pfasAll: false, evTab: "deploy", evFilter: "" }), fetchInto("news", { days: s.days }, "data", "error", "loading", paint, (c) => (c ? seq : ++seq)));
+  const loadDigest = (sc = s.digestScenario) => (s.digestScenario = sc, fetchInto("digest", { scenario: sc }, "digest", "digestError", "digestLoading", paintDigest, (c) => (c ? dSeq : ++dSeq)));
   function set(patch) {
     if (!Object.keys(patch).some((k) => patch[k] !== s[k])) return;
     Object.assign(s, patch);
@@ -53,5 +48,6 @@ export function mountNews(nodes, { fetchJson = getJson, search = "", save = () =
   // N-04 國家條件：既有 /countries 的 factors，只讀一次；取不到 → countries 留 null →「條件未取得」
   const cnt = fetchJson("countries").then((d) => { s.countries = d && d.countries && typeof d.countries === "object" ? d.countries : null; }, () => { s.countries = null; }).then(paint);
   const meta = fetchJson("meta").then((m) => { s.meta = m; }, (e) => { s.metaError = e; }).finally(head);
-  return { state: s, load, set, ready: Promise.all([load(), meta, cnt]) };
+  const dig = nodes.digest ? loadDigest("all") : Promise.resolve();
+  return { state: s, load, set, ready: Promise.all([load(), meta, cnt, dig]) };
 }

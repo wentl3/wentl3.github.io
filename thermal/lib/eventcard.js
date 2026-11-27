@@ -52,6 +52,7 @@ export function eventCard(ev, { compact = false, onPick = null } = {}) {
   const card = el("article", { class: "item event", "data-event": s(ev.id) },
     el("h3", { "data-zh": String(!!ev.headline_is_zh) }, link(head.url, headline)),
     meta,
+    !compact && ev.summary_zh ? el("p", { text: ev.summary_zh }) : null,
     facts.length ? el("div", { class: "facts" }, ...facts.map(fact)) : null);
   if ((ev.conflict || []).length) {
     card.append(el("div", { class: "conflict" }, el("span", { class: "tag warn", text: "有矛盾" }),

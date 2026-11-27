@@ -1,1 +1,1 @@
-{"":{"UZ":{"counts":{"deployment":{"accepted":1,"unverified":0}},"constraints":{},"events":{"reg":0,"deploy":0,"rumour":0,"reg_structure":{}}}},"S-HEAT":{},"S-EFF":{"UZ":{"counts":{"deployment":{"accepted":1,"unverified":0}},"constraints":{},"events":{"reg":0,"deploy":0,"rumour":0,"reg_structure":{}}}},"S-EDGE":{},"S-MIL":{}}
+{"":{"US":{"counts":{"news":{"accepted":2,"unverified":0}},"constraints":{},"events":{"reg":1,"deploy":0,"rumour":1,"reg_structure":{}}}},"S-HEAT":{},"S-EFF":{},"S-EDGE":{},"S-MIL":{}}
